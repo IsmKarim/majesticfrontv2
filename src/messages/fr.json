@@ -1,0 +1,18 @@
+{
+    "common": {},
+    "home": {
+        "hero": {
+            "title": "Une agence premium à Kénitra.",
+            "subtitle": "Discrète. Efficace."
+        },
+        "agencyWord": {
+            "label": "Excellence",
+            "title": "Mot de l'agence",
+            "body": "Chez Majestic Keys, nous croyons que l'immobilier de luxe ne se résume pas à des mètres carrés, mais à l'art de vivre.",
+            "body2": "Spécialistes du marché de Kénitra, nous accompagnons une clientèle exigeante dans la recherche de résidences d'exception.",
+            "cta": "Découvrir l'histoire de l'agence",
+            "experienceYears": "+15",
+            "experienceLabel": "Années d'expérience"
+        }
+    }
+}
