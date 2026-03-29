@@ -4,12 +4,12 @@ import React, { useState } from 'react';
 import { Box, Button, Flex, HStack, Text, Collapsible } from '@chakra-ui/react';
 import Iconify from '@/components/ui/iconify';
 import GlassSelect from '@/components/ui/glassSelect';
-import { propertyTypesCollection } from '@/config/data';
-import { citiesCollection } from '@/config/citiesData';
 import { useSearch } from './useSearch';
 import SwitchInput from '@/components/ui/switchInput';
 import GlassNumberInput from '@/components/ui/glassNumberInput';
 import GlassSlider from '@/components/ui/glassSlider';
+import { propertyTypesCollection } from '@/config/data';
+import { citiesCollection } from '@/config/citiesData';
 
 enum SearchTab {
   BUY = 'Tous',
