@@ -1,7 +1,7 @@
-import PropertyCard from "@/features/properties/components/propertyCard";
+import PropertyGrid from "@/features/properties/components/PropertyGrid";
 import SearchWidget from "@/features/search/searchbar";
 import { mockProperties } from "@/types/property.type";
-import { Box, SimpleGrid, Text } from "@chakra-ui/react";
+import { Box,  Text } from "@chakra-ui/react";
 
 export default function Page() {
     const properties = mockProperties
@@ -22,10 +22,7 @@ export default function Page() {
         </Box>
 
        {/*  <ViewToolBar /> */}
-        <SimpleGrid columns={4} gap={4} px={4} py={12} bg="brand.700">
-            {properties.map((property) => (
-                <PropertyCard key={property.id} property={property} />
-            ))}
-        </SimpleGrid>
+       <PropertyGrid properties={properties}/>
+        
     </>;
 }

@@ -4,7 +4,6 @@ import WhyChooseUs from "@/features/homePage/whyChooseUs";
 import NewsletterSection from "@/features/newsletter/newsletterSection";
 import FeaturedPropertySection from "@/features/properties/featuredPropertiesSection";
 import ServicesSection from "@/features/services/servicesSection";
-import { Box, Button, SimpleGrid } from "@chakra-ui/react";
 
 export default function Home() {
   return (
@@ -15,8 +14,6 @@ export default function Home() {
       <WhyChooseUs />
       <ServicesSection />
       <NewsletterSection />
-
-
     </>
   );
 }
