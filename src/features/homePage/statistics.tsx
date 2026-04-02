@@ -8,13 +8,13 @@ interface Stat {
   value: number;
   suffix: string;
   label: string;
-  duration?: number; 
+  duration?: number;
 }
 
 const STATS: Stat[] = [
-  { value: 15,  suffix: "+",  label: "Années d'expertise",  duration: 1500 },
-  { value: 500, suffix: "+",  label: "Biens vendus",        duration: 2000 },
-  { value: 100, suffix: "%",  label: "Satisfaction client", duration: 1800 },
+  { value: 15, suffix: "+", label: "Années d'expertise", duration: 1500 },
+  { value: 500, suffix: "+", label: "Biens vendus", duration: 2000 },
+  { value: 100, suffix: "%", label: "Satisfaction client", duration: 1800 },
 ];
 
 // ─── easing: easeOutExpo ───────────────────────────────────────────────────
@@ -87,8 +87,6 @@ function StatItem({
       >
         {stat.label}
       </Text>
-
-     
     </Box>
   );
 }
@@ -108,7 +106,7 @@ export default function WhyChooseUsStats() {
           observer.disconnect();
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.3 },
     );
 
     observer.observe(el);
@@ -126,6 +124,8 @@ export default function WhyChooseUsStats() {
       minH={{ base: "280px", lg: "100%" }}
       py={{ base: 10, lg: 14 }}
       px={{ base: 8, lg: 12 }}
+      border="1px solid"
+      borderColor="secondary.700"
     >
       {STATS.map((stat, i) => (
         <StatItem

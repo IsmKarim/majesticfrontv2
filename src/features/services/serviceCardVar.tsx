@@ -24,12 +24,14 @@ export default function ServiceCardVar({
       py={6}
       border="1px solid"
       borderColor="transparent"
+
+
       cursor="pointer"
       transition="all 0.35s cubic-bezier(0.4, 0, 0.2, 1)"
       _hover={{
         transform: "translateY(-6px)",
         boxShadow: "0 20px 40px rgba(0, 0, 0, 0.3)",
-        borderColor: "whiteAlpha.200",
+        borderColor: "secondary.700",
         bg: "whiteAlpha.50",
       }}
     >
