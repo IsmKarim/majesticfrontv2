@@ -2,9 +2,9 @@
 import Iconify from "@/components/ui/iconify";
 import PropertyDetails from "@/features/properties/components/propertyDetails/propertyDetails";
 import PropertyFeatures from "@/features/properties/components/propertyDetails/propertyFeatures";
-import PropertyGallery from "@/features/properties/components/propertyDetails/propertyGallery";
 import PropertyMortgage from "@/features/properties/components/propertyDetails/propertyMortgage";
 import PriceCard from "@/features/properties/components/propertyDetails/propertyPriceCard";
+import PropertyGallery from "@/features/property-gallery/property-gallery";
 import {
   Box,
   Flex,
@@ -79,8 +79,7 @@ export default function Property() {
   return (
     <Box pt={28} bg="brand.700" minH="100vh">
       {/* ── Gallery ── */}
-      <PropertyGallery propertyId="8" propertyName="Alabaster Pavilion" />
-
+      {/* <PropertyGallery/> */}
       {/* ── Attributes bar ── */}
       <Box
         borderBottom="1px solid"
@@ -111,19 +110,11 @@ export default function Property() {
         >
           {/* Left column — content */}
           <GridItem>
+            <PropertyDetails />
+
             {/* Architectural Vision */}
-            <Box mb={12}>
-              <Text
-                as="h2"
-                fontFamily="heading"
-                fontSize={{ base: "2xl", md: "3xl" }}
-                color="secondary.400"
-                fontStyle="italic"
-                fontWeight="400"
-                mb={6}
-              >
-                The Architectural Vision
-              </Text>
+            <Box my={12}>
+            
               <VStack align="flex-start" gap={5}>
                 <Text fontSize="sm" color="secondary.300" lineHeight="tall">
                   Designed by the renowned firm Aethelgard &amp; Associates, the Alabaster Pavilion
@@ -140,7 +131,6 @@ export default function Property() {
             </Box>
 
             {/* Injected property detail sections */}
-            <PropertyDetails />
             <PropertyFeatures />
 
             {/* ── Curated Amenities ── */}

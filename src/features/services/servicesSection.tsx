@@ -27,7 +27,7 @@ const SERVICES = [
 export default function ServicesSection() {
   return (
     <>
-    <Box  bg="brand.600" pb={12}>
+    <Box  bg="brand.600" pb={8}>
 
       <SimpleGrid
         columns={{ base: 1, md: 3, lg: 4 }}
