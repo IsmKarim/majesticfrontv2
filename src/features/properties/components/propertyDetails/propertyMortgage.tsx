@@ -37,10 +37,10 @@ function LabeledSlider({
   return (
     <Box>
       <HStack justify="space-between" mb={2}>
-        <Text fontSize="sm" fontWeight="medium">
+        <Text fontSize="sm" fontWeight="600">
           {label}
         </Text>
-        <Text fontSize="sm" color="fg.muted">
+        <Text fontSize="sm" color="white">
           {step < 1 ? value.toFixed(1) : value.toFixed(0)}
           {suffix ? ` ${suffix}` : ""}
         </Text>
@@ -106,7 +106,15 @@ export default function PropertyMortgage({ price }: PropertyMortgageProps) {
   }, [price, downPaymentPercent, interestRate, termYears]);
 
   return (
-    <Box p={6} borderWidth="1px"  bg="white" m={6} maxW="800px" borderRadius="md" boxShadow="sm">
+    <Box
+      bg="brand.800"
+      border="1px solid"
+      borderColor="secondary.800"
+      borderRadius="sm"
+      p={{ base: 6, md: 10 }}
+      mt={10}
+      color="white"
+    >
       <Text as="h3" fontWeight="semibold" mb={4}>
         Mortgage simulator
       </Text>
@@ -142,23 +150,21 @@ export default function PropertyMortgage({ price }: PropertyMortgageProps) {
           suffix="ans"
         />
 
-        <Stack
-          direction={{ base: "column", md: "row" }}
-          gap={4}
-          mt={4}
-        >
+        <Stack direction={{ base: "column", md: "row" }} gap={4} mt={4}>
           <Stat.Root flex="1">
             <Stat.Label>Mensualité estimée</Stat.Label>
-            <Stat.ValueText fontSize="2xl" fontWeight="bold" color="secondary.700">
+            <Stat.ValueText
+              fontSize="2xl"
+              fontWeight="bold"
+              color="secondary.700"
+            >
               <FormatNumber
                 value={Number.isFinite(monthlyPayment) ? monthlyPayment : 0}
                 style="currency"
                 currency="MAD"
               />
             </Stat.ValueText>
-            <Stat.HelpText>
-              Sur {termYears.toFixed(0)} ans
-            </Stat.HelpText>
+            <Stat.HelpText>Sur {termYears.toFixed(0)} ans</Stat.HelpText>
           </Stat.Root>
 
           <Stat.Root flex="1">

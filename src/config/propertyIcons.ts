@@ -1,5 +1,6 @@
 export const PROPERTYICONS = {
     transactionType: "icon-park-solid:transaction",
+    propertyType: "mdi:home-outline",
     price: "solar:tag-price-bold",
     totalArea: "lsicon:measure-outline",
     bedrooms: "material-symbols:bed-outline",
