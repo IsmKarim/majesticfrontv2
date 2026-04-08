@@ -18,7 +18,6 @@ export default function PropertyFeatures({features } : any) {
                 fontWeight="400"
                 mb={8}
               >
-                Curated Amenities
               </Text>
 
               <Grid
