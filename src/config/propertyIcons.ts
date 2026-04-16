@@ -24,3 +24,57 @@ export const PROPERTYICONS = {
     hasGarden: "maki:garden",
     hasOceanView: "mdi:ocean",
 }
+
+
+export const PropertyFeatures = [
+    {
+        name : "Sous-sol",  
+        icon : "lsicon:park-outline",
+        accessor : "hasBasement"
+    } ,
+    {
+        name : "Securisé",  
+        icon : "fluent:video-security-24-regular",
+        accessor : "hasSecurity"
+    } ,{
+        name : "Balcon",  
+        icon : "iconoir:balcony",
+        accessor : "hasBalcony"
+    } ,{
+        name : "Terrasse",  
+        icon : "hugeicons:terrace",
+        accessor : "hasTerrace"
+    } ,{
+        name : "Ascenseur",  
+        icon : "material-symbols-light:elevator-outline",
+        accessor : "hasElevator"
+    } ,
+    {
+        name : "Climatisation",  
+        icon : "cbi:air-conditioner",
+        accessor : "hasAirConditioning"
+    } ,{
+        name : "Piscine",
+        icon : "cil:pool",
+        accessor : "hasPool"
+    } ,{
+        name : "Cuisine équipée",
+        icon : "emojione-monotone:kitchen-knife",
+        accessor : "hasEquippedKitchen"
+    } ,{
+        name : "Accès facile",
+        icon : "mdi:wheelchair",
+        accessor : "hasEasyAccess"
+    } ,{
+        name : "Vue sur mer",
+        icon : "mdi:ocean",
+        accessor : "hasOceanView"
+    }   , 
+    {
+        name : "Jardin",
+        icon : "maki:garden",
+        accessor : "hasGarden"
+    }   , 
+    
+
+]

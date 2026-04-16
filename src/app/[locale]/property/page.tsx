@@ -1,10 +1,12 @@
 "use client"
 import Iconify from "@/components/ui/iconify";
+import { PROPERTYICONS } from "@/config/propertyIcons";
 import PropertyDetails from "@/features/properties/components/propertyDetails/propertyDetails";
 import PropertyFeatures from "@/features/properties/components/propertyDetails/propertyFeatures";
 import PropertyMortgage from "@/features/properties/components/propertyDetails/propertyMortgage";
 import PriceCard from "@/features/properties/components/propertyDetails/propertyPriceCard";
 import PropertyGallery from "@/features/property-gallery/property-gallery";
+import { mockProperties } from "@/types/property.type";
 import {
   Box,
   Flex,
@@ -15,21 +17,19 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { LuBedDouble, LuBath, LuMaximize2, LuCar, LuWaves } from "react-icons/lu";
-import { MdOutlineLocalMovies, MdOutlineWineBar, MdOutlineSpa, MdOutlineSupportAgent } from "react-icons/md";
+import { LuBedDouble, LuBath, LuMaximize2,  LuWaves } from "react-icons/lu";
 
-// ─── Attribute pill in the top bar ───────────────────────────────────────────
 const Attribute = ({
   icon,
   label,
   value,
 }: {
-  icon: React.ElementType;
+  icon: string;
   label: string;
   value?: string;
 }) => (
   <VStack gap={1} align="center" minW="fit-content">
-    <Icon as={icon} boxSize={6} color="secondary.300" />
+    <Iconify icon={icon} boxSize={6} color="secondary.300" />
     <Text
       fontSize="2xs"
       fontWeight="600"
@@ -42,45 +42,13 @@ const Attribute = ({
   </VStack>
 );
 
-// ─── Single amenity card ──────────────────────────────────────────────────────
-const Amenity = ({
-  icon,
-  title,
-  description,
-}: {
-  icon: React.ElementType;
-  title: string;
-  description: string;
-}) => (
-  <HStack align="flex-start" gap={4}>
-    <Icon as={icon} boxSize={5} color="secondary.300" mt="2px" flexShrink={0} />
-    <VStack align="flex-start" gap={0}>
-      <Text
-        fontSize="xs"
-        fontWeight="700"
-        letterSpacing="0.15em"
-        textTransform="uppercase"
-        color="secondary.100"
-      >
-        {title}
-      </Text>
-      <Text fontSize="xs" color="secondary.400" lineHeight="tall">
-        {description}
-      </Text>
-    </VStack>
-  </HStack>
-);
-
-// ─── Sticky price / CTA card ──────────────────────────────────────────────────
 
 
-// ─── Page ─────────────────────────────────────────────────────────────────────
 export default function Property() {
+  const property= mockProperties[1]
+
   return (
     <Box pt={28} bg="brand.700" minH="100vh">
-      {/* ── Gallery ── */}
-      {/* <PropertyGallery/> */}
-      {/* ── Attributes bar ── */}
       <Box
         borderBottom="1px solid"
         borderColor="secondary.800"
@@ -94,10 +62,10 @@ export default function Property() {
           pb={1}
           style={{ "&::-webkit-scrollbar": { display: "none" } }}
         >
-          <Attribute icon={LuBedDouble} label="Bedrooms" value="5" />
-          <Attribute icon={LuBath} label="Bathrooms" value="6" />
-          <Attribute icon={LuMaximize2} label="SQM" value="1,200" />
-          <Attribute icon={LuWaves} label="Infinity Pool" />
+          <Attribute icon={PROPERTYICONS["bedrooms"]} label="Bedrooms" value={property.bedrooms?.toString()} />
+          <Attribute icon={PROPERTYICONS["bathrooms"]} label="Bathrooms" value={property.bathrooms?.toString()} />
+          <Attribute icon={PROPERTYICONS["totalArea"]} label="m²" value={property.totalArea?.toString()} />
+          <Attribute icon={PROPERTYICONS["parkingSpaces"]} label="Parking Spaces" value={property.parkingSpaces?.toString()} />
         </Flex>
       </Box>
 
@@ -108,42 +76,35 @@ export default function Property() {
           gap={{ base: 10, lg: 16 }}
           alignItems="flex-start"
         >
-          {/* Left column — content */}
           <GridItem>
-            <PropertyDetails />
+            <PropertyDetails  {...property} />
 
-            {/* Architectural Vision */}
             <Box my={12}>
             
               <VStack align="flex-start" gap={5}>
                 <Text fontSize="sm" color="secondary.300" lineHeight="tall">
-                  Designed by the renowned firm Aethelgard &amp; Associates, the Alabaster Pavilion
-                  is a masterpiece of light and form. The residence utilizes local limestone and
-                  expansive floor-to-ceiling glass to dissolve the boundaries between the opulent
-                  interior and the rugged beauty of the Moroccan coastline.
+                  {property.description}
                 </Text>
-                <Text fontSize="sm" color="secondary.300" lineHeight="tall">
-                  Every angle has been calculated to capture the golden hour of Casablanca, casting
-                  soft, rhythmic shadows across the curated marble galleries that form the spine of
-                  the home.
-                </Text>
+             
               </VStack>
             </Box>
 
        
 
             {/* ── Curated Amenities ── */}
-          
+          <PropertyFeatures property={property} />
 
             {/* Mortgage calculator */}
-            <Box mt={10}>
-              <PropertyMortgage price={8_450_000} />
-            </Box>
+            {property.transactionType === "Sale" && (
+              <Box mt={10}>
+                <PropertyMortgage price={property.price} />
+              </Box>
+            )}
           </GridItem>
 
           {/* Right column — sticky price card */}
           <GridItem>
-            <PriceCard price={8_450_000} />
+            <PriceCard price={property.price} />
           </GridItem>
         </Grid>
       </Box>

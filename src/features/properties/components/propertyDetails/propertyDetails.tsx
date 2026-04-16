@@ -3,9 +3,11 @@
 import { Box, Text, Grid, GridItem, Flex, Icon } from "@chakra-ui/react";
 import type { ReactNode } from "react";
 import Iconify from "@/components/ui/iconify";
+import { PROPERTYICONS } from "@/config/propertyIcons";
+import { colors } from "@/theme";
 
 interface PropertyOverviewProps {
-  propertyType: string;
+  category: string;
   transactionType: string;
   price: number;
   totalArea: number;
@@ -16,7 +18,7 @@ interface PropertyOverviewProps {
   bathrooms: number;
   parkingSpaces: number;
   isFurnished: boolean;
-  buildingAge: string;
+  buildingAge: string | number;
   propertyCondition: string;
   listingStatus: string;
   floorNumber: number;
@@ -102,21 +104,21 @@ function DetailItem({
 
 
 export default function PropertyDetails({
-  propertyType = "Villa",
-  transactionType = "For Sale",
-  price = 4500000,
-  totalArea = 320,
-  livingArea = 260,
-  city = "Casablanca",
-  neighborhood = "Anfa",
-  bedrooms = 4,
-  bathrooms = 3,
-  parkingSpaces = 2,
-  isFurnished = true,
-  buildingAge = "2019",
-  propertyCondition = "Excellent",
+  category ,
+  transactionType,
+  price ,
+  totalArea,
+  livingArea ,
+  city ,
+  neighborhood ,
+  bedrooms ,
+  bathrooms,
+  parkingSpaces ,
+  isFurnished ,
+  buildingAge ,
+  propertyCondition ,
   listingStatus = "Available",
-  floorNumber = 2,
+  floorNumber ,
 }: Partial<PropertyOverviewProps>) {
   const formattedPrice = new Intl.NumberFormat("fr-MA", {
     style: "currency",
@@ -178,6 +180,7 @@ export default function PropertyDetails({
           {formattedPrice}
         </Text>
         <Flex align="center" gap={1.5}>
+          <Iconify icon={PROPERTYICONS["city"]} color={"secondary.500"} w="16px" h="16px" />
           <Text fontSize="sm" fontFamily="body" color="whiteAlpha.700">
             {neighborhood}, {city}
           </Text>
@@ -203,52 +206,52 @@ export default function PropertyDetails({
         gap={{ base: 5, md: 6 }}
       >
         <DetailItem
-          icon={<Iconify icon="mdi:home" />}
+          icon={<Iconify icon={PROPERTYICONS.propertyType} {...iconProps} />}
           label="Property Type"
-          value={propertyType}
+          value={category}
         />
         <DetailItem
-          icon={<Iconify icon="mdi:ruler" {...iconProps} />}
+          icon={<Iconify icon={PROPERTYICONS.totalArea} {...iconProps} />}
           label="Total Area"
           value={`${totalArea} m²`}
         />
         <DetailItem
-          icon={<Iconify icon="mdi:ruler" {...iconProps} />}
+          icon={<Iconify icon={PROPERTYICONS.totalArea} {...iconProps} />}
           label="Living Area"
           value={`${livingArea} m²`}
         />
         <DetailItem
-          icon={<Iconify icon="mdi:bed" {...iconProps} />}
+          icon={<Iconify icon={PROPERTYICONS.bedrooms} {...iconProps} />}
           label="Bedrooms"
           value={bedrooms}
         />
         <DetailItem
-          icon={<Iconify icon="mdi:bath" {...iconProps} />}
+          icon={<Iconify icon={PROPERTYICONS.bathrooms} {...iconProps} />}
           label="Bathrooms"
           value={bathrooms}
         />
         <DetailItem
-          icon={<Iconify icon="mdi:car" {...iconProps} />}
+          icon={<Iconify icon={PROPERTYICONS.parkingSpaces} {...iconProps} />}
           label="Parking"
           value={`${parkingSpaces} space${parkingSpaces !== 1 ? "s" : ""}`}
         />
         <DetailItem
-          icon={<Iconify icon="mdi:sofa" {...iconProps} />}
+          icon={<Iconify icon={PROPERTYICONS.isFurnished} {...iconProps} />}
           label="Furnished"
           value={isFurnished ? "Yes" : "No"}
         />
         <DetailItem
-          icon={<Iconify icon="mdi:calendar" {...iconProps} />}
+          icon={<Iconify icon={PROPERTYICONS.buildingAge} {...iconProps} />}
           label="Built"
           value={buildingAge}
         />
         <DetailItem
-          icon={<Iconify icon="mdi:building" {...iconProps} />}
+          icon={<Iconify icon={PROPERTYICONS.orientation} {...iconProps} />}
           label="Condition"
           value={propertyCondition}
         />
         <DetailItem
-          icon={<Iconify icon="mdi:layers" {...iconProps} />}
+          icon={<Iconify icon={PROPERTYICONS.floorNumber} {...iconProps} />}
           label="Floor"
           value={floorNumber}
         />

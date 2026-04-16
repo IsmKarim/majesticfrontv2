@@ -23,6 +23,7 @@ type LabeledSliderProps = {
   value: number;
   onChange: (value: number) => void;
   suffix?: string;
+  hint?: string;
 };
 
 function LabeledSlider({
@@ -33,13 +34,21 @@ function LabeledSlider({
   value,
   onChange,
   suffix,
+  hint,
 }: LabeledSliderProps) {
   return (
     <Box>
       <HStack justify="space-between" mb={2}>
-        <Text fontSize="sm" fontWeight="600">
-          {label}
-        </Text>
+        <Box>
+          <Text fontSize="sm" fontWeight="600">
+            {label}
+          </Text>
+          {hint && (
+            <Text fontSize="xs" color="secondary.400" mt={0.5}>
+              {hint}
+            </Text>
+          )}
+        </Box>
         <Text fontSize="sm" color="white">
           {step < 1 ? value.toFixed(1) : value.toFixed(0)}
           {suffix ? ` ${suffix}` : ""}
@@ -57,7 +66,7 @@ function LabeledSlider({
             onChange(v);
           }
         }}
-        colorPalette="teal"
+        colorPalette="secondary"
       >
         <Slider.Control>
           <Slider.Track>
@@ -128,6 +137,7 @@ export default function PropertyMortgage({ price }: PropertyMortgageProps) {
           value={downPaymentPercent}
           onChange={setDownPaymentPercent}
           suffix="%"
+          hint={new Intl.NumberFormat("fr-MA", { style: "currency", currency: "MAD", maximumFractionDigits: 0 }).format((price * downPaymentPercent) / 100)}
         />
 
         <LabeledSlider
@@ -153,16 +163,14 @@ export default function PropertyMortgage({ price }: PropertyMortgageProps) {
         <Stack direction={{ base: "column", md: "row" }} gap={4} mt={4}>
           <Stat.Root flex="1">
             <Stat.Label>Mensualité estimée</Stat.Label>
-            <Stat.ValueText
-              fontSize="2xl"
-              fontWeight="bold"
-              color="secondary.700"
-            >
-              <FormatNumber
-                value={Number.isFinite(monthlyPayment) ? monthlyPayment : 0}
-                style="currency"
-                currency="MAD"
-              />
+            <Stat.ValueText asChild>
+              <Text fontSize="2xl" fontWeight="bold" color="secondary.300">
+                <FormatNumber
+                  value={Number.isFinite(monthlyPayment) ? monthlyPayment : 0}
+                  style="currency"
+                  currency="MAD"
+                />
+              </Text>
             </Stat.ValueText>
             <Stat.HelpText>Sur {termYears.toFixed(0)} ans</Stat.HelpText>
           </Stat.Root>
@@ -187,7 +195,7 @@ export default function PropertyMortgage({ price }: PropertyMortgageProps) {
         </Stack>
 
         <Text fontSize="xs" color="fg.muted">
-          Simulation indicative — à valider avec votre banque.
+          Simulation indicative , à valider avec la banque.
         </Text>
       </Stack>
     </Box>

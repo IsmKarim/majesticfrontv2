@@ -1,3 +1,4 @@
+import Iconify from "@/components/ui/iconify";
 import { HStack, Icon, Text, VStack } from "@chakra-ui/react";
 
 export default function Amenity ({
@@ -5,13 +6,13 @@ export default function Amenity ({
   title,
   description,
 }: {
-  icon: React.ElementType;
+  icon: string;
   title: string;
-  description: string;
+  description?: string;
 }) {
   return (
     <HStack align="flex-start" gap={4}>
-      <Icon as={icon} boxSize={5} color="secondary.300" mt="2px" flexShrink={0} />
+      <Iconify icon={icon} boxSize={5} color="secondary.300" mt="2px" flexShrink={0} />
       <VStack align="flex-start" gap={0}>
         <Text
           fontSize="xs"
