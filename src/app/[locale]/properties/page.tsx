@@ -1,4 +1,5 @@
 import PropertyGrid from "@/features/properties/components/PropertyGrid";
+import ViewToolBar from "@/features/properties/components/viewToolbar";
 import SearchWidget from "@/features/search/searchbar";
 import { mockProperties } from "@/types/property.type";
 import { Box,  Text } from "@chakra-ui/react";
@@ -21,7 +22,7 @@ export default function Page() {
 
         </Box>
 
-       {/*  <ViewToolBar /> */}
+      <ViewToolBar /> 
        <PropertyGrid properties={properties}/>
         
     </>;

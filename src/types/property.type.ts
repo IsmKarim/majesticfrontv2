@@ -97,17 +97,17 @@ export const mockProperties: Property[] = [
     images: [
       {
         id: "riad",
-        url: "/images/properties/gauthier-cover.jpg",
+        url: "/images/properties/riad.jpg",
         alt: "Salon lumineux"
       },
       {
         id: "img-002",
-        url: "/images/properties/gauthier-2.jpg",
+        url: "/images/properties/riad.jpg",
         alt: "Cuisine équipée"
       },
       {
         id: "img-003",
-        url: "/images/properties/gauthier-3.jpg",
+        url: "/images/properties/riad.jpg",
         alt: "Chambre principale"
       }
     ]

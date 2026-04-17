@@ -44,7 +44,7 @@ export default function PropertyGallery({
     <Box as="section" aria-label={`Photo gallery for ${propertyName}`} px="4">
       {/* Section Header */}
       <Box mb={4}>
-        <Text
+        <Text 
           fontSize={{ base: "lg", md: "xl" }}
           fontWeight="semibold"
           color="gray.800"

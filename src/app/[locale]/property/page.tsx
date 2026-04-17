@@ -12,12 +12,9 @@ import {
   Flex,
   Grid,
   GridItem,
-  HStack,
-  Icon,
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { LuBedDouble, LuBath, LuMaximize2,  LuWaves } from "react-icons/lu";
 
 const Attribute = ({
   icon,
@@ -55,7 +52,8 @@ export default function Property() {
         px={{ base: 4, md: 10, xl: 20 }}
         py={6}
       >
-        <Flex
+        <PropertyGallery images={property.images} />
+        <Flex pt={6}
           gap={{ base: 6, md: 10 }}
           justify={{ base: "flex-start", md: "flex-start" }}
           overflowX="auto"
@@ -69,7 +67,6 @@ export default function Property() {
         </Flex>
       </Box>
 
-      {/* ── Main two-column layout ── */}
       <Box px={{ base: 4, md: 10, xl: 20 }} py={{ base: 10, md: 16 }}>
         <Grid
           templateColumns={{ base: "1fr", lg: "1fr 380px" }}
@@ -89,12 +86,8 @@ export default function Property() {
               </VStack>
             </Box>
 
-       
-
-            {/* ── Curated Amenities ── */}
           <PropertyFeatures property={property} />
 
-            {/* Mortgage calculator */}
             {property.transactionType === "Sale" && (
               <Box mt={10}>
                 <PropertyMortgage price={property.price} />
@@ -102,7 +95,6 @@ export default function Property() {
             )}
           </GridItem>
 
-          {/* Right column — sticky price card */}
           <GridItem>
             <PriceCard price={property.price} />
           </GridItem>
