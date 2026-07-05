@@ -18,7 +18,6 @@ export default async function Hero() {
                     {t('title')} <br/> {t('subtitle')}
                 </Text>
             </Box>
-
      <Box maxW="1200px" mx="auto"><SearchWidget /></Box>
         <Box position="absolute" bottom="8" left="8">
            <SocialSidebar />

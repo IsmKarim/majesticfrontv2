@@ -12,6 +12,7 @@ export default function Home() {
   const properties = mockProperties
   return (
     <>
+      <Hero />
       <AgencyWord />
       <FeaturedPropertySection />
       <WhyChooseUs />
