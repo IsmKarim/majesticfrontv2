@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import PropertyGrid from "@/features/properties/components/PropertyGrid";
 import ViewToolBar from "@/features/properties/components/viewToolbar";
 import SearchWidget from "@/features/search/searchbar";
@@ -12,13 +13,15 @@ export default function Page() {
         <Box color="secondary.400" px='6' bg="brand.700">
 
             <Text as="h2">Curated Listings</Text>
-            <Text py='6'>An exclusive selection of the kingdom's most prestigious architectural marvels,<br />
+            <Text py='6'>An exclusive selection of the kingdom&apos;s most prestigious architectural marvels,<br />
                 from contemporary villas to historic estates.</Text>
 
         </Box>
         <Box bg="brand.700" px='6'>
 
-            <SearchWidget />
+            <Suspense>
+                <SearchWidget />
+            </Suspense>
 
         </Box>
 

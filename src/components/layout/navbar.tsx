@@ -1,17 +1,24 @@
-"use client"
-import { Box, Flex, Button } from "@chakra-ui/react";
-import { navigationConfig, NavItem, NavItemWithChildren } from "@/config/navigation";
+"use client";
+
+import { Box, Flex, HStack } from "@chakra-ui/react";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
+
+import { navigationConfig, isActiveRoute, NavItemWithChildren } from "@/config/navigation";
 import NavDrawer from "./components/navDrawer";
 import Logo from "../ui/logo";
-import Link from "next/link";
-import ActiveNavItem from "./components/activeNavComponent";
-import { colors } from "@/theme";
+import Iconify from "../ui/iconify";
 
 const navItems = navigationConfig.mainNav;
 
-export const NavComponent = ({ navItem, pathname }: { navItem: NavItemWithChildren; pathname: string }) => {
-  const hasChildren = navItem.items && navItem.items.length > 0;
-  const isActive = pathname === navItem.href;
+const NavComponent = ({
+  navItem,
+  isActive,
+}: {
+  navItem: NavItemWithChildren;
+  isActive: boolean;
+}) => {
+  const hasChildren = !!navItem.items?.length;
 
   return (
     <Box
@@ -26,37 +33,33 @@ export const NavComponent = ({ navItem, pathname }: { navItem: NavItemWithChildr
           opacity: 1,
           pointerEvents: "auto",
         },
-        "& > a::after": {
-          content: '""',
-          position: "absolute",
-          bottom: "-12px",
-          left: "50%",
-          transform: "translateX(-50%)",
-          height: "2px",
-          width: isActive ? "100%" : "0%",
-          background: "secondary.500",
-          transition: "width 0.3s ease",
-        },
-        "&:hover > a::after": {
-          width: "100%",
-        },
       }}
     >
-      <Box position="relative" display="inline-block">
-        <Link href={navItem.href}>
-          {navItem.title}
-        </Link>
-        <Box
-          position="absolute"
-          bottom="-8px"
-          left="50%"
-          transform="translateX(-50%)"
-          height="2px"
-          bg="secondary.500"
-          width={isActive ? "100%" : "0%"}
-          transition="width 0.3s ease"
-          className="underline"
-        />
+      <Box
+        asChild
+        position="relative"
+        display="inline-block"
+        py={2}
+        fontFamily="heading"
+        fontSize="0.8rem"
+        fontWeight="medium"
+        textTransform="uppercase"
+        letterSpacing="widest"
+        color={isActive ? "secondary.400" : "whiteAlpha.800"}
+        transition="color 0.25s ease"
+        _hover={{ color: "secondary.300", _after: { width: "100%" } }}
+        _after={{
+          content: '""',
+          position: "absolute",
+          left: 0,
+          bottom: 0,
+          height: "1px",
+          bg: "secondary.400",
+          width: isActive ? "100%" : "0%",
+          transition: "width 0.25s ease",
+        }}
+      >
+        <Link href={navItem.href}>{navItem.title}</Link>
       </Box>
 
       {hasChildren && (
@@ -70,7 +73,9 @@ export const NavComponent = ({ navItem, pathname }: { navItem: NavItemWithChildr
           minW="200px"
         >
           <Box
-            bg="rgba(15, 23, 42, 0.95)"
+            bg="rgba(5, 11, 18, 0.95)"
+            backdropFilter="blur(18px) saturate(160%)"
+            border="1px solid rgba(255, 255, 255, 0.12)"
             borderRadius="md"
             shadow="xl"
             py={2}
@@ -95,7 +100,10 @@ export const NavComponent = ({ navItem, pathname }: { navItem: NavItemWithChildr
     </Box>
   );
 };
+
 export function Navbar() {
+  const pathname = usePathname();
+
   return (
     <Box
       as="header"
@@ -105,36 +113,68 @@ export function Navbar() {
       h="120px"
       px={{ md: 16 }}
       w="100%"
-      shadow="xl"
-      bg="rgba(15, 23, 42, 0.45)"
+      bg="rgba(5, 11, 18, 0.78)"
+      backdropFilter="blur(18px) saturate(160%)"
+      borderBottom="1px solid rgba(255, 255, 255, 0.12)"
+      boxShadow="0 8px 32px rgba(0, 0, 0, 0.45)"
     >
+      {/* Mobile */}
       <Flex
-        h={16}
+        h="100%"
         align="center"
         justify="space-between"
+        px={4}
         display={{ base: "flex", md: "none" }}
       >
-        <Button variant="ghost">Account</Button>
-        <Box><Logo /></Box>
+        <Iconify icon="mdi:account-outline" w="22px" h="22px" color="white" />
+        <Box>
+          <Logo />
+        </Box>
         <NavDrawer />
       </Flex>
 
+      {/* Desktop */}
       <Flex
         align="center"
         justify="space-between"
         h="100%"
         px={8}
         display={{ base: "none", md: "flex" }}
-        color="whiteAlpha.800"
-        fontSize="0.9rem"
       >
-        {navItems.slice(0, 3).map((navItem, index) => (
-          <ActiveNavItem key={index} navItem={navItem} />
-        ))}
-        <Box><Logo /></Box>
-        {navItems.slice(3).map((navItem, index) => (
-          <ActiveNavItem key={index} navItem={navItem} />
-        ))}
+        <HStack gap={10}>
+          {navItems.slice(0, 3).map((navItem, index) => (
+            <NavComponent
+              key={index}
+              navItem={navItem}
+              isActive={isActiveRoute(pathname, navItem.href)}
+            />
+          ))}
+        </HStack>
+
+        <Box position="relative" flexShrink={0} mx={8}>
+          <Box
+            position="absolute"
+            top="50%"
+            left="50%"
+            transform="translate(-50%, -50%)"
+            w="140px"
+            h="140px"
+            borderRadius="full"
+            bg="radial-gradient(circle, rgba(212,175,55,0.18) 0%, rgba(212,175,55,0) 70%)"
+            pointerEvents="none"
+          />
+          <Logo />
+        </Box>
+
+        <HStack gap={10}>
+          {navItems.slice(3).map((navItem, index) => (
+            <NavComponent
+              key={index}
+              navItem={navItem}
+              isActive={isActiveRoute(pathname, navItem.href)}
+            />
+          ))}
+        </HStack>
       </Flex>
     </Box>
   );

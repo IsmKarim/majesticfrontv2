@@ -124,7 +124,7 @@ export default function PropertyDetails({
     style: "currency",
     currency: "MAD",
     maximumFractionDigits: 0,
-  }).format(price);
+  }).format(price ?? 0);
 
   const iconProps = { size: 16, color: "#9E8A73" };
 

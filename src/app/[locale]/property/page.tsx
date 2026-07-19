@@ -43,6 +43,13 @@ const Attribute = ({
 
 export default function Property() {
   const property= mockProperties[1]
+  const galleryImages = property.images.map((img) => ({
+    id: img.id,
+    src: img.url,
+    alt: img.alt ?? property.title,
+    width: 1080,
+    height: 720,
+  }));
 
   return (
     <Box pt={28} bg="brand.700" minH="100vh">
@@ -52,13 +59,13 @@ export default function Property() {
         px={{ base: 4, md: 10, xl: 20 }}
         py={6}
       >
-        <PropertyGallery images={property.images} />
+        <PropertyGallery propertyId={property.id} propertyName={property.title} images={galleryImages} />
         <Flex pt={6}
           gap={{ base: 6, md: 10 }}
           justify={{ base: "flex-start", md: "flex-start" }}
           overflowX="auto"
           pb={1}
-          style={{ "&::-webkit-scrollbar": { display: "none" } }}
+          css={{ "&::-webkit-scrollbar": { display: "none" } }}
         >
           <Attribute icon={PROPERTYICONS["bedrooms"]} label="Bedrooms" value={property.bedrooms?.toString()} />
           <Attribute icon={PROPERTYICONS["bathrooms"]} label="Bathrooms" value={property.bathrooms?.toString()} />

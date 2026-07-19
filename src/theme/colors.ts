@@ -14,7 +14,7 @@ export const colors = {
   },
 
   secondary: {
-    main: { value: "#C4A689" }, // Gold
+    main: { value: "#D4AF37" }, // Gold
     50: { value: "#FFF9E6" },
     100: { value: "#FEF2CC" },
     200: { value: "#FFEEE0" },

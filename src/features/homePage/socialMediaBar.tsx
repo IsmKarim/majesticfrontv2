@@ -2,17 +2,20 @@
 import React from "react";
 import { Flex, Box, Link, Text, useBreakpointValue } from "@chakra-ui/react";
 import Iconify from "@/components/ui/iconify";
+import { siteConfig } from "@/config/site";
 
 const LUXURY_GOLD = "#d4af37";
 
 export default function SocialSidebar() {
   const isMobile = useBreakpointValue({ base: true, md: false });
 
+  const whatsappHref = `https://wa.me/${siteConfig.contact.whatsapp.replace(/\D/g, "")}`;
+
   const socialLinks = [
-    { icon: "cib:facebook", label: "Facebook", href: "#", hoverColor: LUXURY_GOLD },
-    { icon: "cib:instagram", label: "Instagram", href: "#", hoverColor: LUXURY_GOLD },
-    { icon: "cib:youtube", label: "YouTube", href: "#", hoverColor: "red.500" },
-    { icon: "cib:whatsapp", label: "WhatsApp", href: "#", hoverColor: LUXURY_GOLD },
+    { icon: "cib:facebook", label: "Facebook", href: siteConfig.links.facebook, hoverColor: LUXURY_GOLD },
+    { icon: "cib:instagram", label: "Instagram", href: siteConfig.links.instagram, hoverColor: LUXURY_GOLD },
+    { icon: "cib:youtube", label: "YouTube", href: siteConfig.links.youtube, hoverColor: "red.500" },
+    { icon: "cib:whatsapp", label: "WhatsApp", href: whatsappHref, hoverColor: LUXURY_GOLD },
   ];
 
   const FadeLine = ({ dir }: { dir: "down" | "up" }) => (
@@ -52,6 +55,8 @@ export default function SocialSidebar() {
             key={s.label}
             href={s.href}
             aria-label={s.label}
+            target="_blank"
+            rel="noopener noreferrer"
             position="relative"
             display="flex"
             alignItems="center"

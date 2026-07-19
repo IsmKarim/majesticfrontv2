@@ -31,31 +31,31 @@ export function usePropertyGallery(propertyId: string) {
 
     const [activeTag, setActiveTag] = useState<GalleryTag | "all">("all");
 
-    const images = [
+    const images: GalleryImage[] = [
         {
             id: "4",
-            src: "/assets/villa.jpg",
+            src: "/images/properties/villa.jpg",
             alt: "lol",
             width: 1080,
             height: 720,
             caption: "LLOL"
         }, {
             id: "4",
-            src: "/assets/riad.jpg",
+            src: "/images/properties/riad.jpg",
             alt: "lol",
             width: 1080,
             height: 720,
             caption: "LLOL"
         },{
             id: "4",
-            src: "/assets/villa2.jpg",
+            src: "/images/properties/villa2.jpg",
             alt: "lol",
             width: 1080,
             height: 720,
             caption: "LLOL"
         }  ,{
             id: "4",
-            src: "/assets/villa3.jpg",
+            src: "/images/properties/villa3.jpg",
             alt: "lol",
             width: 1080,
             height: 720,

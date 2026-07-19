@@ -5,10 +5,19 @@ export const globalCss = {
     "--global-font-heading": "var(--font-montseratt), ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial",
   },
 
+  html: {
+    scrollBehavior: "smooth",
+  },
+
+  "@media (prefers-reduced-motion: reduce)": {
+    html: { scrollBehavior: "auto" },
+  },
+
   "html, body": {
     m: 0,
     p: 0,
     maxWidth: "100vw",
+    overflowX: "hidden",
     bg: { base: "{colors.bg.canvas}", _dark: "{colors.bg.canvas}" },
     color: { base: "{colors.fg.default}", _dark: "{colors.fg.default}" },
     fontFamily: "{fonts.body}",
@@ -16,6 +25,9 @@ export const globalCss = {
     textRendering: "optimizeLegibility",
     WebkitFontSmoothing: "antialiased",
     MozOsxFontSmoothing: "grayscale",
+    // Mobile: no grey flash on tap, no font inflation in landscape
+    WebkitTapHighlightColor: "transparent",
+    WebkitTextSizeAdjust: "100%",
   },
 
   // Headings: responsive by default (devs don’t set fontSize)

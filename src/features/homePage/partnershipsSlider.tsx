@@ -44,7 +44,7 @@ export function LogoMarquee({
           "linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)",
       }}
       // Pause on hover (optional)
-      sx={
+      css={
         pauseOnHover
           ? {
               "&:hover [data-marquee-track]": {
@@ -60,7 +60,7 @@ export function LogoMarquee({
         align="center"
         gap={`${gap}px`}
         // The trick: translate by 50% because we duplicated the list
-        sx={{
+        css={{
           animation: `logo-marquee ${duration}s linear infinite`,
           "@keyframes logo-marquee": {
             from: { transform: "translateX(0)" },

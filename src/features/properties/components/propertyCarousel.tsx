@@ -1,8 +1,9 @@
 "use client";
+
 import { useRef, useState, useCallback, useEffect } from "react";
 import { Box, IconButton } from "@chakra-ui/react";
-import PropertyCard from "@/features/properties/components/propertyCard";
-import { Property } from "@/types/property.type";
+import PropertyCard from "./propertyCard";
+import type { Property } from "@/types/property.type";
 
 interface PropertyCarouselProps {
   properties: Property[];
@@ -60,6 +61,8 @@ export default function PropertyCarousel({ properties }: PropertyCarouselProps) 
             overflowX: "scroll",          /* the actual scroll axis */
             scrollSnapType: "x mandatory",
             scrollbarWidth: "none",
+            overscrollBehaviorX: "contain", /* swipe past the end must not trigger browser back */
+            WebkitOverflowScrolling: "touch",
           }}
         >
           {properties.map((property, index) => (
@@ -79,10 +82,26 @@ export default function PropertyCarousel({ properties }: PropertyCarouselProps) 
         </div>
       </Box>
 
+      {/* Right-edge fade: quietly signals there is more to scroll */}
+      <Box
+        position="absolute"
+        top={0}
+        bottom={0}
+        right={0}
+        w="48px"
+        pointerEvents="none"
+        zIndex={1}
+        bg="linear-gradient(to left, rgba(13,27,42,0.85), rgba(13,27,42,0))"
+        opacity={canRight ? 1 : 0}
+        transition="opacity 0.4s ease"
+      />
+
+      {/* Arrows are a pointer affordance — on touch, the swipe is the control */}
       {canLeft && (
         <IconButton
           aria-label="Précédent"
           onClick={() => slide(-1)}
+          display={{ base: "none", md: "flex" }}
           position="absolute"
           left="-14px"
           top="50%"
@@ -93,7 +112,8 @@ export default function PropertyCarousel({ properties }: PropertyCarouselProps) 
           bg="white"
           color="gray.800"
           boxShadow="md"
-          _hover={{ bg: "gray.100" }}
+          transition="transform 0.2s ease, background 0.2s ease"
+          _hover={{ bg: "gray.100", transform: "translateY(-50%) scale(1.08)" }}
         >
           ‹
         </IconButton>
@@ -102,6 +122,7 @@ export default function PropertyCarousel({ properties }: PropertyCarouselProps) 
         <IconButton
           aria-label="Suivant"
           onClick={() => slide(1)}
+          display={{ base: "none", md: "flex" }}
           position="absolute"
           right="-14px"
           top="50%"
@@ -112,7 +133,8 @@ export default function PropertyCarousel({ properties }: PropertyCarouselProps) 
           bg="white"
           color="gray.800"
           boxShadow="md"
-          _hover={{ bg: "gray.100" }}
+          transition="transform 0.2s ease, background 0.2s ease"
+          _hover={{ bg: "gray.100", transform: "translateY(-50%) scale(1.08)" }}
         >
           ›
         </IconButton>

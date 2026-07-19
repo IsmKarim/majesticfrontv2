@@ -9,7 +9,7 @@ export interface GalleryImage {
 }
 const image ={
     id : "4",
-    src : "/assets/villa.jpg",
+    src : "/images/properties/villa.jpg",
     alt : "lol" , 
     width :1080 , 
     height: 720 , 

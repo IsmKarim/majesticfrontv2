@@ -1,7 +1,22 @@
 {
-    "welcome_message": "Welcome to our application enn!",
-    "logout_button": "Log Out",
-    "profile_settings": "Profile Settings",
-    "error_404": "Page not found",
-    "submit_button": "Submit"
+    "common": {},
+    "home": {
+        "hero": {
+            "eyebrow": "Real estate agency in Kénitra",
+            "titleLead": "A",
+            "titleAccent": "premium",
+            "titleEnd": "agency in Kénitra",
+            "trait1": "Discreet",
+            "trait2": "Efficient"
+        },
+        "agencyWord": {
+            "label": "Excellence",
+            "title": "A word from the agency",
+            "body": "At Majestic Keys, we believe luxury real estate is not about square meters, but about the art of living. Our mission is to deliver a tailor-made experience where discretion and efficiency are the pillars of every transaction.",
+            "body2": "Specialists in the Kénitra market, we guide a discerning clientele in their search for exceptional residences. Our exclusive network gives us access to unique off-market properties.",
+            "cta": "Discover the agency's story",
+            "experienceYears": "+15",
+            "experienceLabel": "Years of experience"
+        }
+    }
 }

@@ -1,6 +1,12 @@
-import { Portal, Select } from "@chakra-ui/react";
+import { ListCollection, Portal, Select } from "@chakra-ui/react";
 
-export default function UncontrolledSelect({ collection , placeholder  }) {
+export default function UncontrolledSelect({
+    collection,
+    placeholder,
+}: {
+    collection: ListCollection<{ label: string; value: string }>;
+    placeholder?: string;
+}) {
     return (
         <Select.Root collection={collection} >
             <Select.HiddenSelect />

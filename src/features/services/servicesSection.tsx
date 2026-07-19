@@ -1,25 +1,26 @@
 import { Box, Button, Flex, SimpleGrid, Text } from "@chakra-ui/react";
-import ServiceCard from "./serviceCard";
+import NextLink from "next/link";
 import Iconify from "@/components/ui/iconify";
+import Reveal from "@/components/ui/reveal";
 import ServiceCardVar from "./serviceCardVar";
 
 const SERVICES = [
   {
     title: "Achat/location",
     description:
-      "Une sélection rigoureuse de biens d'exceptionrépondant aux standards les plus élevés dumarché international.",
+      "Une sélection rigoureuse de biens d'exception répondant aux standards les plus élevés du marché international.",
     logo: "/icons/Transaction.svg",
   },
   {
     title: "Accompagnement VIP",
     description:
-      "Un service de conciergerie immobilière dédié pourgérer chaque détail de votre installation en toute sérénité.",
+      "Un service de conciergerie immobilière dédié pour gérer chaque détail de votre installation en toute sérénité.",
     logo: "/icons/VIP.svg",
   },
   {
     title: "Conseil Sur-Mesure",
     description:
-      "Expertise juridique et fiscale pour optimiser votrepatrimoine immobilier et sécuriser vos investissements.",
+      "Expertise juridique et fiscale pour optimiser votre patrimoine immobilier et sécuriser vos investissements.",
     logo: "/icons/Transaction.svg",
   },
 ];
@@ -27,25 +28,33 @@ const SERVICES = [
 export default function ServicesSection() {
   return (
     <>
-    <Box  bg="brand.600" pb={8}>
-
       <SimpleGrid
         columns={{ base: 1, md: 3, lg: 4 }}
-        py={16}
+        py={{ base: 10, md: 16 }}
+        px={{ base: 4, md: 0 }}
         gap={4}
+        bg="brand.600"
       >
         {SERVICES.map((service, index) => (
-          <ServiceCardVar
-            key={index}
-            title={service.title}
-            description={service.description}
-            image={service.logo}
-          />
+          <Reveal key={index} delay={150 + index * 120}>
+            <ServiceCardVar
+              title={service.title}
+              description={service.description}
+              image={service.logo}
+            />
+          </Reveal>
         ))}
-        <Box w="100%" h="100%" my="auto" minH="200px" boxShadow="md">
+        <Reveal
+          w="100%"
+          h="100%"
+          my="auto"
+          minH="200px"
+          boxShadow="md"
+          order={{ base: -1, md: 0 }}
+        >
           <Flex
-            px={12}
-            py={16}
+            px={{ base: 6, md: 12 }}
+            py={{ base: 10, md: 16 }}
             direction={"column"}
             gap={4}
             justify={"center"}
@@ -68,7 +77,25 @@ export default function ServicesSection() {
               mesure.
             </Text>
 
-            <Flex w="100%" justify={"center"}>
+            {/* Decorative chevrons breathe in sequence — a quiet pulse, not a blink */}
+            <Flex
+              w="100%"
+              justify={"center"}
+              css={{
+                "@keyframes chevron-breathe": {
+                  "0%, 100%": { opacity: 0.35 },
+                  "50%": { opacity: 1 },
+                },
+                "& > *": {
+                  animation: "chevron-breathe 2.4s ease-in-out infinite",
+                },
+                "& > *:nth-of-type(2)": { animationDelay: "0.3s" },
+                "& > *:nth-of-type(3)": { animationDelay: "0.6s" },
+                "@media (prefers-reduced-motion: reduce)": {
+                  "& > *": { animation: "none" },
+                },
+              }}
+            >
               <Iconify
                 icon={"mingcute:left-fill"}
                 w="50px"
@@ -92,15 +119,31 @@ export default function ServicesSection() {
               />
             </Flex>
           </Flex>
-        </Box>
+        </Reveal>
       </SimpleGrid>
 
-      <Flex justify={"flex-end"} px={4} py={6}>
-        <Button color="whiteAlpha.900" cursor="pointer">
-          Voir plus
+      <Flex justify={"flex-end"} px={{ base: 4, md: 6 }} py={6}>
+        <Button
+          asChild
+          variant="outline"
+          borderColor="secondary.500"
+          color="secondary.400"
+          borderRadius={0}
+          px={8}
+          minH="48px"
+          fontSize="sm"
+          fontWeight="600"
+          textTransform="uppercase"
+          letterSpacing="widest"
+          transition="all 0.3s ease"
+          _hover={{ bg: "secondary.500", color: "brand.900" }}
+        >
+          <NextLink href="/services">
+            Voir plus
+            <Iconify icon="mdi:arrow-right" w="16px" h="16px" />
+          </NextLink>
         </Button>
       </Flex>
-      </Box>
     </>
   );
 }

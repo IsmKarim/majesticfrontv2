@@ -61,12 +61,6 @@ export const navigationConfig: NavigationConfig = {
       href: "/contact",
       label: "cta",
     },
-
-    {
-      title: "Contact",
-      href: "/contact",
-      label: "cta",
-    },
   ],
 
   

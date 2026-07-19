@@ -1,5 +1,6 @@
 "use client"
 import { navigationConfig } from "@/config/navigation";
+import { siteConfig } from "@/config/site";
 import {
     Box,
     Button,
@@ -16,7 +17,16 @@ import Logo from "../ui/logo";
 import { FaPhoneAlt, FaEnvelope, FaCalendarCheck, FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
 import { MdLocationOn } from "react-icons/md";
 
-export  function Footer() {
+const { street, city, state, zip, country } = siteConfig.contact.address;
+const fullAddress = `${street}, ${city}, ${state} ${zip}, ${country}`;
+
+const SOCIAL_LINKS = [
+    { icon: FaFacebook, href: siteConfig.links.facebook, label: "Facebook" },
+    { icon: FaInstagram, href: siteConfig.links.instagram, label: "Instagram" },
+    { icon: FaLinkedin, href: siteConfig.links.linkedin, label: "LinkedIn" },
+];
+
+export function Footer() {
     // defined colors for easy tweaking
     const bgBrand = "brand.900"; // slightly darker than 500 for footer
     const textMuted = "gray.400";
@@ -53,27 +63,33 @@ export  function Footer() {
                                 Prêt à concrétiser votre projet Immobilier ?
                             </Text>
                             <Text color="whiteAlpha.800">
-                                Contactez-nous dès aujourd'hui ou planifiez une visite.
+                                Contactez-nous dès aujourd&apos;hui ou planifiez une visite.
                             </Text>
                         </Box>
 
                         <Flex gap={4} direction={{ base: "column", sm: "row" }} w={{ base: "100%", md: "auto" }}>
                             <Button
+                                asChild
                                 size="lg"
                                 bg={accent}
                                 _hover={{ bg: "secondary.400", transform: "translateY(-6px)" }}
                                 transition="all 0.2s"
                             >
-                                <FaEnvelope />  Message
+                                <Link href={`mailto:${siteConfig.contact.email}`}>
+                                    <FaEnvelope />  Message
+                                </Link>
                             </Button>
                             <Button
+                                asChild
                                 size="lg"
                                 variant="outline"
                                 color="white"
                                 borderColor="whiteAlpha.400"
                                 _hover={{ bg: "whiteAlpha.100", transform: "translateY(-6px)" }}
                             >
-                                <FaPhoneAlt />  Appeler
+                                <Link href={`tel:${siteConfig.contact.phone.replace(/[^\d+]/g, "")}`}>
+                                    <FaPhoneAlt />  Appeler
+                                </Link>
                             </Button>
                             <Button
                                 size="lg"
@@ -98,23 +114,26 @@ export  function Footer() {
                             <Logo />
                         </Box>
                         <Text color={textMuted} fontSize="sm">
-                            Votre partenaire de confiance pour des solutions immobilières d'exception.
-                            L'excellence à chaque étape.
+                            Votre partenaire de confiance pour des solutions immobilières d&apos;exception.
+                            L&apos;excellence à chaque étape.
                         </Text>
                         <Flex gap={4}>
                             {/* Social Icons with hover effects */}
-                            {[FaFacebook, FaInstagram, FaLinkedin].map((SocialIcon, index) => (
-                                <Box
-                                    key={index}
-                                    as="button"
+                            {SOCIAL_LINKS.map(({ icon, href, label }) => (
+                                <Link
+                                    key={label}
+                                    href={href}
+                                    aria-label={label}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                     bg="whiteAlpha.100"
                                     p={2}
                                     rounded="full"
                                     _hover={{ bg: accent, color: "white" }}
                                     transition="all 0.3s"
                                 >
-                                    <Icon as={SocialIcon} boxSize={5} />
-                                </Box>
+                                    <Icon as={icon} boxSize={5} />
+                                </Link>
                             ))}
                         </Flex>
                     </Stack>
@@ -156,17 +175,21 @@ export  function Footer() {
 
                         <Flex align="center" gap={3} color={textMuted}>
                             <Icon as={MdLocationOn} color={accent} />
-                            <Text fontSize="sm">123 Boulevard Majestic, Paris</Text>
+                            <Text fontSize="sm">{fullAddress}</Text>
                         </Flex>
 
                         <Flex align="center" gap={3} color={textMuted}>
                             <Icon as={FaPhoneAlt} color={accent} boxSize={3} />
-                            <Text fontSize="sm">+33 1 23 45 67 89</Text>
+                            <Link href={`tel:${siteConfig.contact.phone.replace(/[^\d+]/g, "")}`} fontSize="sm" color={textMuted} _hover={{ color: "white" }}>
+                                {siteConfig.contact.phone}
+                            </Link>
                         </Flex>
 
                         <Flex align="center" gap={3} color={textMuted}>
                             <Icon as={FaEnvelope} color={accent} boxSize={3} />
-                            <Text fontSize="sm">contact@majestickeys.com</Text>
+                            <Link href={`mailto:${siteConfig.contact.email}`} fontSize="sm" color={textMuted} _hover={{ color: "white" }}>
+                                {siteConfig.contact.email}
+                            </Link>
                         </Flex>
                     </Stack>
 
@@ -182,7 +205,7 @@ export  function Footer() {
                         align={{ base: 'center', md: 'center' }}
                     >
                         <Text fontSize="sm" color={textMuted}>
-                            © 2026 Majestic Keys. All Rights Reserved.
+                            © {new Date().getFullYear()} {siteConfig.name}. All Rights Reserved.
                         </Text>
                         <Stack direction={'row'} gap={6} mt={{ base: 4, md: 0 }}>
                             <Link fontSize={'sm'} color={textMuted} _hover={{ color: accent }}>Privacy</Link>

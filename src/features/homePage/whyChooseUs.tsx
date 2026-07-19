@@ -1,5 +1,7 @@
 // components/WhyChooseUs.tsx
-"use client"
+"use client";
+
+import Reveal from "@/components/ui/reveal";
 import { Box, Flex, Icon, Text, VStack } from "@chakra-ui/react";
 import { BsGrid1X2, BsPeopleFill, BsGearWideConnected } from "react-icons/bs";
 import WhyChooseUsStats from "./statistics";
@@ -80,44 +82,47 @@ export default function WhyChooseUs() {
         px={{ base: 6, md: 10, lg: 14 }}
         py={{ base: 10, lg: 14 }}
       >
-        <Text
-          color="secondary.500"
-          fontSize="xs"
-          textTransform="uppercase"
-          letterSpacing="widest"
-          mb={3}
-        >
-          Pourquoi nous choisir
-        </Text>
+        <Reveal>
+          <Text
+            color="secondary.500"
+            fontSize="xs"
+            textTransform="uppercase"
+            letterSpacing="widest"
+            mb={3}
+          >
+            Pourquoi nous choisir
+          </Text>
 
-        <Text
-          as="h2"
-          fontSize={{ base: "2xl", md: "3xl", lg: "4xl" }}
-          fontWeight="bold"
-          color="white"
-          lineHeight="shorter"
-          mb={{ base: 8, lg: 10 }}
-        >
-          L&apos;Excellence à votre service
-        </Text>
+          <Text
+            as="h2"
+            fontSize={{ base: "2xl", md: "3xl", lg: "4xl" }}
+            fontWeight="bold"
+            color="white"
+            lineHeight="shorter"
+            mb={{ base: 8, lg: 10 }}
+          >
+            L&apos;Excellence à votre service
+          </Text>
+        </Reveal>
 
         <VStack gap={{ base: 7, md: 8 }} align="stretch">
           {FEATURES.map((feature, index) => (
-            <Box ml={index==1 ? 6 : 0} key={index}>
-              <FeatureItem key={feature.title} {...feature} />
-
-            </Box>
+            <Reveal key={feature.title} delay={140 + index * 140} ml={index == 1 ? 6 : 0}>
+              <FeatureItem {...feature} />
+            </Reveal>
           ))}
         </VStack>
       </Flex>
 
       {/* ── Right: Stats Panel ── */}
-      <Box
+      <Reveal
+        variant="fade"
+        delay={200}
         flex={{ base: "unset", lg: "0 0 42%" }}
         minH={{ base: "300px", lg: "unset" }}
       >
         <WhyChooseUsStats />
-      </Box>
+      </Reveal>
     </Flex>
   );
 }

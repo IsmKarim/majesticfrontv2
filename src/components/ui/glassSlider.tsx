@@ -55,10 +55,7 @@ export default function GlassSlider({
             setRange(next);
             onValueChange?.(next);
           }}
-          getAriaValueText={(details) => {
-            const v = details.value as number[];
-            return v.length === 2 ? `Between ${v[0]} and ${v[1]}` : `${v[0]}`;
-          }}
+          getAriaValueText={(details) => `${details.value}`}
           {...rest}
         >
           <Slider.Control>

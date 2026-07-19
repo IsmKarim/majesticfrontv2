@@ -24,23 +24,19 @@ export default function ServiceCardVar({
       py={6}
       border="1px solid"
       borderColor="transparent"
-
-
       cursor="pointer"
       transition="all 0.35s cubic-bezier(0.4, 0, 0.2, 1)"
       _hover={{
         transform: "translateY(-6px)",
         boxShadow: "0 20px 40px rgba(0, 0, 0, 0.3)",
-        borderColor: "secondary.700",
+        borderColor: "whiteAlpha.200",
+        bg: "whiteAlpha.50",
+      }}
+      _active={{
+        transform: "scale(0.99)",
         bg: "whiteAlpha.50",
       }}
     >
-   
-      {/* 
-        To make _groupHover work, add the `group` prop 
-        to the parent Flex above. Alternatively, use 
-        CSS-based approach below:
-      */}
       <Box
         p={4}
         bgColor="whiteAlpha.200"
