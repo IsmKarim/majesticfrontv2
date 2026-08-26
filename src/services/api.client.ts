@@ -66,3 +66,6 @@ export interface Paginated<T> {
     pageSize: number;
     totalPages: number;
 }
+
+
+

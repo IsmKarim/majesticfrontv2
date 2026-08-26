@@ -1,12 +1,18 @@
 export type SiteConfig = typeof siteConfig;
 
+// Canonical origin, no trailing slash. Every absolute URL the site emits —
+// canonicals, hreflang alternates, the sitemap, JSON-LD — is built from this,
+// so a preview deployment MUST override it or it will advertise production URLs
+// and invite Google to index the wrong host.
+const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://majestickeys.com").replace(/\/$/, "");
+
 export const siteConfig = {
 
   name: "Majestic Keys",
   description: "Premium real estate agency offering luxury properties, expert guidance, and exceptional service for buying, selling, and renting properties.",
   tagline: "Your Key to Luxury Living",
-  url: "https://majestickeys.com",
-  ogImage: "https://majestickeys.com/og-image.jpg",
+  url: SITE_URL,
+  ogImage: `${SITE_URL}/og-image.jpg`,
 
 
   contact: {
