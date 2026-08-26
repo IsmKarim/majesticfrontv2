@@ -1,3 +1,4 @@
+import { setRequestLocale } from "next-intl/server";
 import AgencyWord from "@/features/homePage/agencyWord";
 import Hero from "@/features/homePage/hero";
 import MorePropertiesWrapper from "@/features/homePage/morePropertiesWrapper";
@@ -7,11 +8,15 @@ import NewsletterSection from "@/features/newsletter/newsletterSection";
 import FeaturedPropertySection from "@/features/properties/featuredPropertiesSection";
 import ServicesSection from "@/features/services/servicesSection";
 import { Testimonials } from "@/features/testimonials";
-import { mockProperties } from "@/types/property.type";
 import { Box } from "@chakra-ui/react";
 
-export default function Home() {
-  const properties = mockProperties;
+export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  // Layouts and pages render in parallel, so the layout's call has not
+  // necessarily run yet. Without this, next-intl falls back to reading the
+  // request headers and the page can no longer be prerendered.
+  setRequestLocale(locale);
+
   return (
     <Box>
       <Hero />
@@ -20,7 +25,7 @@ export default function Home() {
       <WhyChooseUs />
       <BrowseByCity />
       <ServicesSection />
-      <MorePropertiesWrapper properties={properties} />
+      <MorePropertiesWrapper />
       <NewsletterSection />
       <Testimonials />
     </Box>

@@ -1,22 +1,39 @@
+"use client";
+
 import { Tabs } from "@chakra-ui/react";
 
+/** "all" is the neutral state; the query schema expresses it as no filter at all. */
+const TABS = [
+    { value: "all", label: "Tous" },
+    { value: "sale", label: "Acheter" },
+    { value: "rent", label: "Louer" },
+] as const;
 
-
-export default function SearchTabs() {
-
-
+export default function SearchTabs({
+    value,
+    onValueChange,
+}: {
+    value: string | undefined;
+    onValueChange: (transactionType: string | undefined) => void;
+}) {
     return (
-        <Tabs.Root defaultValue="all" color="white" >
-            <Tabs.List gap={1} >
-                <Tabs.Trigger value="all" bg="brand.500" color="white">
-                    Tous
-                </Tabs.Trigger>
-                <Tabs.Trigger value="buy" bg="brand.500" color="white">
-                    Acheter
-                </Tabs.Trigger>
-                <Tabs.Trigger value="rent" bg="brand.500" color="white">
-                    Louer
-                </Tabs.Trigger>
+        <Tabs.Root
+            value={value ?? "all"}
+            onValueChange={(e) => onValueChange(e.value === "all" ? undefined : e.value)}
+            color="white"
+        >
+            <Tabs.List gap={1}>
+                {TABS.map((tab) => (
+                    <Tabs.Trigger
+                        key={tab.value}
+                        value={tab.value}
+                        bg="brand.500"
+                        color="white"
+                        _selected={{ bg: "secondary.500", color: "brand.900" }}
+                    >
+                        {tab.label}
+                    </Tabs.Trigger>
+                ))}
             </Tabs.List>
         </Tabs.Root>
     );

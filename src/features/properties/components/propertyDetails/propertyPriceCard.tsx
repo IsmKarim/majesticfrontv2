@@ -1,3 +1,7 @@
+// Renders `<Icon as={FiDownload} />`, and a component passed through `as` cannot
+// cross the server/client boundary as a prop. The card is interactive anyway.
+"use client";
+
 import { Box, Button, HStack, Icon, Link, Text, VStack } from "@chakra-ui/react";
 import { FiDownload } from "react-icons/fi";
 

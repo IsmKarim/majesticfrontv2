@@ -10,12 +10,7 @@ import GlassNumberInput from '@/components/ui/glassNumberInput';
 import GlassSlider from '@/components/ui/glassSlider';
 import { propertyTypesCollection } from '@/config/data';
 import { citiesCollection } from '@/config/citiesData';
-
-enum SearchTab {
-  BUY = 'Tous',
-  RENT = 'Acheter',
-  SOLD = 'Louer',
-}
+import SearchTabs from './searchTabs';
 
 const bedroomsCollection = {
   items: [
@@ -47,13 +42,16 @@ const equippedCollection = {
 };
 
 const SearchWidget = () => {
-  const [activeTab, setActiveTab] = useState<SearchTab>(SearchTab.BUY);
   const [showMoreFilters, setShowMoreFilters] = useState(false);
 
-  const { updateSearchQuery, neighborhoodsOptions, searchQuery } = useSearch();
+  const { updateSearchQuery, submitSearch, neighborhoodsOptions, searchQuery } = useSearch();
 
   return (
     <Box position="relative"  mx={{ base: 2, md: 'auto' }}>
+      <SearchTabs
+        value={searchQuery.transactionType}
+        onValueChange={(transactionType) => updateSearchQuery({ transactionType })}
+      />
       <Box
         position="relative"
         zIndex={2}
@@ -212,7 +210,7 @@ const SearchWidget = () => {
               transition="all 0.3s"
               borderRadius="0"
               _hover={{ bg: 'white', color: 'secondary.900' }}
-              onClick={() => console.log(searchQuery)}
+              onClick={submitSearch}
             >
               <HStack gap={2}>
                 <Text>Trouver mon bien</Text>

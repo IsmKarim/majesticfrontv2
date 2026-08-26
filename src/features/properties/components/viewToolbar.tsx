@@ -1,17 +1,23 @@
 "use client"
 import { Flex, Icon, Menu, Portal, Tabs, Text } from "@chakra-ui/react";
 import { LuArrowUpDown, LuLayoutGrid, LuList } from "react-icons/lu";
+import { useSearch } from "@/features/search/useSearch";
+import type { PropertySort } from "@/features/properties/property.query";
 
-const SORT_OPTIONS = [
+// Values match the `sort` enum in property.query.ts — they go straight into the URL.
+const SORT_OPTIONS: { value: PropertySort; label: string }[] = [
     { value: "price-asc", label: "Price: Low to High" },
     { value: "price-desc", label: "Price: High to Low" },
-    { value: "date-desc", label: "Newest First" },
-    { value: "date-asc", label: "Oldest First" },
+    { value: "newest", label: "Newest First" },
+    { value: "oldest", label: "Oldest First" },
     { value: "size-desc", label: "Largest First" },
     { value: "size-asc", label: "Smallest First" },
 ];
 
 export default function ViewToolBar() {
+    const { committed, applySort } = useSearch();
+    const activeLabel = SORT_OPTIONS.find((o) => o.value === committed.sort)?.label ?? "Sort Order";
+
     return (
         <Flex
             justify="space-between"
@@ -68,7 +74,7 @@ export default function ViewToolBar() {
                         _hover={{ bg: "brand.500", color: "secondary.500" }}
                     >
                         <Icon as={LuArrowUpDown} boxSize={4} />
-                        <Text fontSize="sm">Sort Order</Text>
+                        <Text fontSize="sm">{activeLabel}</Text>
                     </Flex>
                 </Menu.Trigger>
                 <Portal>
@@ -78,7 +84,8 @@ export default function ViewToolBar() {
                                 <Menu.Item
                                     key={opt.value}
                                     value={opt.value}
-                                    color="secondary.400"
+                                    onSelect={() => applySort(opt.value)}
+                                    color={opt.value === committed.sort ? "secondary.500" : "secondary.400"}
                                     fontSize="sm"
                                     _hover={{ bg: "brand.600", color: "secondary.500" }}
                                 >

@@ -26,7 +26,7 @@ const SOCIAL_LINKS = [
     { icon: FaLinkedin, href: siteConfig.links.linkedin, label: "LinkedIn" },
 ];
 
-export function Footer() {
+export function FooterView({ year }: { year: number }) {
     // defined colors for easy tweaking
     const bgBrand = "brand.900"; // slightly darker than 500 for footer
     const textMuted = "gray.400";
@@ -205,7 +205,7 @@ export function Footer() {
                         align={{ base: 'center', md: 'center' }}
                     >
                         <Text fontSize="sm" color={textMuted}>
-                            © {new Date().getFullYear()} {siteConfig.name}. All Rights Reserved.
+                            © {year} {siteConfig.name}. All Rights Reserved.
                         </Text>
                         <Stack direction={'row'} gap={6} mt={{ base: 4, md: 0 }}>
                             <Link fontSize={'sm'} color={textMuted} _hover={{ color: accent }}>Privacy</Link>

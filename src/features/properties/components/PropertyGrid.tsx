@@ -1,10 +1,15 @@
 import { Property } from "@/types/property.type";
-import { SimpleGrid } from "@chakra-ui/react";
+import { SimpleGrid, type SimpleGridProps } from "@chakra-ui/react";
 import PropertyCard from "./propertyCard";
 
 
-export default function PropertyGrid({properties , columns=3} : {properties : Property[], columns?: number}){
-
+export default function PropertyGrid({
+    properties,
+    columns = { base: 1, md: 2, lg: 3 },
+}: {
+    properties: Property[];
+    columns?: SimpleGridProps["columns"];
+}) {
 
     return(
         <>

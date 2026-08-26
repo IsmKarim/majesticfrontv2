@@ -1,12 +1,15 @@
-import { Box, Button, Flex, Text } from "@chakra-ui/react";
+import { Button, Flex, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
 import PropertyCarousel from "./components/propertyCarousel";
-import { mockProperties } from "@/types/property.type";
 import Reveal from "@/components/ui/reveal";
 import Iconify from "@/components/ui/iconify";
+import { getFeaturedProperties } from "@/services/properties.service";
+import { buildPropertyHref } from "./property.query";
 
-export default function FeaturedPropertySection() {
-  const properties = mockProperties;
+export default async function FeaturedPropertySection() {
+  const properties = await getFeaturedProperties();
+  if (properties.length === 0) return null;
+
   return (
     <>
       <Flex
@@ -40,11 +43,11 @@ export default function FeaturedPropertySection() {
               Architecture soignée, volumes harmonieux, finitions raffinées
             </Text>
             <Flex gap={4} w="100%" pb={{ base: 0, md: 6 }}>
-              <Text textDecor="underline" color="whiteAlpha.900" cursor="pointer" fontSize="sm" py={1}>
-                Vente
+              <Text asChild textDecor="underline" color="whiteAlpha.900" fontSize="sm" py={1}>
+                <NextLink href={buildPropertyHref({ transactionType: "sale" })}>Vente</NextLink>
               </Text>
-              <Text textDecor="underline" color="whiteAlpha.900" cursor="pointer" fontSize="sm" py={1}>
-                Location
+              <Text asChild textDecor="underline" color="whiteAlpha.900" fontSize="sm" py={1}>
+                <NextLink href={buildPropertyHref({ transactionType: "rent" })}>Location</NextLink>
               </Text>
             </Flex>
           </Flex>

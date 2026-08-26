@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install *)",
+      "Bash(npm uninstall *)",
+      "Bash(npm run *)",
+      "Bash(sed -i 's|const needle = `    id: \"\\\\${id}\",\\\\\\\\n`;|const needle = `    id: \"${id}\",`;|' /tmp/backfill.js)",
+      "Bash(sed -i 's|s = s.replace\\(needle, needle + `    createdAt: \"\\\\${m.createdAt}\",\\\\\\\\n    isFeatured: \\\\${m.isFeatured},\\\\\\\\n`\\);|s = s.replace\\(needle, needle + `\\\\\\\\n    createdAt: \"${m.createdAt}\",\\\\\\\\n    isFeatured: ${m.isFeatured},`\\);|' /tmp/backfill.js)",
+      "Bash(grep -A4 \"properties\\\\\\\\\\\\\\\\\\\\[slug\\\\]\")",
+      "Bash(curl -s \"http://localhost:3000/properties?city=Casablanca&transactionType=rent&sort=price-asc\")",
+      "Bash(grep -oE \"Appartement[^<]{0,60}|Bureau[^<]{0,60}|biens? — page [0-9]+ sur [0-9]+\")",
+      "Bash(curl -s \"http://localhost:3000/properties\")",
+      "Bash(curl -s \"http://localhost:3000/properties?page=abc&bedrooms=999&sort=nonsense&priceMin=xyz\")",
+      "Bash(curl -s \"http://localhost:3000/properties?pageSize=4&page=2\")",
+      "Bash(curl -s \"http://localhost:3000/properties/riad-renove-medina-marrakech\")",
+      "Bash(grep -oE '\\\\{\"@context\":\"https://schema.org\",\"@type\":\"RealEstateListing\".*?\\\\}\\\\}')",
+      "Bash(curl -s -o /dev/null -w \"status=%{http_code}\\\\n\" \"http://localhost:3000/properties/does-not-exist-xyz\")",
+      "Bash(curl -s --max-time 20 \"http://localhost:3000/properties/riad-renove-medina-marrakech\" -o /tmp/detail.html)",
+      "Bash(grep -oE '<meta name=\"description\" content=\"[^\"]{0,80}' /tmp/detail.html)",
+      "Bash(python -c ' *)",
+      "Bash(curl -s --max-time 25 -o /dev/null -w \"  status=%{http_code}\\\\n\" \"http://localhost:3000/properties/does-not-exist-xyz\")",
+      "Bash(curl -s --max-time 25 http://localhost:3000/properties/riad-renove-medina-marrakech -o __TRACKED_VAR__/detail.html)",
+      "Bash(curl -s --max-time 25 http://localhost:3000/sitemap.xml -o /dev/null -w \"status=%{http_code}\\\\n\")",
+      "Bash(curl -s --max-time 25 http://localhost:3000/sitemap.xml)",
+      "Bash(curl -s --max-time 25 http://localhost:3000/ -o __TRACKED_VAR__/home.html)",
+      "Bash(grep -oE 'Villa contemporaine[^<\"\\\\\\\\]{0,20}|Riad rénové[^<\"\\\\\\\\]{0,20}|Appartement avec vue[^<\"\\\\\\\\]{0,20}|Penthouse[^<\"\\\\\\\\]{0,25}' __TRACKED_VAR__/home.html)",
+      "Bash(taskkill //F //PID 12024)",
+      "Bash(git check-ignore *)"
+    ]
+  }
+}

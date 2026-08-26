@@ -1,8 +1,12 @@
 
 export interface Property {
-    id : string, 
+    id : string,
     title: string,
-    slug : string, 
+    slug : string,
+    // ISO 8601. Drives the `newest` / `oldest` sorts.
+    createdAt: string,
+    // Drives the landing page's exclusive selection.
+    isFeatured: boolean,
     category: string,
     transactionType: string,
     price: number,
@@ -50,6 +54,8 @@ interface PropertyImage {
 export const mockProperties: Property[] = [
   {
     id: "prop-001",
+    createdAt: "2026-08-14T09:00:00.000Z",
+    isFeatured: false,
     title: "Appartement moderne meublé à Gauthier",
     slug: "appartement-moderne-meuble-gauthier-casablanca",
     category: "Apartment",
@@ -114,6 +120,8 @@ export const mockProperties: Property[] = [
   },
   {
     id: "prop-002",
+    createdAt: "2026-08-09T09:00:00.000Z",
+    isFeatured: true,
     title: "Villa contemporaine avec piscine à Bouskoura",
     slug: "villa-contemporaine-piscine-bouskoura",
     category: "Villa",
@@ -178,6 +186,8 @@ export const mockProperties: Property[] = [
   },
   {
     id: "prop-003",
+    createdAt: "2026-07-28T09:00:00.000Z",
+    isFeatured: false,
     title: "Studio fonctionnel à louer à Agdal",
     slug: "studio-fonctionnel-location-agdal-rabat",
     category: "Studio",
@@ -236,6 +246,8 @@ export const mockProperties: Property[] = [
   },
   {
     id: "prop-004",
+    createdAt: "2026-07-19T09:00:00.000Z",
+    isFeatured: false,
     title: "Appartement familial à vendre à Hay Riad",
     slug: "appartement-familial-vente-hay-riad-rabat",
     category: "Apartment",
@@ -300,6 +312,8 @@ export const mockProperties: Property[] = [
   },
   {
     id: "prop-005",
+    createdAt: "2026-07-05T09:00:00.000Z",
+    isFeatured: true,
     title: "Riad rénové dans la Médina de Marrakech",
     slug: "riad-renove-medina-marrakech",
     category: "Riad",
@@ -364,6 +378,8 @@ export const mockProperties: Property[] = [
   },
   {
     id: "prop-006",
+    createdAt: "2026-06-22T09:00:00.000Z",
+    isFeatured: true,
     title: "Appartement vue mer à Malabata",
     slug: "appartement-vue-mer-malabata-tanger",
     category: "Apartment",
@@ -428,6 +444,8 @@ export const mockProperties: Property[] = [
   },
   {
     id: "prop-007",
+    createdAt: "2026-06-11T09:00:00.000Z",
+    isFeatured: false,
     title: "Villa en résidence sécurisée à Souissi",
     slug: "villa-residence-securisee-souissi-rabat",
     category: "Villa",
@@ -492,6 +510,8 @@ export const mockProperties: Property[] = [
   },
   {
     id: "prop-008",
+    createdAt: "2026-05-30T09:00:00.000Z",
+    isFeatured: false,
     title: "Appartement économique à Bourgogne",
     slug: "appartement-economique-bourgogne-casablanca",
     category: "Apartment",
@@ -550,6 +570,8 @@ export const mockProperties: Property[] = [
   },
   {
     id: "prop-009",
+    createdAt: "2026-05-16T09:00:00.000Z",
+    isFeatured: true,
     title: "Penthouse avec terrasse à Dar Bouazza",
     slug: "penthouse-terrasse-dar-bouazza",
     category: "Penthouse",
@@ -614,6 +636,8 @@ export const mockProperties: Property[] = [
   },
   {
     id: "prop-010",
+    createdAt: "2026-04-27T09:00:00.000Z",
+    isFeatured: false,
     title: "Bureau professionnel au centre-ville de Casablanca",
     slug: "bureau-professionnel-centre-ville-casablanca",
     category: "Office",
