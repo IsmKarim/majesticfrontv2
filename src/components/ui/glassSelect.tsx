@@ -5,18 +5,68 @@ import { useState, useRef, useEffect } from "react";
 export default function GlassSelect({ collection, label, placeholder, icon, onValueChange }: any) {
     const [isOpen, setIsOpen] = useState(false);
     const [selected, setSelected] = useState<{ label: string; value: string } | null>(null);
+    const [rect, setRect] = useState<{
+        top?: number;
+        bottom?: number;
+        left: number;
+        width: number;
+        maxHeight: number;
+    } | null>(null);
     const containerRef = useRef<HTMLDivElement>(null);
+    const dropdownRef = useRef<HTMLDivElement>(null);
 
-    // Close on outside click
+    // Close on outside click — the dropdown itself lives in a portal (see below),
+    // so it's outside containerRef's DOM subtree and needs its own check here.
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
-            if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+            const target = e.target as Node;
+            const insideTrigger = containerRef.current?.contains(target);
+            const insideDropdown = dropdownRef.current?.contains(target);
+            if (!insideTrigger && !insideDropdown) {
                 setIsOpen(false);
             }
         };
         document.addEventListener("mousedown", handleClickOutside);
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, []);
+
+    // The dropdown renders in a Portal (outside the hero's `overflow: hidden`
+    // clipping box), so it needs viewport-relative coordinates instead of the
+    // `position: absolute` trick that relied on the trigger's positioned parent.
+    // It also caps its own height to whatever room is actually available and
+    // scrolls internally — a long list (e.g. a city's ~100 neighborhoods) would
+    // otherwise just run off the edge of the viewport instead of being clipped,
+    // which is no more reachable than the original bug. If there isn't enough
+    // room below the trigger, it flips to open upward instead.
+    useEffect(() => {
+        if (!isOpen) return;
+        const MARGIN = 16;
+        const GAP = 8;
+        const MIN_HEIGHT = 120;
+        const updateRect = () => {
+            const el = containerRef.current;
+            if (!el) return;
+            const r = el.getBoundingClientRect();
+            const spaceBelow = window.innerHeight - r.bottom - GAP - MARGIN;
+            const spaceAbove = r.top - GAP - MARGIN;
+            const openUpward = spaceBelow < MIN_HEIGHT && spaceAbove > spaceBelow;
+            setRect({
+                left: r.left,
+                width: r.width,
+                maxHeight: Math.max(MIN_HEIGHT, openUpward ? spaceAbove : spaceBelow),
+                ...(openUpward
+                    ? { bottom: window.innerHeight - r.top + GAP }
+                    : { top: r.bottom + GAP }),
+            });
+        };
+        updateRect();
+        window.addEventListener("resize", updateRect);
+        window.addEventListener("scroll", updateRect, { passive: true, capture: true });
+        return () => {
+            window.removeEventListener("resize", updateRect);
+            window.removeEventListener("scroll", updateRect, true);
+        };
+    }, [isOpen]);
 
     const handleSelect = (item: { label: string; value: string }) => {
         setSelected(item);
@@ -81,45 +131,51 @@ export default function GlassSelect({ collection, label, placeholder, icon, onVa
                 <Iconify icon="mdi:chevron-down" color="whiteAlpha.500" w="20px" h="20px" />
             </Box>
 
-            {/* Glassy Dropdown */}
-            {isOpen && (
-                <Box
-                    position="absolute"
-                    top="calc(100% + 8px)"
-                    left="0"
-                    right="0"
-                    zIndex={100}
-                    borderRadius="xl"
-                    overflow="hidden"
-                    bg="rgba(0, 0, 0, 0.7)"
-                    backdropFilter="blur(20px) saturate(160%)"
-                    border="1px solid rgba(255, 255, 255, 0.15)"
-                    boxShadow="0 8px 32px rgba(0, 0, 0, 0.4)"
-                    py={2}
-                    style={{
-                        WebkitBackdropFilter: "blur(20px) saturate(160%)",
-                    }}
-                >
-                    {collection?.items?.map((item: any) => (
-                        <Box
-                            key={item.value}
-                            px={5}
-                            py={3}
-                            cursor="pointer"
-                            color={selected?.value === item.value ? "secondary.400" : "whiteAlpha.800"}
-                            fontFamily="serif"
-                            fontSize="md"
-                            transition="background 0.15s"
-                            _hover={{
-                                bg: "rgba(255, 255, 255, 0.12)",
-                                color: "white",
-                            }}
-                            onClick={() => handleSelect(item)}
-                        >
-                            {item.label}
-                        </Box>
-                    ))}
-                </Box>
+            {/* Glassy Dropdown — portaled to <body> so the hero section's
+                `overflow: hidden` can't clip it when it drops below the fold */}
+            {isOpen && rect && (
+                <Portal>
+                    <Box
+                        ref={dropdownRef}
+                        position="fixed"
+                        top={rect.top !== undefined ? `${rect.top}px` : undefined}
+                        bottom={rect.bottom !== undefined ? `${rect.bottom}px` : undefined}
+                        left={`${rect.left}px`}
+                        width={`${rect.width}px`}
+                        maxHeight={`${rect.maxHeight}px`}
+                        overflowY="auto"
+                        zIndex={1400}
+                        borderRadius="xl"
+                        bg="rgba(0, 0, 0, 0.7)"
+                        backdropFilter="blur(20px) saturate(160%)"
+                        border="1px solid rgba(255, 255, 255, 0.15)"
+                        boxShadow="0 8px 32px rgba(0, 0, 0, 0.4)"
+                        py={2}
+                        style={{
+                            WebkitBackdropFilter: "blur(20px) saturate(160%)",
+                        }}
+                    >
+                        {collection?.items?.map((item: any) => (
+                            <Box
+                                key={item.value}
+                                px={5}
+                                py={3}
+                                cursor="pointer"
+                                color={selected?.value === item.value ? "secondary.400" : "whiteAlpha.800"}
+                                fontFamily="serif"
+                                fontSize="md"
+                                transition="background 0.15s"
+                                _hover={{
+                                    bg: "rgba(255, 255, 255, 0.12)",
+                                    color: "white",
+                                }}
+                                onClick={() => handleSelect(item)}
+                            >
+                                {item.label}
+                            </Box>
+                        ))}
+                    </Box>
+                </Portal>
             )}
         </Box>
     );

@@ -4,7 +4,7 @@ export type SiteConfig = typeof siteConfig;
 // canonicals, hreflang alternates, the sitemap, JSON-LD — is built from this,
 // so a preview deployment MUST override it or it will advertise production URLs
 // and invite Google to index the wrong host.
-const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://majestickeys.com").replace(/\/$/, "");
+const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://majestickeys.ma").replace(/\/$/, "");
 
 export const siteConfig = {
 
@@ -16,34 +16,34 @@ export const siteConfig = {
 
 
   contact: {
-    email: "info@majestickeys.com",
-    phone: "+1 (555) 123-4567",
-    whatsapp: "+1 (555) 123-4567",
+    email: "info@majestickeys.ma",
+    phone: "+212 6 44 66 56 82",
+    whatsapp: "+212 6 44 66 56 82",
     address: {
-      street: "123 Luxury Boulevard",
-      city: "Casablanca",
-      state: "Casablanca-Settat",
-      zip: "20000",
+      street: "Angle du boulevard Mohamed Diouri et Rue Salah Eddine Résidence al Mohafada Bureau n°1",
+      city: "Kénitra",
+      state: "Rabat-Salé-Kénitra",
+      zip: "14000",
       country: "Morocco",
     },
   },
 
   businessHours: {
-    weekdays: "9:00 AM - 6:00 PM",
-    saturday: "10:00 AM - 4:00 PM",
+    weekdays: "9:30 AM - 6:30 PM",
+    saturday: "10:00 AM - 12:30 PM",
     sunday: "Closed",
     timezone: "GMT+1",
   },
 
 
   links: {
-    facebook: "https://facebook.com/majestickeys",
-    instagram: "https://instagram.com/majestickeys",
-    twitter: "https://twitter.com/majestickeys",
-    linkedin: "https://linkedin.com/company/majestickeys",
-    youtube: "https://youtube.com/@majestickeys",
-    tiktok: "https://tiktok.com/@majestickeys",
-    pinterest: "https://pinterest.com/majestickeys",
+    facebook: "https://facebook.com/majestic_keys_immobilier",
+    instagram: "https://instagram.com/majestic_keys_immobilier",
+    //twitter: "https://twitter.com/majestickeys",
+    //linkedin: "https://linkedin.com/company/majestickeys",
+    //youtube: "https://youtube.com/@majestickeys",
+    //tiktok: "https://tiktok.com/@majestickeys",
+    //pinterest: "https://pinterest.com/majestickeys",
   },
 
 
@@ -54,13 +54,18 @@ export const siteConfig = {
       "property for sale",
       "homes for rent",
       "real estate agency",
-      "Casablanca real estate",
+      "Kénitra real estate",
       "luxury homes",
       "property investment",
     ],
     authors: [
       {
         name: "Majestic Keys Team",
+        url: "https://majestickeys.com/about/team",
+      },
+
+       {
+        name: "Mohammed Zahri",
         url: "https://majestickeys.com/about/team",
       },
     ],
@@ -115,6 +120,21 @@ export const siteConfig = {
     currencies: ["MAD", "USD", "EUR"],
     defaultCurrency: "MAD",
 
+    currencyInterrchangeRates: {
+      MAD: {
+        USD: 0.10,
+        EUR: 0.09,
+      },
+      USD: {
+        MAD: 10.0,
+        EUR: 0.91,
+      },
+      EUR: {
+        MAD: 11.0,
+        USD: 1.10,
+      },
+    },
+
     // Maps
     defaultMapCenter: {
       lat: 33.5731,
@@ -141,8 +161,8 @@ export const siteConfig = {
 
 
   featureFlags: {
-    enableVirtualTours: true,
-    enable3DFloorPlans: true,
+    enableVirtualTours: false,
+    enable3DFloorPlans: false,
     enableMortgageCalculator: true,
     enablePropertyComparison: true,
     enableSavedSearches: true,
@@ -163,7 +183,7 @@ export const siteConfig = {
 
 
   cache: {
-    propertiesStaleTime: 5 * 60 * 1000, // 5 minutes
+    propertiesStaleTime: 15 * 60 * 1000, // 15 minutes
     agentsStaleTime: 10 * 60 * 1000, // 10 minutes
     blogsStaleTime: 15 * 60 * 1000, // 15 minutes
     revalidateOnFocus: false,
@@ -174,15 +194,15 @@ export const siteConfig = {
   emailTemplates: {
     inquiry: {
       subject: "Property Inquiry - Majestic Keys",
-      from: "inquiries@majestickeys.com",
+      from: "inquiries@majestickeys.ma",
     },
     propertyAlert: {
       subject: "New Property Alert - Majestic Keys",
-      from: "alerts@majestickeys.com",
+      from: "alerts@majestickeys.ma",
     },
     newsletter: {
       subject: "Majestic Keys Newsletter",
-      from: "newsletter@majestickeys.com",
+      from: "newsletter@majestickeys.ma",
     },
   },
 

@@ -14,7 +14,6 @@ export default function SocialSidebar() {
   const socialLinks = [
     { icon: "cib:facebook", label: "Facebook", href: siteConfig.links.facebook, hoverColor: LUXURY_GOLD },
     { icon: "cib:instagram", label: "Instagram", href: siteConfig.links.instagram, hoverColor: LUXURY_GOLD },
-    { icon: "cib:youtube", label: "YouTube", href: siteConfig.links.youtube, hoverColor: "red.500" },
     { icon: "cib:whatsapp", label: "WhatsApp", href: whatsappHref, hoverColor: LUXURY_GOLD },
   ];
 

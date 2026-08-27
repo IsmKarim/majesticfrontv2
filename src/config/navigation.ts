@@ -52,6 +52,10 @@ export const navigationConfig: NavigationConfig = {
       href: "/about",
     },
     {
+      title: "team",
+      href: "/team",
+    },
+    {
       title: "services",
       href: "/services",
     },

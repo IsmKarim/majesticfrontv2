@@ -21,6 +21,7 @@
     "rent": "Rent",
     "rentDescription": "Find rental properties",
     "about": "About",
+    "team": "Team",
     "services": "Services",
     "contact": "Contact"
   },
@@ -125,6 +126,19 @@
       "discretionBody": "Your transactions are handled in complete confidence, away from prying eyes.",
       "efficiencyTitle": "Efficiency",
       "efficiencyBody": "Responsive, direct support that turns your ambitions into reality at the right pace."
+    }
+  },
+  "team": {
+    "eyebrow": "Our Team",
+    "titleLead": "The people behind",
+    "titleAccent": "Majestic Keys",
+    "body": "A small, dedicated team of advisors, negotiators and specialists guiding every step of your property journey in Kénitra and beyond.",
+    "metaTitle": "Our Team",
+    "metaDescription": "Meet the advisors, negotiators and specialists behind Majestic Keys, a prestige real estate agency in Kénitra.",
+    "grid": {
+      "eyebrow": "Meet the Team",
+      "title": "The experts guiding your project",
+      "emailAria": "Email {name}"
     }
   },
   "services": {

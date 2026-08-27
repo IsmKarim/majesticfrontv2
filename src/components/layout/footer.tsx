@@ -19,12 +19,12 @@ import { FaPhoneAlt, FaEnvelope, FaCalendarCheck, FaFacebook, FaInstagram, FaLin
 import { MdLocationOn } from "react-icons/md";
 
 const { street, city, state, zip, country } = siteConfig.contact.address;
-const fullAddress = `${street}, ${city}, ${state} ${zip}, ${country}`;
+const fullAddress = `${street}, ${city}`;
 
 const SOCIAL_LINKS = [
     { icon: FaFacebook, href: siteConfig.links.facebook, label: "Facebook" },
     { icon: FaInstagram, href: siteConfig.links.instagram, label: "Instagram" },
-    { icon: FaLinkedin, href: siteConfig.links.linkedin, label: "LinkedIn" },
+   // { icon: FaLinkedin, href: siteConfig.links.linkedin, label: "LinkedIn" },
 ];
 
 export function FooterView({ year }: { year: number }) {

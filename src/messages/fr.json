@@ -21,6 +21,7 @@
     "rent": "Louer",
     "rentDescription": "Trouver une location",
     "about": "À propos",
+    "team": "Équipe",
     "services": "Services",
     "contact": "Contact"
   },
@@ -125,6 +126,19 @@
       "discretionBody": "Vos transactions sont traitées en toute confidentialité, à l'abri des regards indiscrets.",
       "efficiencyTitle": "Efficacité",
       "efficiencyBody": "Un accompagnement réactif, sans détour, pour concrétiser vos ambitions au bon rythme."
+    }
+  },
+  "team": {
+    "eyebrow": "Notre Équipe",
+    "titleLead": "Les visages de",
+    "titleAccent": "Majestic Keys",
+    "body": "Une équipe restreinte et investie de conseillers, négociateurs et spécialistes qui vous accompagne à chaque étape de votre projet immobilier à Kénitra et au-delà.",
+    "metaTitle": "Notre équipe",
+    "metaDescription": "Découvrez les conseillers, négociateurs et spécialistes de Majestic Keys, agence immobilière de prestige à Kénitra.",
+    "grid": {
+      "eyebrow": "L'Équipe",
+      "title": "Les experts qui accompagnent votre projet",
+      "emailAria": "Envoyer un e-mail à {name}"
     }
   },
   "services": {

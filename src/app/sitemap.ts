@@ -7,6 +7,7 @@ import { getPropertySlugs } from "@/services/properties.service";
 const ROUTES: { path: string; priority: number; changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"] }[] = [
   { path: "", priority: 1, changeFrequency: "weekly" },
   { path: "/about", priority: 0.7, changeFrequency: "monthly" },
+  { path: "/team", priority: 0.6, changeFrequency: "monthly" },
   { path: "/services", priority: 0.7, changeFrequency: "monthly" },
   { path: "/properties", priority: 0.9, changeFrequency: "daily" },
   { path: "/contact", priority: 0.6, changeFrequency: "monthly" },
