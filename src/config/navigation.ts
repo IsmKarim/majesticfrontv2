@@ -24,132 +24,43 @@ export interface NavigationConfig {
 }
 
 export const navigationConfig: NavigationConfig = {
-  mainNav: [ 
+  mainNav: [
     {
-      title: "Home",
+      // `title` and `description` are i18n keys resolved against the `nav`
+      // namespace at render time, not display strings.
+      title: "home",
       href: "/",
     },
     {
-      title: "Properties",
+      title: "properties",
       href: "/properties",
       items: [
         {
-          title: "Buy",
-          href: "/properties/buy",
-          description: "Browse properties for sale",
+          title: "buy",
+          href: "/properties?transactionType=sale",
+          description: "buyDescription",
         },
         {
-          title: "Rent",
-          href: "/properties/rent",
-          description: "Find rental properties",
+          title: "rent",
+          href: "/properties?transactionType=rent",
+          description: "rentDescription",
         },
-    
       ],
     },
     {
-      title: "About Us",
+      title: "about",
       href: "/about",
     },
-   
     {
-      title: "Services",
+      title: "services",
       href: "/services",
-     
     },
     {
-      title: "Contact",
+      title: "contact",
       href: "/contact",
       label: "cta",
     },
   ],
-
-  
- /*  footerNav: {
-    company: [
-      {
-        title: "About Us",
-        href: "/about",
-      },
-      {
-        title: "Our Team",
-        href: "/about/team",
-      },
-      {
-        title: "Careers",
-        href: "/about/careers",
-      },
-      {
-        title: "Press",
-        href: "/press",
-      },
-      {
-        title: "Contact",
-        href: "/contact",
-      },
-    ],
-    properties: [
-      {
-        title: "Buy Properties",
-        href: "/properties/buy",
-      },
-      {
-        title: "Rent Properties",
-        href: "/properties/rent",
-      },
-      {
-        title: "Luxury Estates",
-        href: "/properties/luxury",
-      },
-      {
-        title: "Commercial",
-        href: "/properties/commercial",
-      },
-      {
-        title: "New Developments",
-        href: "/properties/new-developments",
-      },
-    ],
-    resources: [
-      {
-        title: "Blog",
-        href: "/blog",
-      },
-      {
-        title: "Market Reports",
-        href: "/resources/reports",
-      },
-      {
-        title: "Buying Guide",
-        href: "/resources/buying-guide",
-      },
-      {
-        title: "Selling Guide",
-        href: "/resources/selling-guide",
-      },
-      {
-        title: "FAQs",
-        href: "/faqs",
-      },
-    ],
-    legal: [
-      {
-        title: "Privacy Policy",
-        href: "/privacy",
-      },
-      {
-        title: "Terms of Service",
-        href: "/terms",
-      },
-      {
-        title: "Cookie Policy",
-        href: "/cookies",
-      },
-      {
-        title: "Accessibility",
-        href: "/accessibility",
-      },
-    ],
-  }, */
 };
 
 export const getAllRoutes = (): string[] => {
@@ -175,6 +86,9 @@ export const getAllRoutes = (): string[] => {
 };
 
 export const isActiveRoute = (pathname: string, href: string): boolean => {
-  if (href === "/") return pathname === "/";
-  return pathname.startsWith(href);
+  // Nav hrefs may carry a query (e.g. /properties?transactionType=sale); active
+  // state is decided on the path alone.
+  const path = href.split("?")[0];
+  if (path === "/") return pathname === "/";
+  return pathname.startsWith(path);
 };

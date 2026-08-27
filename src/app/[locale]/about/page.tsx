@@ -1,11 +1,13 @@
-"use client";
-
 import { Box, HStack, Text } from "@chakra-ui/react";
 import OurStory from "@/features/about/components/ourStory";
 import OurValues from "@/features/about/components/ourValues";
 import WhyChooseUs from "@/features/homePage/whyChooseUs";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
-export default function AboutPage() {
+export default async function AboutPage({ params }: { params: Promise<{ locale: string }> }) {
+    const { locale } = await params;
+    setRequestLocale(locale);
+    const t = await getTranslations("about");
     return (
         <>
             <Box pt="120px" pb={{ base: 12, md: 20 }} px={4} bg="brand.600" textAlign="center">
@@ -18,7 +20,7 @@ export default function AboutPage() {
                         letterSpacing="widest"
                         fontWeight="600"
                     >
-                        À Propos
+                        {t("eyebrow")}
                     </Text>
                     <Box w="36px" h="1px" bg="secondary.500" />
                 </HStack>
@@ -30,9 +32,9 @@ export default function AboutPage() {
                     color="white"
                     mb={4}
                 >
-                    L&apos;art de l&apos;immobilier{" "}
+                    {t("titleLead")}{" "}
                     <Text as="span" color="secondary.400" fontStyle="italic">
-                        d&apos;exception
+                        {t("titleAccent")}
                     </Text>
                 </Text>
 
@@ -43,9 +45,7 @@ export default function AboutPage() {
                     mx="auto"
                     lineHeight="tall"
                 >
-                    Depuis plus de 15 ans, Majestic Keys accompagne une clientèle
-                    exigeante dans l&apos;acquisition et la valorisation de biens
-                    d&apos;exception à Kénitra et au-delà.
+                    {t("body")}
                 </Text>
             </Box>
 

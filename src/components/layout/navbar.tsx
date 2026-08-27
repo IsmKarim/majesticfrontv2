@@ -2,10 +2,12 @@
 
 import { Box, Flex, HStack } from "@chakra-ui/react";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 
 import { navigationConfig, isActiveRoute, NavItemWithChildren } from "@/config/navigation";
 import NavDrawer from "./components/navDrawer";
+import LocaleSwitcher from "./components/localeSwitcher";
 import Logo from "../ui/logo";
 import Iconify from "../ui/iconify";
 
@@ -19,6 +21,7 @@ const NavComponent = ({
   isActive: boolean;
 }) => {
   const hasChildren = !!navItem.items?.length;
+  const t = useTranslations("nav");
 
   return (
     <Box
@@ -59,7 +62,7 @@ const NavComponent = ({
           transition: "width 0.25s ease",
         }}
       >
-        <Link href={navItem.href}>{navItem.title}</Link>
+        <Link href={navItem.href}>{t(navItem.title)}</Link>
       </Box>
 
       {hasChildren && (
@@ -90,7 +93,7 @@ const NavComponent = ({
                   _hover={{ bg: "whiteAlpha.100", color: "secondary.500" }}
                   transition="background 0.15s ease"
                 >
-                  {child.title}
+                  {t(child.title)}
                 </Box>
               </Link>
             ))}
@@ -174,6 +177,7 @@ export function Navbar() {
               isActive={isActiveRoute(pathname, navItem.href)}
             />
           ))}
+          <LocaleSwitcher />
         </HStack>
       </Flex>
     </Box>

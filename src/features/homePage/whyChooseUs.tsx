@@ -4,6 +4,7 @@
 import Reveal from "@/components/ui/reveal";
 import { Box, Flex, Icon, Text, VStack } from "@chakra-ui/react";
 import { BsGrid1X2, BsPeopleFill, BsGearWideConnected } from "react-icons/bs";
+import { useTranslations } from "next-intl";
 import WhyChooseUsStats from "./statistics";
 
 interface Feature {
@@ -12,26 +13,12 @@ interface Feature {
   description: string;
 }
 
-const FEATURES: Feature[] = [
-  {
-    icon: BsGrid1X2,
-    title: "Portfolio Exclusif",
-    description:
-      "Accès privilégié à des propriétés off-market et des domaines d'exception introuvables ailleurs.",
-  },
-  {
-    icon: BsPeopleFill,
-    title: "Service Personnalisé",
-    description:
-      "Chaque client bénéficie d'un accompagnement sur mesure, adapté à ses besoins les plus spécifiques.",
-  },
-  {
-    icon: BsGearWideConnected,
-    title: "Expertise du Marché",
-    description:
-      "Une connaissance approfondie du paysage immobilier marocain pour des investissements sécurisés.",
-  },
-];
+// `titleKey`/`bodyKey` resolve against the `home.whyChooseUs` namespace.
+const FEATURES = [
+  { icon: BsGrid1X2, titleKey: "portfolioTitle", bodyKey: "portfolioBody" },
+  { icon: BsPeopleFill, titleKey: "serviceTitle", bodyKey: "serviceBody" },
+  { icon: BsGearWideConnected, titleKey: "expertiseTitle", bodyKey: "expertiseBody" },
+] as const;
 
 function FeatureItem({ icon, title, description }: Feature) {
   return (
@@ -67,6 +54,7 @@ function FeatureItem({ icon, title, description }: Feature) {
 }
 
 export default function WhyChooseUs() {
+  const t = useTranslations("home.whyChooseUs");
   return (
     <Flex
       direction={{ base: "column", lg: "row" }}
@@ -90,7 +78,7 @@ export default function WhyChooseUs() {
             letterSpacing="widest"
             mb={3}
           >
-            Pourquoi nous choisir
+            {t("eyebrow")}
           </Text>
 
           <Text
@@ -101,14 +89,18 @@ export default function WhyChooseUs() {
             lineHeight="shorter"
             mb={{ base: 8, lg: 10 }}
           >
-            L&apos;Excellence à votre service
+            {t("title")}
           </Text>
         </Reveal>
 
         <VStack gap={{ base: 7, md: 8 }} align="stretch">
           {FEATURES.map((feature, index) => (
-            <Reveal key={feature.title} delay={140 + index * 140} ml={index == 1 ? 6 : 0}>
-              <FeatureItem {...feature} />
+            <Reveal key={feature.titleKey} delay={140 + index * 140} ml={index == 1 ? 6 : 0}>
+              <FeatureItem
+                icon={feature.icon}
+                title={t(feature.titleKey)}
+                description={t(feature.bodyKey)}
+              />
             </Reveal>
           ))}
         </VStack>

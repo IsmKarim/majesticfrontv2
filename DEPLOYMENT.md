@@ -57,21 +57,24 @@ When real photography moves to a CDN, add its hostname to
 `images.remotePatterns` in `next.config.ts` (currently `[]`) or `next/image`
 will reject it at runtime.
 
-### 1.4 `/en` serves French content
+### 1.4 Translations — resolved, but review the English copy
 
-`src/messages/fr.json` and `en.json` contain **13 keys each**, covering only the
-hero and the agency-word block. Everything else — nav, footer, `/about`,
-`/services`, `/contact`, all property UI — is hardcoded French.
+~~`/en` serves French content.~~ The site is now fully localized: every
+user-facing string outside property data comes from `src/messages/{fr,en}.json`
+(296 keys each, verified at parity with no empty values). Rendered output was
+checked for both locales with zero cross-contamination in either direction.
 
-Meanwhile `sitemap.xml` advertises `hreflang="en"` alternates for every URL and
-`layout.tsx` declares `alternateLocale`. Google will fetch the `en` URLs, find
-French, and treat them as duplicates of the French pages.
+Two things still need a human:
 
-Pick one before launch:
+- **The English copy is a first-pass translation, not a native-speaker review.**
+  Marketing headlines especially (`home.hero`, `services.section.title`) deserve
+  a proper pass before launch.
+- **`src/app/global-error.tsx` stays French-only.** It replaces the entire
+  document when the root layout itself fails, so no i18n provider is mounted and
+  no locale is knowable. This is the one intentional exception.
 
-- **Translate the site properly**, or
-- **Drop `en`**: remove it from `src/i18n/locales.ts`. The sitemap, alternates
-  and `generateStaticParams` all derive from that array and will follow.
+Property records (titles, descriptions, neighbourhoods) are data and are not
+translated — the API will need to serve them per-locale if that is a requirement.
 
 ### 1.5 Set the environment variables
 

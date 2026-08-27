@@ -16,6 +16,16 @@ export const SORT_VALUES = [
 
 export type PropertySort = (typeof SORT_VALUES)[number];
 
+/**
+ * Grid vs list is a *presentation* choice: both render the same listings in the
+ * same order. It therefore lives alongside the query in the URL but never inside
+ * `PropertyQuery` — putting it there would make it part of the `use cache` key
+ * and store two identical result sets per filter combination.
+ */
+export const VIEW_VALUES = ["grid", "list"] as const;
+export type PropertyView = (typeof VIEW_VALUES)[number];
+export const DEFAULT_VIEW: PropertyView = "grid";
+
 export const DEFAULT_SORT: PropertySort = "newest";
 export const DEFAULT_PAGE_SIZE = 12;
 export const MAX_PAGE_SIZE = 48;
@@ -85,6 +95,13 @@ function firstValues(searchParams: RawSearchParams): Record<string, string> {
     return out;
 }
 
+/** Reads the presentation mode. Anything unrecognised falls back to the default. */
+export function parsePropertyView(searchParams: RawSearchParams): PropertyView {
+    const raw = searchParams.view;
+    const value = Array.isArray(raw) ? raw[0] : raw;
+    return VIEW_VALUES.includes(value as PropertyView) ? (value as PropertyView) : DEFAULT_VIEW;
+}
+
 /** URL search params -> normalized, defaulted query. Never throws. */
 export function parsePropertyQuery(searchParams: RawSearchParams): PropertyQuery {
     const parsed = propertyQuerySchema.parse(firstValues(searchParams));
@@ -105,8 +122,15 @@ const DEFAULTS: Partial<Record<keyof PropertyQuery, unknown>> = {
 /**
  * Serializes a query back to a `/properties` href. Values equal to their default
  * are omitted so the canonical URL for an unfiltered first page stays clean.
+ *
+ * `view` is accepted so sort and pagination links keep the reader in the layout
+ * they chose. Leave it off when building a canonical URL — grid and list are the
+ * same content, and emitting both would be duplicate content.
  */
-export function buildPropertyHref(query: Partial<PropertyQuery> = {}, basePath = "/properties"): string {
+export function buildPropertyHref(
+    query: Partial<PropertyQuery> & { view?: PropertyView } = {},
+    basePath = "/properties",
+): string {
     const params = new URLSearchParams();
     for (const key of KEY_ORDER) {
         const value = query[key];
@@ -114,6 +138,8 @@ export function buildPropertyHref(query: Partial<PropertyQuery> = {}, basePath =
         if (DEFAULTS[key] === value) continue;
         params.set(key, String(value));
     }
+    if (query.view && query.view !== DEFAULT_VIEW) params.set("view", query.view);
+
     const qs = params.toString();
     return qs ? `${basePath}?${qs}` : basePath;
 }

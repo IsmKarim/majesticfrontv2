@@ -4,8 +4,10 @@
 import Reveal from "@/components/ui/reveal";
 import { Box, Flex, Input, Text, Button } from "@chakra-ui/react";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 export default function NewsletterSection() {
+  const t = useTranslations("home.newsletter");
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
@@ -35,7 +37,7 @@ export default function NewsletterSection() {
             color="secondary.500"
             mb={4}
           >
-            Newsletter Exclusive
+            {t("eyebrow")}
           </Text>
 
           {/* ── Heading ── */}
@@ -47,7 +49,7 @@ export default function NewsletterSection() {
             lineHeight="shorter"
             mb={4}
           >
-            Restez informé de nos offres privées
+            {t("title")}
           </Text>
 
           {/* ── Subtext ── */}
@@ -59,15 +61,14 @@ export default function NewsletterSection() {
             mb={10}
             lineHeight="tall"
           >
-            Inscrivez-vous pour recevoir en avant-première nos nouvelles propriétés
-            et nos analyses du marché de prestige.
+            {t("body")}
           </Text>
 
           {/* ── Input + CTA ── */}
           {submitted ? (
             <Reveal variant="fade" duration={500}>
               <Text color="secondary.500" fontWeight="semibold" fontSize="md">
-                Merci ! Vous êtes maintenant abonné. ✓
+                {t("success")}
               </Text>
             </Reveal>
           ) : (
@@ -85,7 +86,7 @@ export default function NewsletterSection() {
               <Input
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="Votre adresse email"
+                placeholder={t("placeholder")}
                 type="email"
                 name="email"
                 autoComplete="email"
@@ -122,7 +123,7 @@ export default function NewsletterSection() {
                 _hover={{ bg: "secondary.400" }}
                 _active={{ transform: "scale(0.98)" }}
               >
-                S&apos;abonner
+                {t("submit")}
               </Button>
             </Flex>
           )}

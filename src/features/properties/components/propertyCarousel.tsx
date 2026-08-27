@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useRef, useState, useCallback, useEffect } from "react";
 import { Box, IconButton } from "@chakra-ui/react";
 import PropertyCard from "./propertyCard";
@@ -10,6 +11,7 @@ interface PropertyCarouselProps {
 }
 
 export default function PropertyCarousel({ properties }: PropertyCarouselProps) {
+  const t = useTranslations("common");
   const trackRef = useRef<HTMLDivElement>(null); // ← plain div, not Chakra Flex
   const [canLeft, setCanLeft] = useState(false);
   const [canRight, setCanRight] = useState(true);
@@ -99,7 +101,7 @@ export default function PropertyCarousel({ properties }: PropertyCarouselProps) 
       {/* Arrows are a pointer affordance — on touch, the swipe is the control */}
       {canLeft && (
         <IconButton
-          aria-label="Précédent"
+          aria-label={t("previous")}
           onClick={() => slide(-1)}
           display={{ base: "none", md: "flex" }}
           position="absolute"
@@ -120,7 +122,7 @@ export default function PropertyCarousel({ properties }: PropertyCarouselProps) 
       )}
       {canRight && (
         <IconButton
-          aria-label="Suivant"
+          aria-label={t("next")}
           onClick={() => slide(1)}
           display={{ base: "none", md: "flex" }}
           position="absolute"

@@ -3,29 +3,17 @@ import NextLink from "next/link";
 import Iconify from "@/components/ui/iconify";
 import Reveal from "@/components/ui/reveal";
 import ServiceCardVar from "./serviceCardVar";
+import { getTranslations } from "next-intl/server";
 
 const SERVICES = [
-  {
-    title: "Achat/location",
-    description:
-      "Une sélection rigoureuse de biens d'exception répondant aux standards les plus élevés du marché international.",
-    logo: "/icons/Transaction.svg",
-  },
-  {
-    title: "Accompagnement VIP",
-    description:
-      "Un service de conciergerie immobilière dédié pour gérer chaque détail de votre installation en toute sérénité.",
-    logo: "/icons/VIP.svg",
-  },
-  {
-    title: "Conseil Sur-Mesure",
-    description:
-      "Expertise juridique et fiscale pour optimiser votre patrimoine immobilier et sécuriser vos investissements.",
-    logo: "/icons/Transaction.svg",
-  },
-];
+  { titleKey: "selectionTitle", bodyKey: "selectionBody", logo: "/icons/Transaction.svg" },
+  { titleKey: "vipTitle", bodyKey: "vipBody", logo: "/icons/VIP.svg" },
+  { titleKey: "adviceTitle", bodyKey: "adviceBody", logo: "/icons/Transaction.svg" },
+] as const;
 
-export default function ServicesSection() {
+export default async function ServicesSection() {
+  const t = await getTranslations("services.section");
+  const tc = await getTranslations("common");
   return (
     <>
       <SimpleGrid
@@ -38,8 +26,8 @@ export default function ServicesSection() {
         {SERVICES.map((service, index) => (
           <Reveal key={index} delay={150 + index * 120}>
             <ServiceCardVar
-              title={service.title}
-              description={service.description}
+              title={t(service.titleKey)}
+              description={t(service.bodyKey)}
               image={service.logo}
             />
           </Reveal>
@@ -66,15 +54,14 @@ export default function ServicesSection() {
               textTransform="uppercase"
               letterSpacing="wide"
             >
-              Expertise
+              {t("eyebrow")}
             </Text>
 
             <Text color="white" as="h4">
-              SERVICE PRESTIGIEUX
+              {t("title")}
             </Text>
             <Text color="white" mt={4}>
-              Nous vous offrons un service de qualité, personnalisé et sur
-              mesure.
+              {t("body")}
             </Text>
 
             {/* Decorative chevrons breathe in sequence — a quiet pulse, not a blink */}
@@ -139,7 +126,7 @@ export default function ServicesSection() {
           _hover={{ bg: "secondary.500", color: "brand.900" }}
         >
           <NextLink href="/services">
-            Voir plus
+            {tc("seeMore")}
             <Iconify icon="mdi:arrow-right" w="16px" h="16px" />
           </NextLink>
         </Button>

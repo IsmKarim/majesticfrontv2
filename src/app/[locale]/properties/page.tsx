@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Box, Text } from "@chakra-ui/react";
 
 import ViewToolBar from "@/features/properties/components/viewToolbar";
@@ -8,24 +8,41 @@ import PropertyResults, {
     PropertyResultsSkeleton,
 } from "@/features/properties/components/propertyResults";
 import SearchWidget from "@/features/search/searchbar";
-import { buildPropertyHref, parsePropertyQuery } from "@/features/properties/property.query";
+import {
+    buildPropertyHref,
+    parsePropertyQuery,
+    parsePropertyView,
+} from "@/features/properties/property.query";
+import { defaultLocale, locales, type Locale } from "@/i18n/locales";
 
 type SearchParams = Record<string, string | string[] | undefined>;
 
 export async function generateMetadata({
+    params,
     searchParams,
 }: {
+    params: Promise<{ locale: string }>;
     searchParams: Promise<SearchParams>;
 }): Promise<Metadata> {
+    const { locale: raw } = await params;
+    const locale = (locales.includes(raw as Locale) ? raw : defaultLocale) as Locale;
+    const t = await getTranslations({ locale, namespace: "properties.list" });
     const query = parsePropertyQuery(await searchParams);
 
+    // The default locale is served unprefixed, so every other locale needs the
+    // prefix or its canonical would point at the French page.
+    const href = buildPropertyHref(query);
+    const prefixed = (l: Locale) => (l === defaultLocale ? href : `/${l}${href}`);
+
     return {
-        title: query.page > 1 ? `Nos biens — page ${query.page}` : "Nos biens",
-        description:
-            "Parcourez la sélection Majestic Keys : villas, appartements et biens d'exception à la vente et à la location au Maroc.",
+        title: query.page > 1 ? t("metaTitlePaged", { page: query.page }) : t("metaTitle"),
+        description: t("metaDescription"),
         // Each filter combination points back at itself, so paginated and filtered
         // views stay distinct rather than collapsing onto one canonical URL.
-        alternates: { canonical: buildPropertyHref(query) },
+        alternates: {
+            canonical: prefixed(locale),
+            languages: Object.fromEntries(locales.map((l) => [l, prefixed(l)])),
+        },
     };
 }
 
@@ -35,8 +52,8 @@ export async function generateMetadata({
  * inside the Suspense boundary instead.
  */
 async function Results({ searchParams }: { searchParams: Promise<SearchParams> }) {
-    const query = parsePropertyQuery(await searchParams);
-    return <PropertyResults query={query} />;
+    const resolved = await searchParams;
+    return <PropertyResults query={parsePropertyQuery(resolved)} view={parsePropertyView(resolved)} />;
 }
 
 export default async function Page({
@@ -48,18 +65,15 @@ export default async function Page({
 }) {
     const { locale } = await params;
     setRequestLocale(locale);
+    const t = await getTranslations("properties.list");
 
     return (
         <>
             <Box pt={"120px"} bg="brand.700"></Box>
 
             <Box color="secondary.400" px="6" bg="brand.700">
-                <Text as="h2">Curated Listings</Text>
-                <Text py="6">
-                    An exclusive selection of the kingdom&apos;s most prestigious architectural marvels,
-                    <br />
-                    from contemporary villas to historic estates.
-                </Text>
+                <Text as="h2">{t("title")}</Text>
+                <Text py="6">{t("subtitle")}</Text>
             </Box>
 
             <Box bg="brand.700" px="6">

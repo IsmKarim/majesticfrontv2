@@ -4,20 +4,23 @@ import { useState } from "react";
 import { Box, Button, CloseButton, Drawer, Portal, VStack } from "@chakra-ui/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 import { navigationConfig, isActiveRoute } from "@/config/navigation";
 import Logo from "@/components/ui/logo";
 import Iconify from "@/components/ui/iconify";
+import LocaleSwitcher from "./localeSwitcher";
 
 export default function NavDrawer() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const t = useTranslations("nav");
 
   return (
     <Drawer.Root open={open} onOpenChange={(e) => setOpen(e.open)} placement="end">
       <Drawer.Trigger asChild>
           
-          <Iconify icon="mdi:menu" w="24px" h="24px" color="white"/>
+          <Iconify icon="mdi:menu" w="24px" h="24px" color="white" aria-label={t("openMenu")} />
       </Drawer.Trigger>
       <Portal>
         <Drawer.Backdrop bg="blackAlpha.600" backdropFilter="blur(4px)" />
@@ -57,11 +60,15 @@ export default function NavDrawer() {
                       _hover={{ bg: "whiteAlpha.100", color: "secondary.300" }}
                     >
                       <Link href={navItem.href} onClick={() => setOpen(false)}>
-                        {navItem.title}
+                        {t(navItem.title)}
                       </Link>
                     </Box>
                   );
                 })}
+
+                <Box pt={4} mt={2} borderTop="1px solid rgba(255, 255, 255, 0.1)">
+                  <LocaleSwitcher variant="inline" />
+                </Box>
               </VStack>
             </Drawer.Body>
             <Drawer.CloseTrigger asChild>

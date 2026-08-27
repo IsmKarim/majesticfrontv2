@@ -2,8 +2,11 @@ import { Box, Grid, Text } from "@chakra-ui/react";
 import Amenity from "./amenity";
 import { PropertyFeatures as FEATURES } from "@/config/propertyIcons";
 import type { Property } from "@/types/property.type";
+import { getTranslations } from "next-intl/server";
 
-export default function PropertyFeatures({ property }: { property: Property }) {
+export default async function PropertyFeatures({ property }: { property: Property }) {
+  const t = await getTranslations("properties.detail");
+  const tf = await getTranslations("properties.features");
   const active = FEATURES.filter(f => property[f.accessor as keyof Property]);
 
   if (!active.length) return null;
@@ -25,7 +28,7 @@ export default function PropertyFeatures({ property }: { property: Property }) {
         fontWeight="400"
         mb={8}
       >
-        Curated Amenities
+        {t("amenities")}
       </Text>
 
       <Grid
@@ -33,7 +36,7 @@ export default function PropertyFeatures({ property }: { property: Property }) {
         gap={{ base: 7, sm: 8, md: 10 }}
       >
         {active.map(f => (
-          <Amenity key={f.accessor} icon={f.icon} title={f.name} />
+          <Amenity key={f.accessor} icon={f.icon} title={tf(f.accessor)} />
         ))}
       </Grid>
     </Box>

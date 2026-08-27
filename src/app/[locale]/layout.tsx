@@ -3,10 +3,10 @@ import type { Metadata, Viewport } from 'next';
 import { ReactNode } from 'react';
 
 import { NextIntlClientProvider } from 'next-intl';
-import { getMessages, setRequestLocale } from 'next-intl/server';
+import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
 
 import { locales, defaultLocale, type Locale } from '@/i18n/locales';
-import { seoContent } from '@/config/seo';
+import { ogLocales } from '@/config/seo';
 import { siteConfig } from '@/config/site';
 import { cormorant_garamond, display } from '@/theme/fonts';
 import './globals.css';
@@ -25,7 +25,14 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale: rawLocale } = await params;
   const locale = (locales.includes(rawLocale as Locale) ? rawLocale : defaultLocale) as Locale;
-  const content = seoContent[locale];
+  const t = await getTranslations({ locale, namespace: 'seo' });
+  const content = {
+    title: t('title'),
+    description: t('description'),
+    // `keywords` is an array in the catalog, so it has to be read raw.
+    keywords: t.raw('keywords') as string[],
+    ogLocale: ogLocales[locale],
+  };
   const localePath = locale === defaultLocale ? '' : `/${locale}`;
 
   return {
@@ -54,7 +61,7 @@ export async function generateMetadata({
       title: content.title,
       description: content.description,
       locale: content.ogLocale,
-      alternateLocale: locales.filter((l) => l !== locale).map((l) => seoContent[l].ogLocale),
+      alternateLocale: locales.filter((l) => l !== locale).map((l) => ogLocales[l]),
       images: [
         {
           url: '/images/properties/riad.jpg',

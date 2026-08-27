@@ -7,53 +7,20 @@ import {
     BsGraphUpArrow,
     BsCameraVideoFill,
 } from "react-icons/bs";
+import { getTranslations } from "next-intl/server";
 
-interface Service {
-    icon: React.ElementType;
-    title: string;
-    description: string;
-}
+// `titleKey`/`bodyKey` resolve against the `services.grid` namespace.
+const SERVICES = [
+    { icon: BsKeyFill, titleKey: "saleTitle", bodyKey: "saleBody" },
+    { icon: BsBuilding, titleKey: "rentalTitle", bodyKey: "rentalBody" },
+    { icon: BsAwardFill, titleKey: "vipTitle", bodyKey: "vipBody" },
+    { icon: BsFileEarmarkTextFill, titleKey: "adviceTitle", bodyKey: "adviceBody" },
+    { icon: BsGraphUpArrow, titleKey: "valuationTitle", bodyKey: "valuationBody" },
+    { icon: BsCameraVideoFill, titleKey: "viewingTitle", bodyKey: "viewingBody" },
+] as const;
 
-const SERVICES: Service[] = [
-    {
-        icon: BsKeyFill,
-        title: "Achat & Vente",
-        description:
-            "Un accompagnement de bout en bout pour acquérir ou céder un bien d'exception, en toute sérénité.",
-    },
-    {
-        icon: BsBuilding,
-        title: "Location & Gestion",
-        description:
-            "Mise en location et gestion locative complète, pour un rendement optimisé sans contrainte.",
-    },
-    {
-        icon: BsAwardFill,
-        title: "Accompagnement VIP",
-        description:
-            "Un service de conciergerie immobilière dédié, pour gérer chaque détail avec la plus grande discrétion.",
-    },
-    {
-        icon: BsFileEarmarkTextFill,
-        title: "Conseil Sur-Mesure",
-        description:
-            "Expertise juridique et fiscale pour sécuriser vos transactions et optimiser votre patrimoine.",
-    },
-    {
-        icon: BsGraphUpArrow,
-        title: "Estimation & Valorisation",
-        description:
-            "Une analyse précise du marché pour révéler la juste valeur de votre bien.",
-    },
-    {
-        icon: BsCameraVideoFill,
-        title: "Visites Privées & Virtuelles",
-        description:
-            "Des visites organisées sur-mesure, en personne ou à distance, pour ne rien laisser au hasard.",
-    },
-];
-
-export default function ServicesGrid() {
+export default async function ServicesGrid() {
+    const t = await getTranslations("services.grid");
     return (
         <Box bg="brand.500" py={{ base: 14, md: 20 }} px={4}>
             <HStack justify="center" gap={3} mb={4}>
@@ -65,7 +32,7 @@ export default function ServicesGrid() {
                     letterSpacing="widest"
                     fontWeight="600"
                 >
-                    Notre Offre
+                    {t("eyebrow")}
                 </Text>
                 <Box w="36px" h="1px" bg="secondary.500" />
             </HStack>
@@ -78,7 +45,7 @@ export default function ServicesGrid() {
                 textAlign="center"
                 mb={{ base: 10, md: 14 }}
             >
-                Un service pour chaque ambition
+                {t("title")}
             </Text>
 
             <SimpleGrid
@@ -88,7 +55,7 @@ export default function ServicesGrid() {
                 mx="auto"
             >
                 {SERVICES.map((service) => (
-                    <Flex key={service.title} gap={4} align="flex-start">
+                    <Flex key={service.titleKey} gap={4} align="flex-start">
                         <Box
                             flexShrink={0}
                             p={3}
@@ -96,7 +63,7 @@ export default function ServicesGrid() {
                             borderColor="secondary.700"
                             color="secondary.500"
                         >
-                            <Icon as={service.icon} boxSize={5} />
+                            <Icon asChild boxSize={5}><service.icon /></Icon>
                         </Box>
                         <Box>
                             <Text
@@ -105,14 +72,14 @@ export default function ServicesGrid() {
                                 color="white"
                                 mb={1}
                             >
-                                {service.title}
+                                {t(service.titleKey)}
                             </Text>
                             <Text
                                 fontSize={{ base: "sm", md: "sm" }}
                                 color="secondary.300"
                                 lineHeight="tall"
                             >
-                                {service.description}
+                                {t(service.bodyKey)}
                             </Text>
                         </Box>
                     </Flex>

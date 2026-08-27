@@ -1,4 +1,5 @@
 import { Box, Text } from "@chakra-ui/react";
+import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import NextLink from "next/link";
 
@@ -9,7 +10,8 @@ interface BrowseCardProps {
     href: string;
 }
 
-export default function BrowseCard({ img, title, totalListings, href = "/properties" }: BrowseCardProps) {
+export default async function BrowseCard({ img, title, totalListings, href = "/properties" }: BrowseCardProps) {
+    const t = await getTranslations("home.cities");
     return (
         <Box
             asChild
@@ -91,7 +93,7 @@ export default function BrowseCard({ img, title, totalListings, href = "/propert
                         textTransform="uppercase"
                         letterSpacing="wide"
                     >
-                        {totalListings} Listings
+                        {t("listings", { count: totalListings })}
                     </Text>
                 </Box>
             </NextLink>

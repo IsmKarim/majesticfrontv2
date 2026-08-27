@@ -1,10 +1,12 @@
-"use client";
-
 import { Box, HStack, Text } from "@chakra-ui/react";
 import ServicesGrid from "@/features/services/components/servicesGrid";
 import OurProcess from "@/features/services/components/ourProcess";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
-export default function ServicesPage() {
+export default async function ServicesPage({ params }: { params: Promise<{ locale: string }> }) {
+    const { locale } = await params;
+    setRequestLocale(locale);
+    const t = await getTranslations("services");
     return (
         <>
             <Box pt="120px" pb={{ base: 12, md: 20 }} px={4} bg="brand.600" textAlign="center">
@@ -17,7 +19,7 @@ export default function ServicesPage() {
                         letterSpacing="widest"
                         fontWeight="600"
                     >
-                        Nos Services
+                        {t("eyebrow")}
                     </Text>
                     <Box w="36px" h="1px" bg="secondary.500" />
                 </HStack>
@@ -29,9 +31,9 @@ export default function ServicesPage() {
                     color="white"
                     mb={4}
                 >
-                    L&apos;excellence,{" "}
+                    {t("titleLead")}{" "}
                     <Text as="span" color="secondary.400" fontStyle="italic">
-                        à chaque étape
+                        {t("titleAccent")}
                     </Text>
                 </Text>
 
@@ -42,9 +44,7 @@ export default function ServicesPage() {
                     mx="auto"
                     lineHeight="tall"
                 >
-                    De la première visite à la signature et bien au-delà, Majestic
-                    Keys met son expertise au service de chaque étape de votre
-                    projet immobilier.
+                    {t("body")}
                 </Text>
             </Box>
 

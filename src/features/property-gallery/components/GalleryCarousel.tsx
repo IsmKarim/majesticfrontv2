@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Box, Flex, IconButton, Text } from "@chakra-ui/react";
 import useEmblaCarousel from "embla-carousel-react";
 import Image from "next/image";
@@ -15,9 +16,10 @@ interface ArrowButtonProps {
 }
 
 function ArrowButton({ direction, onClick, disabled }: ArrowButtonProps) {
+  const t = useTranslations("properties.gallery");
   return (
     <IconButton
-      aria-label={direction === "prev" ? "Previous image" : "Next image"}
+      aria-label={direction === "prev" ? t("previousImage") : t("nextImage")}
       onClick={onClick}
       disabled={disabled}
       position="absolute"

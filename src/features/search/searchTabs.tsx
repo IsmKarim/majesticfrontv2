@@ -1,12 +1,13 @@
 "use client";
 
 import { Tabs } from "@chakra-ui/react";
+import { useTranslations } from "next-intl";
 
 /** "all" is the neutral state; the query schema expresses it as no filter at all. */
 const TABS = [
-    { value: "all", label: "Tous" },
-    { value: "sale", label: "Acheter" },
-    { value: "rent", label: "Louer" },
+    { value: "all", labelKey: "tabAll" },
+    { value: "sale", labelKey: "tabBuy" },
+    { value: "rent", labelKey: "tabRent" },
 ] as const;
 
 export default function SearchTabs({
@@ -16,6 +17,7 @@ export default function SearchTabs({
     value: string | undefined;
     onValueChange: (transactionType: string | undefined) => void;
 }) {
+    const t = useTranslations("search");
     return (
         <Tabs.Root
             value={value ?? "all"}
@@ -31,7 +33,7 @@ export default function SearchTabs({
                         color="white"
                         _selected={{ bg: "secondary.500", color: "brand.900" }}
                     >
-                        {tab.label}
+                        {t(tab.labelKey)}
                     </Tabs.Trigger>
                 ))}
             </Tabs.List>

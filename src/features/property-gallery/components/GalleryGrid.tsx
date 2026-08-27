@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Box, Grid, GridItem, Skeleton, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import { GalleryGridProps } from "../types";
@@ -29,6 +30,7 @@ function GalleryGridSkeleton() {
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 export function GalleryGrid({ images, onImageClick }: GalleryGridProps) {
+  const t = useTranslations("properties.gallery");
   if (!images.length) return <GalleryGridSkeleton />;
 
   const [hero, ...rest] = images;
@@ -156,7 +158,7 @@ export function GalleryGrid({ images, onImageClick }: GalleryGridProps) {
                   textTransform="uppercase"
                   letterSpacing="widest"
                 >
-                  more photos
+                  {t("morePhotos")}
                 </Text>
               </Box>
             )}

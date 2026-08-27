@@ -2,6 +2,7 @@
 
 import { Box, Button, Text, VStack } from "@chakra-ui/react";
 import { useEffect } from "react";
+import { useTranslations } from "next-intl";
 
 /**
  * Route-level error boundary. Catches render/data failures below the layout —
@@ -15,6 +16,8 @@ export default function Error({
     error: Error & { digest?: string };
     reset: () => void;
 }) {
+    const t = useTranslations("errors");
+
     useEffect(() => {
         // Replace with the real reporter (Sentry et al.) once one is wired up.
         console.error(error);
@@ -24,15 +27,14 @@ export default function Error({
         <Box bg="brand.700" minH="70vh" display="flex" alignItems="center" justifyContent="center" px={6}>
             <VStack gap={5} textAlign="center" maxW="520px">
                 <Text as="h1" fontSize={{ base: "2xl", md: "3xl" }} color="white" fontWeight="600">
-                    Une erreur est survenue
+                    {t("title")}
                 </Text>
                 <Text color="secondary.300" fontSize="sm" lineHeight="tall">
-                    Nous n&apos;avons pas pu charger cette page. Réessayez dans un instant — si le
-                    problème persiste, contactez notre équipe.
+                    {t("body")}
                 </Text>
                 {error.digest && (
                     <Text color="secondary.600" fontSize="xs" fontFamily="mono">
-                        Référence : {error.digest}
+                        {t("reference", { digest: error.digest })}
                     </Text>
                 )}
                 <Button
@@ -47,7 +49,7 @@ export default function Error({
                     letterSpacing="widest"
                     _hover={{ bg: "white" }}
                 >
-                    Réessayer
+                    {t("retry")}
                 </Button>
             </VStack>
         </Box>

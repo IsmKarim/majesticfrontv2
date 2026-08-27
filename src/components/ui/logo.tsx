@@ -1,14 +1,16 @@
 import { Stack, Text } from "@chakra-ui/react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 
 export default function Logo({ showWordmark = false }: { showWordmark?: boolean }) {
+  const t = useTranslations("common");
   return (
-    <Link href="/" aria-label="Majestic Keys Home">
+    <Link href="/" aria-label={t("homeLink")}>
       <Stack gap="2" justify="center" align="center">
         <Image
           src="/logo.png"
-          alt="Majestic Keys Logo"
+          alt={t("logoAlt")}
           width={120}
           height={80}
           priority

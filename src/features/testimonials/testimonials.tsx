@@ -4,10 +4,12 @@
 // NO business logic, NO direct API calls, NO state management.
 // Composes child components and passes data via props.
 
+import { useTranslations } from "next-intl";
 import { Box, VStack, Text, HStack } from "@chakra-ui/react";
 import { TestimonialSlider } from "./testimonialSlider";
 
 export const Testimonials = () => {
+  const t = useTranslations("testimonials");
   return (
     <Box
       as="section"
@@ -43,7 +45,7 @@ export const Testimonials = () => {
               color="secondary.500"
               fontFamily="'Outfit', sans-serif"
             >
-              Client Stories
+              {t("eyebrow")}
             </Text>
             <Box w="40px" h="1px" bg="secondary.500" />
           </HStack>
@@ -57,7 +59,7 @@ export const Testimonials = () => {
             color="white"
             letterSpacing="-0.01em"
           >
-            Trusted by Discerning Buyers
+            {t("title")}
           </Text>
 
           <Text
@@ -67,8 +69,7 @@ export const Testimonials = () => {
             lineHeight={1.7}
             fontFamily="'Outfit', sans-serif"
           >
-            Our clients share their experiences finding their dream properties
-            through Majestic Keys.
+            {t("body")}
           </Text>
         </VStack>
 

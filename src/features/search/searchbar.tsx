@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Box, Button, Flex, HStack, Text, Collapsible } from '@chakra-ui/react';
 import Iconify from '@/components/ui/iconify';
 import GlassSelect from '@/components/ui/glassSelect';
@@ -8,43 +8,45 @@ import { useSearch } from './useSearch';
 import SwitchInput from '@/components/ui/switchInput';
 import GlassNumberInput from '@/components/ui/glassNumberInput';
 import GlassSlider from '@/components/ui/glassSlider';
-import { propertyTypesCollection } from '@/config/data';
+import { createListCollection } from '@chakra-ui/react';
+import { useTranslations } from 'next-intl';
+import { PROPERTYTYPES } from '@/config/propertyOptions';
 import { citiesCollection } from '@/config/citiesData';
 import SearchTabs from './searchTabs';
 
-const bedroomsCollection = {
-  items: [
-    { label: 'Toutes', value: '0' },
-    { label: '1+', value: '1' },
-    { label: '2+', value: '2' },
-    { label: '3+', value: '3' },
-    { label: '4+', value: '4' },
-    { label: '5+', value: '5' },
-  ],
-};
-
-const bathroomsCollection = {
-  items: [
-    { label: 'Toutes', value: '0' },
-    { label: '1+', value: '1' },
-    { label: '2+', value: '2' },
-    { label: '3+', value: '3' },
-    { label: '4+', value: '4' },
-  ],
-};
-
-const equippedCollection = {
-  items: [
-    { label: 'Tous', value: 'any' },
-    { label: 'Oui', value: 'yes' },
-    { label: 'Non', value: 'no' },
-  ],
-};
+// Numeric option values are stable; only the labels are localized, so the
+// collections are built inside the component against the active catalog.
+const BEDROOM_VALUES = ['0', '1', '2', '3', '4', '5'];
+const BATHROOM_VALUES = ['0', '1', '2', '3', '4'];
 
 const SearchWidget = () => {
   const [showMoreFilters, setShowMoreFilters] = useState(false);
+  const t = useTranslations('search');
+  const tType = useTranslations('propertyTypes');
 
   const { updateSearchQuery, submitSearch, neighborhoodsOptions, searchQuery } = useSearch();
+
+  const propertyTypesCollection = useMemo(
+    () => createListCollection({
+      items: PROPERTYTYPES.map((type) => ({ label: tType(type.value), value: type.value })),
+    }),
+    [tType],
+  );
+
+  const bedroomsCollection = useMemo(() => ({
+    items: BEDROOM_VALUES.map((v) => ({ label: v === '0' ? t('anyFemalePlural') : `${v}+`, value: v })),
+  }), [t]);
+
+  const bathroomsCollection = useMemo(() => ({
+    items: BATHROOM_VALUES.map((v) => ({ label: v === '0' ? t('anyFemalePlural') : `${v}+`, value: v })),
+  }), [t]);
+  const equippedCollection = useMemo(() => ({
+    items: [
+      { label: t('any'), value: 'any' },
+      { label: t('yes'), value: 'yes' },
+      { label: t('no'), value: 'no' },
+    ],
+  }), [t]);
 
   return (
     <Box position="relative"  mx={{ base: 2, md: 'auto' }}>
@@ -78,8 +80,8 @@ const SearchWidget = () => {
             >
               <GlassSelect
                 collection={propertyTypesCollection}
-                label="Type De Bien"
-                placeholder="Tout"
+                label={t("propertyType")}
+                placeholder={t("propertyTypePlaceholder")}
                 icon="mdi:home-outline"
                 onValueChange={(propertyType: string) =>
                   updateSearchQuery({ propertyType })
@@ -88,8 +90,8 @@ const SearchWidget = () => {
 
               <GlassSelect
                 collection={citiesCollection}
-                label="Ville"
-                placeholder="Toutes les villes"
+                label={t("city")}
+                placeholder={t("cityPlaceholder")}
                 icon="mdi:map-marker-outline"
                 onValueChange={(city: string) =>
                   updateSearchQuery({ city, neighborhood: '' })
@@ -98,8 +100,8 @@ const SearchWidget = () => {
 
               <GlassSelect
                 collection={{ items: neighborhoodsOptions }}
-                label="Quartier"
-                placeholder="Tous les quartiers"
+                label={t("neighborhood")}
+                placeholder={t("neighborhoodPlaceholder")}
                 icon="mdi:map-marker-outline"
                 onValueChange={(neighborhood: string) =>
                   updateSearchQuery({ neighborhood })
@@ -126,8 +128,8 @@ const SearchWidget = () => {
                   >
                     <GlassNumberInput
                       collection={bedroomsCollection}
-                      label="Chambres"
-                      placeholder="Toutes"
+                      label={t("bedrooms")}
+                      placeholder={t("anyFemalePlural")}
                       icon="mdi:bed-outline"
                       onValueChange={(v: string) =>
                         updateSearchQuery({ bedrooms: Number(v) })
@@ -136,8 +138,8 @@ const SearchWidget = () => {
 
                     <GlassNumberInput
                       collection={bathroomsCollection}
-                      label="Salles de bain"
-                      placeholder="Toutes"
+                      label={t("bathrooms")}
+                      placeholder={t("anyFemalePlural")}
                       icon="mdi:shower"
                       onValueChange={(v: string) =>
                         updateSearchQuery({ bathrooms: Number(v) })
@@ -146,7 +148,7 @@ const SearchWidget = () => {
 
                     <SwitchInput
                       collection={equippedCollection}
-                      label="Équipé"
+                      label={t("equipped")}
                       icon="mdi:sofa-outline"
                       onValueChange={(v: string) =>
                         updateSearchQuery({ equipped: v as 'any' | 'yes' | 'no' })
@@ -155,8 +157,8 @@ const SearchWidget = () => {
 
                     <Box flex="2" minW={0}>
                       <GlassSlider
-                        label="Prix"
-                        placeholder="Toutes"
+                        label={t("price")}
+                        placeholder={t("anyFemalePlural")}
                         onValueChange={(v: [number, number]) => {
                           updateSearchQuery({ priceMin: v[0], priceMax: v[1] });
                         }}
@@ -175,7 +177,7 @@ const SearchWidget = () => {
                     cursor="pointer"
                     py={1}
                   >
-                    <Text>{showMoreFilters ? 'Moins' : 'Plus'} de filtres</Text>
+                    <Text>{showMoreFilters ? t("lessFilters") : t("moreFilters")}</Text>
                     <Iconify
                       icon={
                         showMoreFilters ? 'mdi:chevron-up' : 'mdi:chevron-down'
@@ -213,7 +215,7 @@ const SearchWidget = () => {
               onClick={submitSearch}
             >
               <HStack gap={2}>
-                <Text>Trouver mon bien</Text>
+                <Text>{t("submit")}</Text>
                 <Iconify icon="mdi:magnify" w="18px" h="18px" />
               </HStack>
             </Button>

@@ -1,5 +1,7 @@
 "use client";
 
+import { useLocale, useTranslations } from "next-intl";
+import { categoryToPropertyType } from "@/config/propertyOptions";
 import { Box, Text, Grid, GridItem, Flex, Icon } from "@chakra-ui/react";
 import type { ReactNode } from "react";
 import Iconify from "@/components/ui/iconify";
@@ -32,6 +34,14 @@ function StatusBadge({ status }: { status: string }) {
     pending: { bg: "rgba(214, 158, 46, 0.15)", text: "#D69E2E" },
   };
   const colors = colorMap[status.toLowerCase()] ?? colorMap.available;
+  const t = useTranslations("properties.detail");
+  const STATUS_KEYS: Record<string, string> = {
+    available: "statusAvailable",
+    sold: "statusSold",
+    rented: "statusRented",
+    pending: "statusPending",
+  };
+  const label = t(STATUS_KEYS[status.toLowerCase()] ?? "statusAvailable");
 
   return (
     <Text
@@ -48,7 +58,7 @@ function StatusBadge({ status }: { status: string }) {
       bg={colors.bg}
       color={colors.text}
     >
-      {status}
+      {label}
     </Text>
   );
 }
@@ -120,7 +130,12 @@ export default function PropertyDetails({
   listingStatus = "Available",
   floorNumber ,
 }: Partial<PropertyOverviewProps>) {
-  const formattedPrice = new Intl.NumberFormat("fr-MA", {
+  const t = useTranslations("properties.detail");
+  const tType = useTranslations("propertyTypes");
+  const locale = useLocale();
+
+  // Currency stays MAD; the locale decides grouping and symbol placement.
+  const formattedPrice = new Intl.NumberFormat(`${locale}-MA`, {
     style: "currency",
     currency: "MAD",
     maximumFractionDigits: 0,
@@ -155,7 +170,7 @@ export default function PropertyDetails({
             fontStyle="italic"
             fontWeight="400"
           >
-            Property Overview
+            {t("overview")}
           </Text>
         </Box>
         <StatusBadge status={listingStatus} />
@@ -207,52 +222,52 @@ export default function PropertyDetails({
       >
         <DetailItem
           icon={<Iconify icon={PROPERTYICONS.propertyType} {...iconProps} />}
-          label="Property Type"
-          value={category}
+          label={t("propertyType")}
+          value={tType(categoryToPropertyType(category ?? ""))}
         />
         <DetailItem
           icon={<Iconify icon={PROPERTYICONS.totalArea} {...iconProps} />}
-          label="Total Area"
+          label={t("totalArea")}
           value={`${totalArea} m²`}
         />
         <DetailItem
           icon={<Iconify icon={PROPERTYICONS.totalArea} {...iconProps} />}
-          label="Living Area"
+          label={t("livingArea")}
           value={`${livingArea} m²`}
         />
         <DetailItem
           icon={<Iconify icon={PROPERTYICONS.bedrooms} {...iconProps} />}
-          label="Bedrooms"
+          label={t("bedrooms")}
           value={bedrooms}
         />
         <DetailItem
           icon={<Iconify icon={PROPERTYICONS.bathrooms} {...iconProps} />}
-          label="Bathrooms"
+          label={t("bathrooms")}
           value={bathrooms}
         />
         <DetailItem
           icon={<Iconify icon={PROPERTYICONS.parkingSpaces} {...iconProps} />}
-          label="Parking"
-          value={`${parkingSpaces} space${parkingSpaces !== 1 ? "s" : ""}`}
+          label={t("parking")}
+          value={t("parkingCount", { count: parkingSpaces ?? 0 })}
         />
         <DetailItem
           icon={<Iconify icon={PROPERTYICONS.isFurnished} {...iconProps} />}
-          label="Furnished"
-          value={isFurnished ? "Yes" : "No"}
+          label={t("furnished")}
+          value={isFurnished ? t("yes") : t("no")}
         />
         <DetailItem
           icon={<Iconify icon={PROPERTYICONS.buildingAge} {...iconProps} />}
-          label="Built"
+          label={t("built")}
           value={buildingAge}
         />
         <DetailItem
           icon={<Iconify icon={PROPERTYICONS.orientation} {...iconProps} />}
-          label="Condition"
+          label={t("condition")}
           value={propertyCondition}
         />
         <DetailItem
           icon={<Iconify icon={PROPERTYICONS.floorNumber} {...iconProps} />}
-          label="Floor"
+          label={t("floor")}
           value={floorNumber}
         />
       </Grid>

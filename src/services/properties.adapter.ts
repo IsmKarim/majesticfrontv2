@@ -2,6 +2,7 @@ import "server-only";
 
 import type { Paginated } from "./api.client";
 import type { PropertyQuery } from "@/features/properties/property.query";
+import { categoryToPropertyType, normalizeTransactionType } from "@/config/propertyOptions";
 import { type Property, mockProperties } from "@/types/property.type";
 
 /**
@@ -13,29 +14,13 @@ import { type Property, mockProperties } from "@/types/property.type";
  * calls on each function for the intended endpoint.
  */
 
-/**
- * The mock data stores display labels ("Apartment", "Villa") while the URL and
- * the filter UI speak the slugs from `config/data.ts`. The real API will return
- * slugs directly, at which point this mapping disappears with the mocks.
- */
-const CATEGORY_TO_TYPE: Record<string, string> = {
-    Apartment: "appartment",
-    Studio: "appartment",
-    Penthouse: "appartment",
-    Villa: "villa",
-    Riad: "house",
-    House: "house",
-    Land: "land",
-    Office: "business",
-    Commercial: "commercial",
-};
 
 function matches(property: Property, query: PropertyQuery): boolean {
     const { transactionType, propertyType, city, neighborhood } = query;
     const { priceMin, priceMax, bedrooms, bathrooms, equipped } = query;
 
-    if (transactionType && property.transactionType.toLowerCase() !== transactionType) return false;
-    if (propertyType && (CATEGORY_TO_TYPE[property.category] ?? "other") !== propertyType) return false;
+    if (transactionType && normalizeTransactionType(property.transactionType) !== transactionType) return false;
+    if (propertyType && categoryToPropertyType(property.category) !== propertyType) return false;
     if (city && property.city.toLowerCase() !== city.toLowerCase()) return false;
     if (neighborhood && property.neighborhood.toLowerCase() !== neighborhood.toLowerCase()) return false;
     if (priceMin !== undefined && property.price < priceMin) return false;

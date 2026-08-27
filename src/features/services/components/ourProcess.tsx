@@ -1,39 +1,16 @@
 import { Box, HStack, SimpleGrid, Text } from "@chakra-ui/react";
+import { getTranslations } from "next-intl/server";
 
-interface Step {
-    number: string;
-    title: string;
-    description: string;
-}
+// `titleKey`/`bodyKey` resolve against the `services.process` namespace.
+const STEPS = [
+    { number: "01", titleKey: "step1Title", bodyKey: "step1Body" },
+    { number: "02", titleKey: "step2Title", bodyKey: "step2Body" },
+    { number: "03", titleKey: "step3Title", bodyKey: "step3Body" },
+    { number: "04", titleKey: "step4Title", bodyKey: "step4Body" },
+] as const;
 
-const STEPS: Step[] = [
-    {
-        number: "01",
-        title: "Consultation",
-        description:
-            "Nous échangeons sur vos besoins, vos ambitions et le profil du bien recherché ou à valoriser.",
-    },
-    {
-        number: "02",
-        title: "Sélection",
-        description:
-            "Notre équipe identifie les opportunités les plus pertinentes, y compris hors marché.",
-    },
-    {
-        number: "03",
-        title: "Négociation",
-        description:
-            "Nous défendons vos intérêts à chaque étape, de l'offre jusqu'à la signature.",
-    },
-    {
-        number: "04",
-        title: "Suivi",
-        description:
-            "Un accompagnement personnalisé se poursuit bien au-delà de la transaction.",
-    },
-];
-
-export default function OurProcess() {
+export default async function OurProcess() {
+    const t = await getTranslations("services.process");
     return (
         <Box bg="brand.600" py={{ base: 14, md: 20 }} px={4}>
             <HStack justify="center" gap={3} mb={4}>
@@ -45,7 +22,7 @@ export default function OurProcess() {
                     letterSpacing="widest"
                     fontWeight="600"
                 >
-                    Notre Méthode
+                    {t("eyebrow")}
                 </Text>
                 <Box w="36px" h="1px" bg="secondary.500" />
             </HStack>
@@ -58,7 +35,7 @@ export default function OurProcess() {
                 textAlign="center"
                 mb={{ base: 10, md: 14 }}
             >
-                Un processus maîtrisé
+                {t("title")}
             </Text>
 
             <SimpleGrid
@@ -86,10 +63,10 @@ export default function OurProcess() {
                             textTransform="uppercase"
                             letterSpacing="wide"
                         >
-                            {step.title}
+                            {t(step.titleKey)}
                         </Text>
                         <Text color="secondary.300" fontSize="sm" lineHeight="tall">
-                            {step.description}
+                            {t(step.bodyKey)}
                         </Text>
                     </Box>
                 ))}

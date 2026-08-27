@@ -3,7 +3,9 @@
 import { Button, Field, Input, SimpleGrid, Stack, Textarea } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { contactFormSchema, ContactFormValues } from "./contact.schema";
+import { useTranslations } from "next-intl";
+import { useMemo } from "react";
+import { createContactFormSchema, ContactFormValues } from "./contact.schema";
 
 type ContactFormProps = {
   onSubmit: (values: ContactFormValues) => Promise<void> | void;
@@ -24,16 +26,20 @@ const DEFAULT_VALUES: ContactFormValues = {
 export default function ContactForm({
   onSubmit,
   defaultValues,
-  submitLabel = "Envoyer le message",
+  submitLabel,
   isLoading = false,
   isDisabled = false,
 }: ContactFormProps) {
+  const t = useTranslations("contact.form");
+  const tv = useTranslations("contact.validation");
+  // Rebuilt when the locale changes so error messages follow the active language.
+  const schema = useMemo(() => createContactFormSchema(tv), [tv]);
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<ContactFormValues>({
-    resolver: zodResolver(contactFormSchema),
+    resolver: zodResolver(schema),
     defaultValues: {
       ...DEFAULT_VALUES,
       ...defaultValues,
@@ -49,11 +55,11 @@ export default function ContactForm({
         <SimpleGrid columns={{ base: 1, md: 2 }} gap={5}>
           <Field.Root invalid={!!errors.firstName} required>
             <Field.Label>
-              Prénom
+              {t("firstName")}
               <Field.RequiredIndicator />
             </Field.Label>
             <Input
-              placeholder="Yasmine"
+              placeholder={t("firstNamePlaceholder")}
               {...register("firstName")}
               disabled={isDisabled || submitting}
             />
@@ -62,11 +68,11 @@ export default function ContactForm({
 
           <Field.Root invalid={!!errors.lastName} required>
             <Field.Label>
-              Nom
+              {t("lastName")}
               <Field.RequiredIndicator />
             </Field.Label>
             <Input
-              placeholder="Alaoui"
+              placeholder={t("lastNamePlaceholder")}
               {...register("lastName")}
               disabled={isDisabled || submitting}
             />
@@ -77,12 +83,12 @@ export default function ContactForm({
         <SimpleGrid columns={{ base: 1, md: 2 }} gap={5}>
           <Field.Root invalid={!!errors.email} required>
             <Field.Label>
-              Email
+              {t("email")}
               <Field.RequiredIndicator />
             </Field.Label>
             <Input
               type="email"
-              placeholder="yasmine@exemple.com"
+              placeholder={t("emailPlaceholder")}
               {...register("email")}
               disabled={isDisabled || submitting}
             />
@@ -91,12 +97,12 @@ export default function ContactForm({
 
           <Field.Root invalid={!!errors.phoneNumber} required>
             <Field.Label>
-              Téléphone
+              {t("phone")}
               <Field.RequiredIndicator />
             </Field.Label>
             <Input
               type="tel"
-              placeholder="+212 6 12 34 56 78"
+              placeholder={t("phonePlaceholder")}
               {...register("phoneNumber")}
               disabled={isDisabled || submitting}
             />
@@ -106,11 +112,11 @@ export default function ContactForm({
 
         <Field.Root invalid={!!errors.message} required>
           <Field.Label>
-            Message
+            {t("message")}
             <Field.RequiredIndicator />
           </Field.Label>
           <Textarea
-            placeholder="Dites-nous comment nous pouvons vous aider..."
+            placeholder={t("messagePlaceholder")}
             minH="160px"
             resize="vertical"
             {...register("message")}
@@ -122,11 +128,11 @@ export default function ContactForm({
         <Button
           type="submit"
           loading={submitting}
-          loadingText="Envoi en cours..."
+          loadingText={t("submitting")}
           disabled={isDisabled || submitting}
           alignSelf={{ base: "stretch", md: "flex-start" }}
         >
-          {submitLabel}
+          {submitLabel ?? t("submit")}
         </Button>
       </Stack>
     </form>

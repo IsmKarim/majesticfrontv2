@@ -2,6 +2,7 @@
 
 "use client";
 
+import { useTranslations } from "next-intl";
 import {
   Box,
   HStack,
@@ -27,6 +28,7 @@ const ChevronRightIcon = () => (
 );
 
 export const TestimonialSlider = () => {
+  const t = useTranslations("testimonials");
   const {
     testimonials,
     activeIndex,
@@ -52,7 +54,7 @@ export const TestimonialSlider = () => {
     return (
       <Center minH="400px">
         <Text color="text.secondary" fontFamily="'Outfit', sans-serif">
-          Unable to load testimonials at this time.
+          {t("unavailable")}
         </Text>
       </Center>
     );
@@ -79,7 +81,7 @@ export const TestimonialSlider = () => {
       {/* Controls */}
       <HStack gap={6} justify="center" align="center">
         <IconButton
-          aria-label="Previous testimonial"
+          aria-label={t("previous")}
           onClick={goPrev}
           size="lg"
           color="text.secondary"
@@ -108,7 +110,7 @@ export const TestimonialSlider = () => {
         </HStack>
 
         <IconButton
-          aria-label="Next testimonial"
+          aria-label={t("next")}
           onClick={goNext}
           size="lg"
           color="white"

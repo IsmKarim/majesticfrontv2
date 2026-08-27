@@ -2,6 +2,7 @@
 
 import { Button, Flex } from "@chakra-ui/react";
 import { GalleryTag } from "../types";
+import { useTranslations } from "next-intl";
 
 interface GalleryTagFilterProps {
   tags: Array<GalleryTag | "all">;
@@ -9,17 +10,20 @@ interface GalleryTagFilterProps {
   onTagChange: (tag: GalleryTag | "all") => void;
 }
 
-const TAG_LABELS: Record<string, string> = {
-  all: "All Photos",
-  interior: "Interior",
-  exterior: "Exterior",
-  pool: "Pool",
-  garden: "Garden",
-  kitchen: "Kitchen",
-  bedroom: "Bedroom",
+// Values are i18n keys in the `properties.gallery` namespace.
+const TAG_LABEL_KEYS: Record<string, string> = {
+  all: "allPhotos",
+  interior: "tagInterior",
+  exterior: "tagExterior",
+  pool: "tagPool",
+  garden: "tagGarden",
+  kitchen: "tagKitchen",
+  bedroom: "tagBedroom",
 };
 
 export function GalleryTagFilter({ tags, activeTag, onTagChange }: GalleryTagFilterProps) {
+  const t = useTranslations("properties.gallery");
+
   if (tags.length <= 1) return null;
 
   return (
@@ -42,7 +46,7 @@ export function GalleryTagFilter({ tags, activeTag, onTagChange }: GalleryTagFil
             transform: "translateY(-1px)",
           }}
         >
-          {TAG_LABELS[tag ?? ""] ?? tag}
+          {t(TAG_LABEL_KEYS[tag ?? ""] ?? "allPhotos")}
         </Button>
       ))}
     </Flex>

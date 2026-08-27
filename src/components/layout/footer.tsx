@@ -12,6 +12,7 @@ import {
     Link,
     Icon,
 } from "@chakra-ui/react";
+import { useTranslations } from "next-intl";
 import Logo from "../ui/logo";
 // Assuming you have react-icons installed. If not, use generic Chakra Icons or text.
 import { FaPhoneAlt, FaEnvelope, FaCalendarCheck, FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
@@ -27,6 +28,8 @@ const SOCIAL_LINKS = [
 ];
 
 export function FooterView({ year }: { year: number }) {
+    const t = useTranslations("footer");
+    const tNav = useTranslations("nav");
     // defined colors for easy tweaking
     const bgBrand = "brand.900"; // slightly darker than 500 for footer
     const textMuted = "gray.400";
@@ -60,10 +63,10 @@ export function FooterView({ year }: { year: number }) {
                     <Flex direction={{ base: "column", md: "row" }} align="center" justify="space-between" gap={6}>
                         <Box>
                             <Text fontSize="2xl" fontWeight="bold" mb={2}>
-                                Prêt à concrétiser votre projet Immobilier ?
+                                {t("ctaTitle")}
                             </Text>
                             <Text color="whiteAlpha.800">
-                                Contactez-nous dès aujourd&apos;hui ou planifiez une visite.
+                                {t("ctaBody")}
                             </Text>
                         </Box>
 
@@ -76,7 +79,7 @@ export function FooterView({ year }: { year: number }) {
                                 transition="all 0.2s"
                             >
                                 <Link href={`mailto:${siteConfig.contact.email}`}>
-                                    <FaEnvelope />  Message
+                                    <FaEnvelope />  {t("message")}
                                 </Link>
                             </Button>
                             <Button
@@ -88,7 +91,7 @@ export function FooterView({ year }: { year: number }) {
                                 _hover={{ bg: "whiteAlpha.100", transform: "translateY(-6px)" }}
                             >
                                 <Link href={`tel:${siteConfig.contact.phone.replace(/[^\d+]/g, "")}`}>
-                                    <FaPhoneAlt />  Appeler
+                                    <FaPhoneAlt />  {t("call")}
                                 </Link>
                             </Button>
                             <Button
@@ -97,7 +100,7 @@ export function FooterView({ year }: { year: number }) {
                                 color="brand.900"
                                 _hover={{ bg: "gray.100", transform: "translateY(-6px)" }}
                             >
-                                <FaCalendarCheck />Visiter
+                                <FaCalendarCheck />{t("visit")}
                             </Button>
                         </Flex>
                     </Flex>
@@ -114,8 +117,7 @@ export function FooterView({ year }: { year: number }) {
                             <Logo />
                         </Box>
                         <Text color={textMuted} fontSize="sm">
-                            Votre partenaire de confiance pour des solutions immobilières d&apos;exception.
-                            L&apos;excellence à chaque étape.
+                            {t("tagline")}
                         </Text>
                         <Flex gap={4}>
                             {/* Social Icons with hover effects */}
@@ -141,7 +143,7 @@ export function FooterView({ year }: { year: number }) {
                     {/* Column 2: Navigation */}
                     <Stack align={"flex-start"}>
                         <Text fontWeight={"bold"} fontSize={"lg"} mb={2} color={accent}>
-                            Navigation
+                            {t("navigation")}
                         </Text>
                         {navigationConfig.mainNav.map((navItem, index) => (
                             <Link
@@ -151,7 +153,7 @@ export function FooterView({ year }: { year: number }) {
                                 _hover={{ color: "white", paddingLeft: "5px" }}
                                 transition="all 0.2s"
                             >
-                                {navItem.title}
+                                {tNav(navItem.title)}
                             </Link>
                         ))}
                     </Stack>
@@ -159,18 +161,18 @@ export function FooterView({ year }: { year: number }) {
                     {/* Column 3: Legal / Extra (Replacing the duplicate nav map) */}
                     <Stack align={"flex-start"}>
                         <Text fontWeight={"bold"} fontSize={"lg"} mb={2} color={accent}>
-                            Support
+                            {t("support")}
                         </Text>
-                        <Link href="#" color={textMuted} _hover={{ color: "white" }}>FAQ</Link>
-                        <Link href="#" color={textMuted} _hover={{ color: "white" }}>Politique de confidentialité</Link>
-                        <Link href="#" color={textMuted} _hover={{ color: "white" }}>Conditions générales</Link>
-                        <Link href="#" color={textMuted} _hover={{ color: "white" }}>Carrières</Link>
+                        <Link href="#" color={textMuted} _hover={{ color: "white" }}>{t("faq")}</Link>
+                        <Link href="#" color={textMuted} _hover={{ color: "white" }}>{t("privacy")}</Link>
+                        <Link href="#" color={textMuted} _hover={{ color: "white" }}>{t("terms")}</Link>
+                        <Link href="#" color={textMuted} _hover={{ color: "white" }}>{t("careers")}</Link>
                     </Stack>
 
                     {/* Column 4: Contact Info (Replacing the duplicate nav map) */}
                     <Stack align={"flex-start"}>
                         <Text fontWeight={"bold"} fontSize={"lg"} mb={2} color={accent}>
-                            Coordonnées
+                            {t("details")}
                         </Text>
 
                         <Flex align="center" gap={3} color={textMuted}>
@@ -205,11 +207,11 @@ export function FooterView({ year }: { year: number }) {
                         align={{ base: 'center', md: 'center' }}
                     >
                         <Text fontSize="sm" color={textMuted}>
-                            © {year} {siteConfig.name}. All Rights Reserved.
+                            © {year} {siteConfig.name}. {t("rights")}
                         </Text>
                         <Stack direction={'row'} gap={6} mt={{ base: 4, md: 0 }}>
-                            <Link fontSize={'sm'} color={textMuted} _hover={{ color: accent }}>Privacy</Link>
-                            <Link fontSize={'sm'} color={textMuted} _hover={{ color: accent }}>Terms</Link>
+                            <Link fontSize={'sm'} color={textMuted} _hover={{ color: accent }}>{t("privacyShort")}</Link>
+                            <Link fontSize={'sm'} color={textMuted} _hover={{ color: accent }}>{t("termsShort")}</Link>
                         </Stack>
                     </Flex>
                 </Container>

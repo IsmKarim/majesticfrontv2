@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Alert, Box, Text } from "@chakra-ui/react";
 import { PropertyGalleryProps } from "./types";
 import { usePropertyGallery } from "./usePropertyGallery";
@@ -12,6 +13,7 @@ export default function PropertyGallery({
   propertyId,
   propertyName,
 }: PropertyGalleryProps) {
+  const t = useTranslations("properties.gallery");
   const {
     images,
     activeTag,
@@ -31,7 +33,7 @@ export default function PropertyGallery({
       <Alert.Root status="error" borderRadius="xl">
         <Alert.Indicator />
         <Alert.Content>
-          <Alert.Title>Gallery unavailable</Alert.Title>
+          <Alert.Title>{t("unavailable")}</Alert.Title>
           <Alert.Description>
             We couldn&apos;t load the photos for {propertyName}. Please try again later.
           </Alert.Description>

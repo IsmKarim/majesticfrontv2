@@ -35,7 +35,7 @@ export default async function AgencyWord() {
           >
             <Image
               src="/images/cities/kenitra.png"
-              alt="Vue de Kénitra"
+              alt={t("imageAlt")}
               fill
               style={{
                 objectFit: "cover",

@@ -7,34 +7,25 @@ import ContactForm from "@/features/contact/contactForm";
 import { ContactFormValues } from "@/features/contact/contact.schema";
 import { siteConfig } from "@/config/site";
 import { toaster } from "@/components/ui/toaster";
+import { useTranslations } from "next-intl";
 
 const { street, city, country } = siteConfig.contact.address;
 
+// `labelKey` resolves against the `contact` namespace at render time.
 const CONTACT_DETAILS = [
-    {
-        icon: "mdi:map-marker-outline",
-        label: "Adresse",
-        value: `${street}, ${city}, ${country}`,
-    },
-    {
-        icon: "mdi:phone-outline",
-        label: "Téléphone",
-        value: siteConfig.contact.phone,
-    },
-    {
-        icon: "mdi:email-outline",
-        label: "Email",
-        value: siteConfig.contact.email,
-    },
+    { icon: "mdi:map-marker-outline", labelKey: "addressLabel", value: `${street}, ${city}, ${country}` },
+    { icon: "mdi:phone-outline", labelKey: "phoneLabel", value: siteConfig.contact.phone },
+    { icon: "mdi:email-outline", labelKey: "emailLabel", value: siteConfig.contact.email },
 ];
 
 export default function ContactPage() {
+    const t = useTranslations("contact");
     // TODO: wire to a real backend endpoint once the API exists
     const handleSubmit = async (values: ContactFormValues) => {
         void values;
         toaster.create({
-            title: "Message envoyé",
-            description: "Notre équipe vous recontactera dans les plus brefs délais.",
+            title: t("successTitle"),
+            description: t("successBody"),
             type: "success",
         });
     };
@@ -51,7 +42,7 @@ export default function ContactPage() {
                         letterSpacing="widest"
                         fontWeight="600"
                     >
-                        Contact
+                        {t("eyebrow")}
                     </Text>
                     <Box w="36px" h="1px" bg="secondary.500" />
                 </HStack>
@@ -63,9 +54,9 @@ export default function ContactPage() {
                     color="white"
                     mb={4}
                 >
-                    Parlons de votre{" "}
+                    {t("titleLead")}{" "}
                     <Text as="span" color="secondary.400" fontStyle="italic">
-                        projet
+                        {t("titleAccent")}
                     </Text>
                 </Text>
 
@@ -76,8 +67,7 @@ export default function ContactPage() {
                     mx="auto"
                     lineHeight="tall"
                 >
-                    Une question, un projet d&apos;achat, de vente ou de location ?
-                    Notre équipe vous répond avec discrétion et efficacité.
+                    {t("body")}
                 </Text>
             </Box>
 
@@ -93,11 +83,11 @@ export default function ContactPage() {
                 <Reveal>
                     <Stack gap={8} color="white">
                         <Text as="h2" fontSize={{ base: "xl", md: "2xl" }} fontWeight="bold">
-                            Nos coordonnées
+                            {t("detailsTitle")}
                         </Text>
 
                         {CONTACT_DETAILS.map((detail) => (
-                            <Flex key={detail.label} align="flex-start" gap={4}>
+                            <Flex key={detail.labelKey} align="flex-start" gap={4}>
                                 <Flex
                                     align="center"
                                     justify="center"
@@ -111,7 +101,7 @@ export default function ContactPage() {
                                 </Flex>
                                 <Box>
                                     <Text fontSize="sm" color="secondary.500" textTransform="uppercase" letterSpacing="wide">
-                                        {detail.label}
+                                        {t(detail.labelKey)}
                                     </Text>
                                     <Text color="whiteAlpha.900" mt={1}>
                                         {detail.value}

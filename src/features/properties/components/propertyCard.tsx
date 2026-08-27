@@ -4,6 +4,8 @@ import { Property } from "@/types/property.type";
 import { Badge, Box, Flex, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import NextLink from "next/link";
+import { useTranslations } from "next-intl";
+import { categoryToPropertyType, normalizeTransactionType } from "@/config/propertyOptions";
 
 // ── Config ──────────────────────────────────────────────────────────────────
 const PROP_ATTRIBUTES: {
@@ -16,10 +18,9 @@ const PROP_ATTRIBUTES: {
         { icon: "parkingSpaces", getValue: (p) => p.parkingSpaces },
     ];
 
-function formatPricePerSqm(price: number, surface?: number): string | null {
+function pricePerSqmValue(price: number, surface?: number): number | null {
     if (!surface) return null;
-    const rounded = Math.round(price / surface / 100) * 100;
-    return `${rounded.toLocaleString()} MAD/m²`;
+    return Math.round(price / surface / 100) * 100;
 }
 
 function PropAttributeWithIcon({
@@ -41,8 +42,14 @@ function PropAttributeWithIcon({
 
 // ── Main Component ────────────────────────────────────────────────────────────
 export default function PropertyCard({ property }: { property: Property }) {
-    const pricePerSqm = formatPricePerSqm(property.price, property.totalArea);
-    const isBuy = property.transactionType === "buy";
+    const t = useTranslations("properties.card");
+    const tType = useTranslations("propertyTypes");
+    const tTx = useTranslations("transactionTypes");
+
+    const pricePerSqm = pricePerSqmValue(property.price, property.totalArea);
+    // The mocks capitalise ("Sale"/"Rent"); normalise before comparing.
+    const transaction = normalizeTransactionType(property.transactionType);
+    const isSale = transaction === "sale";
     const location = `${property.neighborhood} - ${property.city}`
     return (
         <Box
@@ -67,13 +74,13 @@ export default function PropertyCard({ property }: { property: Property }) {
 
                     {/* Transaction badge — Buy / Rent */}
                     <Badge position="absolute" top={3} left={3} variant="solid"
-                        colorScheme={isBuy ? "yellow" : "blue"}>
-                        {isBuy ? "Vente" : "Location"}
+                        colorScheme={isSale ? "yellow" : "blue"}>
+                        {tTx(transaction)}
                     </Badge>
 
                     {/* Property type badge */}
                     <Badge position="absolute" top={3} right={3} variant="solid">
-                        {property.category}
+                        {tType(categoryToPropertyType(property.category))}
                     </Badge>
                 </Box>
 
@@ -86,11 +93,11 @@ export default function PropertyCard({ property }: { property: Property }) {
                     {/* Price row */}
                     <Flex align="baseline" gap={2} mb={3}>
                         <Text color="secondary.500" fontWeight="bold" fontSize="lg">
-                            {property.price.toLocaleString()} MAD
+                            {t("price", { price: property.price.toLocaleString() })}
                         </Text>
                         {pricePerSqm && (
                             <Text color="gray.400" fontSize="xs">
-                                {pricePerSqm}
+                                {t("perSqm", { price: pricePerSqm.toLocaleString() })}
                             </Text>
                         )}
                     </Flex>

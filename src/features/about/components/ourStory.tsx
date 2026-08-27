@@ -1,9 +1,11 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import Image from "next/image";
+import { getTranslations } from "next-intl/server";
 
 const IMAGE_DIMS = { maxW: "400px", h: { base: "320px", md: "440px", lg: "560px" } };
 
-export default function OurStory() {
+export default async function OurStory() {
+    const t = await getTranslations("about.story");
     return (
         <Flex
             py={{ base: 8, md: 12 }}
@@ -31,7 +33,7 @@ export default function OurStory() {
                     >
                         <Image
                             src="/images/properties/villa.jpg"
-                            alt="Villa Majestic Keys"
+                            alt={t("imageAlt")}
                             fill
                             style={{
                                 objectFit: "cover",
@@ -69,7 +71,7 @@ export default function OurStory() {
                                 textTransform="uppercase"
                                 letterSpacing="wide"
                             >
-                                Années d&apos;expérience
+                                {t("experienceLabel")}
                             </Text>
                         </Box>
                     </Box>
@@ -92,7 +94,7 @@ export default function OurStory() {
                     textTransform="uppercase"
                     letterSpacing="wide"
                 >
-                    Notre Histoire
+                    {t("eyebrow")}
                 </Text>
 
                 <Text
@@ -102,7 +104,7 @@ export default function OurStory() {
                     mt={2}
                     mb={4}
                 >
-                    Une vision, un héritage
+                    {t("title")}
                 </Text>
 
                 <Text
@@ -110,12 +112,7 @@ export default function OurStory() {
                     fontSize={{ base: "sm", md: "md" }}
                     lineHeight="tall"
                 >
-                    Majestic Keys est née à Kénitra d&apos;une conviction simple :
-                    l&apos;immobilier de prestige mérite une approche à la hauteur de
-                    son exigence. Loin des transactions standardisées, nous avons
-                    construit une agence à taille humaine, où chaque dossier est
-                    traité avec la rigueur et la discrétion d&apos;un service
-                    véritablement sur-mesure.
+                    {t("body")}
                 </Text>
 
                 <Text
@@ -124,12 +121,7 @@ export default function OurStory() {
                     fontSize={{ base: "sm", md: "md" }}
                     lineHeight="tall"
                 >
-                    Au fil des années, notre réseau s&apos;est étendu aux quartiers
-                    les plus recherchés du royaume, nous donnant accès à des biens
-                    rares, souvent invisibles sur le marché ouvert. Cette proximité
-                    avec le terrain, alliée à une expertise juridique et fiscale
-                    pointue, fait de nous le partenaire de confiance d&apos;une
-                    clientèle marocaine et internationale exigeante.
+                    {t("body2")}
                 </Text>
 
                 <Text
@@ -140,7 +132,7 @@ export default function OurStory() {
                     fontStyle="italic"
                     fontSize={{ base: "md", md: "lg" }}
                 >
-                    — L&apos;équipe Majestic Keys
+                    {t("signature")}
                 </Text>
             </Flex>
         </Flex>

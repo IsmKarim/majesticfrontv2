@@ -6,8 +6,10 @@ import { getNeighborhoodsCollection } from "@/config/citiesData";
 import {
     buildPropertyHref,
     parsePropertyQuery,
+    parsePropertyView,
     type PropertyQuery,
     type PropertySort,
+    type PropertyView,
 } from "@/features/properties/property.query";
 
 /** Sentinel values the filter controls use for "no preference". */
@@ -82,9 +84,23 @@ export const useSearch = () => {
         router.push(buildPropertyHref({ ...clean(draft), page: 1 }));
     };
 
+    /** Grid vs list, read back off the URL so the server renders the right one. */
+    const view = useMemo<PropertyView>(
+        () => parsePropertyView(paramsToObject(searchParams)),
+        [searchParams],
+    );
+
     /** Sort is a single action, so it commits straight to the URL. */
     const applySort = (sort: PropertySort) => {
-        router.replace(buildPropertyHref({ ...committed, sort, page: 1 }), { scroll: false });
+        router.replace(buildPropertyHref({ ...committed, view, sort, page: 1 }), { scroll: false });
+    };
+
+    /**
+     * Switching layout keeps the current page — unlike a filter or sort change,
+     * it does not reorder anything, so there is nothing to reset.
+     */
+    const applyView = (next: PropertyView) => {
+        router.replace(buildPropertyHref({ ...committed, view: next }), { scroll: false });
     };
 
     const neighborhoodsOptions = useMemo(
@@ -97,6 +113,8 @@ export const useSearch = () => {
         searchQuery: draft,
         /** The filters currently reflected in the URL and the rendered results. */
         committed,
+        view,
+        applyView,
         updateSearchQuery,
         submitSearch,
         applySort,

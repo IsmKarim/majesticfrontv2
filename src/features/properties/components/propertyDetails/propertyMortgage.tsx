@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import * as React from "react";
 import {
   Box,
@@ -80,6 +81,8 @@ function LabeledSlider({
 }
 
 export default function PropertyMortgage({ price }: PropertyMortgageProps) {
+  const t = useTranslations("properties.mortgage");
+  const td = useTranslations("properties.detail");
   const [downPaymentPercent, setDownPaymentPercent] = React.useState(20);
   const [interestRate, setInterestRate] = React.useState(4);
   const [termYears, setTermYears] = React.useState(20);
@@ -125,12 +128,12 @@ export default function PropertyMortgage({ price }: PropertyMortgageProps) {
       color="white"
     >
       <Text as="h3" fontWeight="semibold" mb={4}>
-        Mortgage simulator
+        {t("title")}
       </Text>
 
       <Stack gap={6}>
         <LabeledSlider
-          label="Apport personnel (%)"
+          label={td("downPayment")}
           min={0}
           max={80}
           step={1}
@@ -141,7 +144,7 @@ export default function PropertyMortgage({ price }: PropertyMortgageProps) {
         />
 
         <LabeledSlider
-          label="Taux d'intérêt annuel"
+          label={t("rate")}
           min={0}
           max={12}
           step={0.05}
@@ -151,7 +154,7 @@ export default function PropertyMortgage({ price }: PropertyMortgageProps) {
         />
 
         <LabeledSlider
-          label="Durée du crédit (années)"
+          label={t("duration")}
           min={5}
           max={30}
           step={1}
@@ -162,7 +165,7 @@ export default function PropertyMortgage({ price }: PropertyMortgageProps) {
 
         <Stack direction={{ base: "column", md: "row" }} gap={4} mt={4}>
           <Stat.Root flex="1">
-            <Stat.Label>Mensualité estimée</Stat.Label>
+            <Stat.Label>{t("monthly")}</Stat.Label>
             <Stat.ValueText asChild>
               <Text fontSize="2xl" fontWeight="bold" color="secondary.300">
                 <FormatNumber
@@ -176,14 +179,14 @@ export default function PropertyMortgage({ price }: PropertyMortgageProps) {
           </Stat.Root>
 
           <Stat.Root flex="1">
-            <Stat.Label>Montant emprunté</Stat.Label>
+            <Stat.Label>{t("borrowed")}</Stat.Label>
             <Stat.ValueText>
               <FormatNumber value={principal} style="currency" currency="MAD" />
             </Stat.ValueText>
           </Stat.Root>
 
           <Stat.Root flex="1">
-            <Stat.Label>Intérêts totaux</Stat.Label>
+            <Stat.Label>{t("totalInterest")}</Stat.Label>
             <Stat.ValueText>
               <FormatNumber
                 value={totalInterest}
@@ -195,7 +198,7 @@ export default function PropertyMortgage({ price }: PropertyMortgageProps) {
         </Stack>
 
         <Text fontSize="xs" color="fg.muted">
-          Simulation indicative , à valider avec la banque.
+          {t("disclaimer")}
         </Text>
       </Stack>
     </Box>

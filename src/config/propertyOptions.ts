@@ -22,3 +22,29 @@ export const TRANSACTIONTYPES = [
     { value: 'rent', label: 'Location' },
     { value: 'shortlet', label: 'Location de Vacances' },
 ] as const;
+
+/**
+ * The mock data stores display labels ("Apartment", "Villa") while URLs, filters
+ * and translation keys use slugs. Shared by the data adapter and the UI so both
+ * agree on the mapping. Delete once the API returns slugs directly.
+ */
+const CATEGORY_TO_TYPE: Record<string, string> = {
+    Apartment: "appartment",
+    Studio: "appartment",
+    Penthouse: "appartment",
+    Villa: "villa",
+    Riad: "house",
+    House: "house",
+    Land: "land",
+    Office: "business",
+    Commercial: "commercial",
+};
+
+export function categoryToPropertyType(category: string): string {
+    return CATEGORY_TO_TYPE[category] ?? "other";
+}
+
+/** "Sale" | "sale" -> "sale". Normalises the mocks' capitalised values. */
+export function normalizeTransactionType(value: string): string {
+    return value.toLowerCase();
+}

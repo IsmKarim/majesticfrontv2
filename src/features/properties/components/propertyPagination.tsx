@@ -1,6 +1,7 @@
 import { Flex, Text } from "@chakra-ui/react";
 import NextLink from "next/link";
-import { buildPropertyHref, type PropertyQuery } from "../property.query";
+import { buildPropertyHref, type PropertyQuery, type PropertyView } from "../property.query";
+import { getTranslations } from "next-intl/server";
 
 /**
  * Builds a compact page list: always the first and last page, plus a window
@@ -37,21 +38,27 @@ const linkStyles = {
  * Real `<a>` elements rather than click handlers — pagination has to be
  * crawlable, and each page is its own indexable URL.
  */
-export default function PropertyPagination({
+export default async function PropertyPagination({
     query,
+    view,
     page,
     totalPages,
 }: {
     query: PropertyQuery;
+    view: PropertyView;
     page: number;
     totalPages: number;
 }) {
+    const t = await getTranslations("common");
+    const tp = await getTranslations("properties.pagination");
+
     if (totalPages <= 1) return null;
 
-    const href = (target: number) => buildPropertyHref({ ...query, page: target });
+    // Carry the view through so paging does not throw the reader back to grid.
+    const href = (target: number) => buildPropertyHref({ ...query, view, page: target });
 
     return (
-        <Flex as="nav" aria-label="Pagination" justify="center" align="center" gap={2} py={10} bg="brand.700" wrap="wrap">
+        <Flex as="nav" aria-label={tp("label")} justify="center" align="center" gap={2} py={10} bg="brand.700" wrap="wrap">
             {page > 1 && (
                 <Text
                     asChild
@@ -61,7 +68,7 @@ export default function PropertyPagination({
                     _hover={{ borderColor: "secondary.500", color: "secondary.500" }}
                 >
                     <NextLink href={href(page - 1)} rel="prev">
-                        Précédent
+                        {t("previous")}
                     </NextLink>
                 </Text>
             )}
@@ -106,7 +113,7 @@ export default function PropertyPagination({
                     _hover={{ borderColor: "secondary.500", color: "secondary.500" }}
                 >
                     <NextLink href={href(page + 1)} rel="next">
-                        Suivant
+                        {t("next")}
                     </NextLink>
                 </Text>
             )}

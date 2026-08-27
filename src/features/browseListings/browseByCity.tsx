@@ -1,6 +1,7 @@
 import Reveal from "@/components/ui/reveal";
 import { Box, HStack, SimpleGrid, Text } from "@chakra-ui/react";
 import BrowseCard from "./browseCard";
+import { getTranslations } from "next-intl/server";
 
 // TODO: real per-city photos and live listing counts once the backend is wired
 const CITIES = [
@@ -11,7 +12,8 @@ const CITIES = [
     { title: "Marrakech", img: "/images/cities/pexels-anouar-12433311.jpg", totalListings: 6, href: "/properties?city=marrakech" },
 ];
 
-export default function BrowseByCity() {
+export default async function BrowseByCity() {
+    const t = await getTranslations("home.cities");
     return (
         <Box bg="brand.600" py={{ base: 16, md: 24 }} px={4}>
             <Reveal>
@@ -24,7 +26,7 @@ export default function BrowseByCity() {
                         letterSpacing="widest"
                         fontWeight="600"
                     >
-                        Notre Présence
+                        {t("eyebrow")}
                     </Text>
                     <Box w="36px" h="1px" bg="secondary.500" />
                 </HStack>
@@ -37,7 +39,7 @@ export default function BrowseByCity() {
                     textAlign="center"
                     mb={{ base: 10, md: 14 }}
                 >
-                    Villes d&apos;exception
+                    {t("title")}
                 </Text>
             </Reveal>
 

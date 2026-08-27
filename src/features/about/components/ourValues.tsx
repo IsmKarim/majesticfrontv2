@@ -1,34 +1,16 @@
 import { Box, Flex, HStack, Icon, SimpleGrid, Text } from "@chakra-ui/react";
 import { BsGem, BsEyeSlash, BsLightningChargeFill } from "react-icons/bs";
+import { getTranslations } from "next-intl/server";
 
-interface Value {
-    icon: React.ElementType;
-    title: string;
-    description: string;
-}
+// `titleKey`/`bodyKey` resolve against the `about.values` namespace.
+const VALUES = [
+    { icon: BsGem, titleKey: "excellenceTitle", bodyKey: "excellenceBody" },
+    { icon: BsEyeSlash, titleKey: "discretionTitle", bodyKey: "discretionBody" },
+    { icon: BsLightningChargeFill, titleKey: "efficiencyTitle", bodyKey: "efficiencyBody" },
+] as const;
 
-const VALUES: Value[] = [
-    {
-        icon: BsGem,
-        title: "Excellence",
-        description:
-            "Une sélection rigoureuse et une exécution irréprochable à chaque étape de votre projet.",
-    },
-    {
-        icon: BsEyeSlash,
-        title: "Discrétion",
-        description:
-            "Vos transactions sont traitées en toute confidentialité, à l'abri des regards indiscrets.",
-    },
-    {
-        icon: BsLightningChargeFill,
-        title: "Efficacité",
-        description:
-            "Un accompagnement réactif, sans détour, pour concrétiser vos ambitions au bon rythme.",
-    },
-];
-
-export default function OurValues() {
+export default async function OurValues() {
+    const t = await getTranslations("about.values");
     return (
         <Box bg="brand.600" py={{ base: 14, md: 20 }} px={4}>
             <HStack justify="center" gap={3} mb={4}>
@@ -40,7 +22,7 @@ export default function OurValues() {
                     letterSpacing="widest"
                     fontWeight="600"
                 >
-                    Nos Valeurs
+                    {t("eyebrow")}
                 </Text>
                 <Box w="36px" h="1px" bg="secondary.500" />
             </HStack>
@@ -53,7 +35,7 @@ export default function OurValues() {
                 textAlign="center"
                 mb={{ base: 10, md: 14 }}
             >
-                Ce qui nous définit
+                {t("title")}
             </Text>
 
             <SimpleGrid
@@ -63,7 +45,7 @@ export default function OurValues() {
                 mx="auto"
             >
                 {VALUES.map((value) => (
-                    <Box key={value.title} textAlign="center" px={4}>
+                    <Box key={value.titleKey} textAlign="center" px={4}>
                         <Flex justify="center" mb={5}>
                             <Box
                                 p={4}
@@ -71,7 +53,7 @@ export default function OurValues() {
                                 borderColor="secondary.700"
                                 color="secondary.500"
                             >
-                                <Icon as={value.icon} boxSize={7} />
+                                <Icon asChild boxSize={7}><value.icon /></Icon>
                             </Box>
                         </Flex>
                         <Text
@@ -82,10 +64,10 @@ export default function OurValues() {
                             textTransform="uppercase"
                             letterSpacing="wide"
                         >
-                            {value.title}
+                            {t(value.titleKey)}
                         </Text>
                         <Text color="secondary.300" fontSize="sm" lineHeight="tall">
-                            {value.description}
+                            {t(value.bodyKey)}
                         </Text>
                     </Box>
                 ))}

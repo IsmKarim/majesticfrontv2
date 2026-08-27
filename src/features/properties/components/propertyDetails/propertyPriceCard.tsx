@@ -4,8 +4,10 @@
 
 import { Box, Button, HStack, Icon, Link, Text, VStack } from "@chakra-ui/react";
 import { FiDownload } from "react-icons/fi";
+import { useTranslations } from "next-intl";
 
 export default function PriceCard ({ price = 8_450_000 }: { price?: number }){
+  const t = useTranslations("properties.detail");
   const formatted = new Intl.NumberFormat("fr-MA").format(price);
 
   return (
@@ -26,7 +28,7 @@ export default function PriceCard ({ price = 8_450_000 }: { price?: number }){
         color="secondary.400"
         mb={2}
       >
-        Price on Inquiry
+        {t("priceOnInquiry")}
       </Text>
       <Text
         fontSize={{ base: "3xl", xl: "4xl" }}
@@ -50,7 +52,7 @@ export default function PriceCard ({ price = 8_450_000 }: { price?: number }){
         borderRadius="none"
         mb={4}
       >
-        Request a Private Viewing
+        {t("requestViewing")}
       </Button>
 
       <Link
@@ -67,7 +69,7 @@ export default function PriceCard ({ price = 8_450_000 }: { price?: number }){
         href="#"
       >
         <Icon as={FiDownload} boxSize={3} />
-        Download Brochure
+        {t("downloadBrochure")}
       </Link>
 
 
@@ -94,10 +96,10 @@ export default function PriceCard ({ price = 8_450_000 }: { price?: number }){
             textTransform="uppercase"
             color="secondary.400"
           >
-            Celestial Advisor
+            {t("advisorRole")}
           </Text>
           <Text fontSize="sm" fontWeight="600" color="secondary.100" fontFamily="heading">
-            Julian St. James
+            {t("advisorName")}
           </Text>
           <Link
             fontSize="2xs"
@@ -107,7 +109,7 @@ export default function PriceCard ({ price = 8_450_000 }: { price?: number }){
             _hover={{ color: "accent.300" }}
             href="#"
           >
-            Contact Directly
+            {t("contactDirectly")}
           </Link>
         </VStack>
       </HStack>

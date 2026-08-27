@@ -3,19 +3,21 @@
 
 import { Box, Flex, Text } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 
 interface Stat {
   value: number;
   suffix: string;
-  label: string;
+  labelKey: string;
   duration?: number;
 }
 
-const STATS: Stat[] = [
-  { value: 15, suffix: "+", label: "Années d'expertise", duration: 1500 },
-  { value: 500, suffix: "+", label: "Biens vendus", duration: 2000 },
-  { value: 100, suffix: "%", label: "Satisfaction client", duration: 1800 },
-];
+// `labelKey` resolves against the `home.stats` namespace.
+const STATS = [
+  { value: 15, suffix: "+", labelKey: "years", duration: 1500 },
+  { value: 500, suffix: "+", labelKey: "sold", duration: 2000 },
+  { value: 100, suffix: "%", labelKey: "satisfaction", duration: 1800 },
+] as const;
 
 // ─── easing: easeOutExpo ───────────────────────────────────────────────────
 function easeOutExpo(t: number): number {
@@ -63,6 +65,7 @@ function StatItem({
   active: boolean;
   showDivider: boolean;
 }) {
+  const t = useTranslations("home.stats");
   const count = useCounter(stat.value, stat.duration ?? 1500, active);
 
   return (
@@ -85,7 +88,7 @@ function StatItem({
         letterSpacing="widest"
         mt={2}
       >
-        {stat.label}
+        {t(stat.labelKey)}
       </Text>
     </Box>
   );
@@ -129,7 +132,7 @@ export default function WhyChooseUsStats() {
     >
       {STATS.map((stat, i) => (
         <StatItem
-          key={stat.label}
+          key={stat.labelKey}
           stat={stat}
           active={hasAnimated}
           showDivider={i < STATS.length - 1}

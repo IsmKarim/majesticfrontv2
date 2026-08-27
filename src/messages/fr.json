@@ -1,22 +1,384 @@
 {
-    "common": {},
-    "home": {
-        "hero": {
-            "eyebrow": "Agence immobilière à Kénitra",
-            "titleLead": "Une agence",
-            "titleAccent": "premium",
-            "titleEnd": "à Kénitra",
-            "trait1": "Discrète",
-            "trait2": "Efficace"
-        },
-        "agencyWord": {
-            "label": "Excellence",
-            "title": "Mot de l'agence",
-            "body": "Chez Majestic Keys, nous croyons que l'immobilier de luxe ne se résume pas à des mètres carrés, mais à l'art de vivre. Notre mission est d'offrir une expérience sur-mesure, où la discrétion et l'efficacité sont les piliers de chaque transaction.",
-            "body2": "Spécialistes du marché de Kénitra, nous accompagnons une clientèle exigeante dans la recherche de résidences d'exception. Notre réseau exclusif nous permet d'accéder à des biens « off-market » uniques.",
-            "cta": "Découvrir l'histoire de l'agence",
-            "experienceYears": "+15",
-            "experienceLabel": "Années d'expérience"
-        }
+  "common": {
+    "seeMore": "Voir plus",
+    "seeAll": "Voir tous nos biens",
+    "previous": "Précédent",
+    "next": "Suivant",
+    "retry": "Réessayer",
+    "close": "Fermer",
+    "toggleTheme": "Changer de thème",
+    "homeLink": "Majestic Keys — Accueil",
+    "logoAlt": "Logo Majestic Keys",
+    "language": "Langue",
+    "changeLanguage": "Changer de langue"
+  },
+  "nav": {
+    "openMenu": "Ouvrir le menu",
+    "home": "Accueil",
+    "properties": "Nos biens",
+    "buy": "Acheter",
+    "buyDescription": "Parcourir les biens à vendre",
+    "rent": "Louer",
+    "rentDescription": "Trouver une location",
+    "about": "À propos",
+    "services": "Services",
+    "contact": "Contact"
+  },
+  "footer": {
+    "tagline": "L'immobilier d'exception à Kénitra et au-delà. Discrétion, efficacité, sur-mesure.",
+    "explore": "Explorer",
+    "resources": "Ressources",
+    "contactTitle": "Contact",
+    "faq": "FAQ",
+    "privacy": "Politique de confidentialité",
+    "terms": "Conditions générales",
+    "careers": "Carrières",
+    "privacyShort": "Confidentialité",
+    "termsShort": "Conditions",
+    "rights": "Tous droits réservés.",
+    "bookCall": "Prendre rendez-vous",
+    "ctaTitle": "Prêt à concrétiser votre projet immobilier ?",
+    "ctaBody": "Contactez-nous dès aujourd'hui ou planifiez une visite.",
+    "message": "Message",
+    "call": "Appeler",
+    "visit": "Visiter",
+    "navigation": "Navigation",
+    "support": "Support",
+    "details": "Coordonnées"
+  },
+  "home": {
+    "hero": {
+      "eyebrow": "Agence immobilière à Kénitra",
+      "titleLead": "Une agence",
+      "titleAccent": "premium",
+      "titleEnd": "à Kénitra",
+      "trait1": "Discrète",
+      "trait2": "Efficace"
+    },
+    "agencyWord": {
+      "label": "Excellence",
+      "title": "Mot de l'agence",
+      "body": "Chez Majestic Keys, nous croyons que l'immobilier de luxe ne se résume pas à des mètres carrés, mais à l'art de vivre. Notre mission est d'offrir une expérience sur-mesure, où la discrétion et l'efficacité sont les piliers de chaque transaction.",
+      "body2": "Spécialistes du marché de Kénitra, nous accompagnons une clientèle exigeante dans la recherche de résidences d'exception. Notre réseau exclusif nous permet d'accéder à des biens « off-market » uniques.",
+      "cta": "Découvrir l'histoire de l'agence",
+      "experienceYears": "+15",
+      "experienceLabel": "Années d'expérience",
+      "imageAlt": "Vue de Kénitra"
+    },
+    "whyChooseUs": {
+      "eyebrow": "Pourquoi nous choisir",
+      "title": "L'Excellence à votre service",
+      "portfolioTitle": "Portfolio Exclusif",
+      "portfolioBody": "Accès privilégié à des propriétés off-market et des domaines d'exception introuvables ailleurs.",
+      "serviceTitle": "Service Personnalisé",
+      "serviceBody": "Chaque client bénéficie d'un accompagnement sur mesure, adapté à ses besoins les plus spécifiques.",
+      "expertiseTitle": "Expertise du Marché",
+      "expertiseBody": "Une connaissance approfondie du paysage immobilier marocain pour des investissements sécurisés."
+    },
+    "stats": {
+      "years": "Années d'expertise",
+      "sold": "Biens vendus",
+      "satisfaction": "Satisfaction client"
+    },
+    "cities": {
+      "eyebrow": "Notre Présence",
+      "title": "Villes d'exception",
+      "listings": "{count, plural, =0 {Aucun bien} one {# bien} other {# biens}}"
+    },
+    "featured": {
+      "eyebrow": "COLLECTION EXCLUSIVE",
+      "body": "Architecture soignée, volumes harmonieux, finitions raffinées",
+      "sale": "Vente",
+      "rent": "Location"
+    },
+    "newsletter": {
+      "eyebrow": "Newsletter Exclusive",
+      "title": "Restez informé de nos offres privées",
+      "body": "Inscrivez-vous pour recevoir en avant-première nos nouvelles propriétés et nos analyses du marché de prestige.",
+      "placeholder": "Votre adresse email",
+      "submit": "S'abonner",
+      "success": "Merci ! Vous êtes maintenant abonné. ✓"
     }
+  },
+  "about": {
+    "eyebrow": "À Propos",
+    "titleLead": "L'art de l'immobilier",
+    "titleAccent": "d'exception",
+    "body": "Depuis plus de 15 ans, Majestic Keys accompagne une clientèle exigeante dans l'acquisition et la valorisation de biens d'exception à Kénitra et au-delà.",
+    "metaTitle": "À propos",
+    "metaDescription": "Découvrez Majestic Keys, agence immobilière de prestige à Kénitra : notre histoire, nos valeurs et notre approche sur-mesure.",
+    "story": {
+      "eyebrow": "Notre Histoire",
+      "title": "Une vision, un héritage",
+      "body": "Majestic Keys est née à Kénitra d'une conviction simple : l'immobilier de prestige mérite une approche à la hauteur de son exigence. Loin des transactions standardisées, nous avons construit une agence à taille humaine, où chaque dossier est traité avec la rigueur et la discrétion d'un service véritablement sur-mesure.",
+      "body2": "Au fil des années, notre réseau s'est étendu aux quartiers les plus recherchés du royaume, nous donnant accès à des biens rares, souvent invisibles sur le marché ouvert. Cette proximité avec le terrain, alliée à une expertise juridique et fiscale pointue, fait de nous le partenaire de confiance d'une clientèle marocaine et internationale exigeante.",
+      "signature": "— L'équipe Majestic Keys",
+      "experienceLabel": "Années d'expérience",
+      "imageAlt": "Villa Majestic Keys"
+    },
+    "values": {
+      "eyebrow": "Nos Valeurs",
+      "title": "Ce qui nous définit",
+      "excellenceTitle": "Excellence",
+      "excellenceBody": "Une sélection rigoureuse et une exécution irréprochable à chaque étape de votre projet.",
+      "discretionTitle": "Discrétion",
+      "discretionBody": "Vos transactions sont traitées en toute confidentialité, à l'abri des regards indiscrets.",
+      "efficiencyTitle": "Efficacité",
+      "efficiencyBody": "Un accompagnement réactif, sans détour, pour concrétiser vos ambitions au bon rythme."
+    }
+  },
+  "services": {
+    "eyebrow": "Nos Services",
+    "titleLead": "L'excellence,",
+    "titleAccent": "à chaque étape",
+    "body": "De la première visite à la signature et bien au-delà, Majestic Keys met son expertise au service de chaque étape de votre projet immobilier.",
+    "metaTitle": "Nos services",
+    "metaDescription": "Achat, vente, location, gestion locative et conseil patrimonial : l'accompagnement sur-mesure de Majestic Keys à Kénitra.",
+    "section": {
+      "eyebrow": "Expertise",
+      "title": "SERVICE PRESTIGIEUX",
+      "body": "Nous vous offrons un service de qualité, personnalisé et sur mesure.",
+      "selectionTitle": "Achat / Location",
+      "selectionBody": "Une sélection rigoureuse de biens d'exception répondant aux standards les plus élevés du marché international.",
+      "vipTitle": "Accompagnement VIP",
+      "vipBody": "Un service de conciergerie immobilière dédié pour gérer chaque détail de votre installation en toute sérénité.",
+      "adviceTitle": "Conseil Sur-Mesure",
+      "adviceBody": "Expertise juridique et fiscale pour optimiser votre patrimoine immobilier et sécuriser vos investissements."
+    },
+    "grid": {
+      "eyebrow": "Notre Offre",
+      "title": "Un service pour chaque ambition",
+      "saleTitle": "Achat & Vente",
+      "saleBody": "Un accompagnement de bout en bout pour acquérir ou céder un bien d'exception, en toute sérénité.",
+      "rentalTitle": "Location & Gestion",
+      "rentalBody": "Mise en location et gestion locative complète, pour un rendement optimisé sans contrainte.",
+      "vipTitle": "Accompagnement VIP",
+      "vipBody": "Un service de conciergerie immobilière dédié, pour gérer chaque détail avec la plus grande discrétion.",
+      "adviceTitle": "Conseil Sur-Mesure",
+      "adviceBody": "Expertise juridique et fiscale pour sécuriser vos transactions et optimiser votre patrimoine.",
+      "valuationTitle": "Estimation & Valorisation",
+      "valuationBody": "Une analyse précise du marché pour révéler la juste valeur de votre bien.",
+      "viewingTitle": "Visites Privées & Virtuelles",
+      "viewingBody": "Des visites organisées sur-mesure, en personne ou à distance, pour ne rien laisser au hasard."
+    },
+    "process": {
+      "eyebrow": "Notre Méthode",
+      "title": "Un processus maîtrisé",
+      "step1Title": "Consultation",
+      "step1Body": "Nous échangeons sur vos besoins, vos ambitions et le profil du bien recherché ou à valoriser.",
+      "step2Title": "Sélection",
+      "step2Body": "Notre équipe identifie les opportunités les plus pertinentes, y compris hors marché.",
+      "step3Title": "Négociation",
+      "step3Body": "Nous défendons vos intérêts à chaque étape, de l'offre jusqu'à la signature.",
+      "step4Title": "Suivi",
+      "step4Body": "Un accompagnement personnalisé se poursuit bien au-delà de la transaction."
+    }
+  },
+  "contact": {
+    "eyebrow": "Contact",
+    "titleLead": "Parlons de votre",
+    "titleAccent": "projet",
+    "body": "Une question, un projet d'achat, de vente ou de location ? Notre équipe vous répond avec discrétion et efficacité.",
+    "metaTitle": "Contact",
+    "metaDescription": "Contactez Majestic Keys pour votre projet immobilier à Kénitra : achat, vente, location ou estimation.",
+    "detailsTitle": "Nos coordonnées",
+    "addressLabel": "Adresse",
+    "phoneLabel": "Téléphone",
+    "emailLabel": "Email",
+    "successTitle": "Message envoyé",
+    "successBody": "Notre équipe vous recontactera dans les plus brefs délais.",
+    "errorTitle": "Envoi impossible",
+    "errorBody": "Une erreur est survenue. Merci de réessayer ou de nous appeler directement.",
+    "form": {
+      "firstName": "Prénom",
+      "lastName": "Nom",
+      "email": "Email",
+      "phone": "Téléphone",
+      "message": "Message",
+      "messagePlaceholder": "Dites-nous comment nous pouvons vous aider...",
+      "submit": "Envoyer le message",
+      "submitting": "Envoi en cours...",
+      "firstNamePlaceholder": "Yasmine",
+      "lastNamePlaceholder": "Alaoui",
+      "emailPlaceholder": "yasmine@exemple.com",
+      "phonePlaceholder": "+212 6 12 34 56 78"
+    },
+    "validation": {
+      "firstNameMin": "Le prénom doit contenir au moins 2 caractères",
+      "lastNameMin": "Le nom doit contenir au moins 2 caractères",
+      "emailInvalid": "Veuillez saisir une adresse email valide",
+      "phoneShort": "Le numéro de téléphone est trop court",
+      "phoneLong": "Le numéro de téléphone est trop long",
+      "phoneInvalid": "Veuillez saisir un numéro de téléphone valide",
+      "messageMin": "Le message doit contenir au moins 10 caractères",
+      "messageLong": "Le message est trop long"
+    }
+  },
+  "properties": {
+    "list": {
+      "title": "Notre sélection",
+      "subtitle": "Une sélection exclusive des biens les plus prestigieux du royaume, de la villa contemporaine au domaine historique.",
+      "metaTitle": "Nos biens",
+      "metaTitlePaged": "Nos biens — page {page}",
+      "metaDescription": "Parcourez la sélection Majestic Keys : villas, appartements et biens d'exception à la vente et à la location au Maroc.",
+      "resultCount": "{count, plural, =0 {Aucun bien} one {# bien} other {# biens}} — page {page} sur {totalPages}",
+      "emptyTitle": "Aucun bien ne correspond à votre recherche",
+      "emptyBody": "Essayez d'élargir vos critères — un budget plus large ou une autre ville."
+    },
+    "toolbar": {
+      "grid": "Grille",
+      "list": "Liste",
+      "sortOrder": "Trier",
+      "sortPriceAsc": "Prix croissant",
+      "sortPriceDesc": "Prix décroissant",
+      "sortNewest": "Plus récents",
+      "sortOldest": "Plus anciens",
+      "sortSizeDesc": "Plus grands",
+      "sortSizeAsc": "Plus petits"
+    },
+    "pagination": {
+      "label": "Pagination"
+    },
+    "card": {
+      "perSqm": "{price} MAD/m²",
+      "price": "{price} MAD",
+      "perMonth": "/mois",
+      "reference": "Réf. {ref}",
+      "viewDetails": "Voir le bien",
+      "moreAmenities": "+{count}",
+      "floorNumber": "{floor}ᵉ étage",
+      "groundFloor": "Rez-de-chaussée"
+    },
+    "detail": {
+      "overview": "Aperçu du bien",
+      "amenities": "Prestations",
+      "propertyType": "Type de bien",
+      "totalArea": "Surface totale",
+      "livingArea": "Surface habitable",
+      "bedrooms": "Chambres",
+      "bathrooms": "Salles de bain",
+      "parking": "Places de parking",
+      "squareMeters": "m²",
+      "priceOnInquiry": "Prix sur demande",
+      "requestViewing": "Demander une visite privée",
+      "downloadBrochure": "Télécharger la brochure",
+      "advisorRole": "Votre conseiller",
+      "contactDirectly": "Contacter directement",
+      "furnished": "Meublé",
+      "built": "Année de construction",
+      "condition": "État",
+      "floor": "Étage",
+      "yes": "Oui",
+      "no": "Non",
+      "parkingCount": "{count, plural, =0 {Aucune place} one {# place} other {# places}}",
+      "statusAvailable": "Disponible",
+      "statusSold": "Vendu",
+      "statusRented": "Loué",
+      "statusPending": "Sous compromis",
+      "advisorName": "Julian St. James",
+      "downPayment": "Apport personnel (%)"
+    },
+    "mortgage": {
+      "title": "Simulateur de prêt",
+      "monthly": "Mensualité estimée",
+      "borrowed": "Montant emprunté",
+      "totalInterest": "Intérêts totaux",
+      "rate": "Taux d'intérêt annuel",
+      "duration": "Durée du crédit (années)",
+      "disclaimer": "Simulation indicative, à valider avec la banque."
+    },
+    "gallery": {
+      "unavailable": "Galerie indisponible",
+      "allPhotos": "Toutes les photos",
+      "morePhotos": "photos de plus",
+      "previousImage": "Image précédente",
+      "nextImage": "Image suivante",
+      "tagInterior": "Intérieur",
+      "tagExterior": "Extérieur",
+      "tagPool": "Piscine",
+      "tagGarden": "Jardin",
+      "tagKitchen": "Cuisine",
+      "tagBedroom": "Chambre",
+      "imageAlt": "Photo du bien"
+    },
+    "features": {
+      "hasBasement": "Sous-sol",
+      "hasSecurity": "Sécurisé",
+      "hasBalcony": "Balcon",
+      "hasTerrace": "Terrasse",
+      "hasElevator": "Ascenseur",
+      "hasAirConditioning": "Climatisation",
+      "hasPool": "Piscine",
+      "hasEquippedKitchen": "Cuisine équipée",
+      "hasEasyAccess": "Accès facile",
+      "hasOceanView": "Vue sur mer",
+      "hasGarden": "Jardin"
+    }
+  },
+  "search": {
+    "tabAll": "Tous",
+    "tabBuy": "Acheter",
+    "tabRent": "Louer",
+    "propertyType": "Type de bien",
+    "propertyTypePlaceholder": "Tout",
+    "city": "Ville",
+    "cityPlaceholder": "Toutes les villes",
+    "neighborhood": "Quartier",
+    "neighborhoodPlaceholder": "Tous les quartiers",
+    "bedrooms": "Chambres",
+    "bathrooms": "Salles de bain",
+    "anyFemalePlural": "Toutes",
+    "equipped": "Équipé",
+    "any": "Tous",
+    "yes": "Oui",
+    "no": "Non",
+    "price": "Prix",
+    "moreFilters": "Plus de filtres",
+    "lessFilters": "Moins de filtres",
+    "submit": "Trouver mon bien"
+  },
+  "propertyTypes": {
+    "villa": "Villa",
+    "appartment": "Appartement",
+    "house": "Maison et Duplex",
+    "land": "Terrain",
+    "commercial": "Magasin Commercial",
+    "business": "Bureau et Plateau",
+    "other": "Autre"
+  },
+  "transactionTypes": {
+    "sale": "Vente",
+    "rent": "Location",
+    "shortlet": "Location de Vacances"
+  },
+  "testimonials": {
+    "eyebrow": "Témoignages",
+    "title": "La confiance d'une clientèle exigeante",
+    "body": "Nos clients racontent comment ils ont trouvé le bien de leurs rêves avec Majestic Keys.",
+    "unavailable": "Impossible de charger les témoignages pour le moment.",
+    "previous": "Témoignage précédent",
+    "next": "Témoignage suivant"
+  },
+  "errors": {
+    "title": "Une erreur est survenue",
+    "body": "Nous n'avons pas pu charger cette page. Réessayez dans un instant — si le problème persiste, contactez notre équipe.",
+    "reference": "Référence : {digest}",
+    "notFoundEyebrow": "Erreur 404",
+    "notFoundTitle": "Cette page n'existe pas",
+    "notFoundBody": "Le bien que vous cherchez a peut-être été vendu, loué, ou retiré de notre sélection.",
+    "notFoundMetaTitle": "Page introuvable",
+    "propertyNotFound": "Bien introuvable"
+  },
+  "seo": {
+    "title": "Majestic Keys | Agence Immobilière de Luxe à Kénitra",
+    "description": "Majestic Keys est une agence immobilière premium à Kénitra, spécialisée dans l'achat, la vente et la location de biens d'exception. Un accompagnement discret, efficace et sur-mesure.",
+    "keywords": [
+      "agence immobilière Kénitra",
+      "immobilier de luxe Maroc",
+      "achat villa Kénitra",
+      "location appartement Kénitra",
+      "biens immobiliers d'exception",
+      "Majestic Keys"
+    ]
+  }
 }

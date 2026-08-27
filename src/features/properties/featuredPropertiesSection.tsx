@@ -4,9 +4,12 @@ import PropertyCarousel from "./components/propertyCarousel";
 import Reveal from "@/components/ui/reveal";
 import Iconify from "@/components/ui/iconify";
 import { getFeaturedProperties } from "@/services/properties.service";
+import { getTranslations } from "next-intl/server";
 import { buildPropertyHref } from "./property.query";
 
 export default async function FeaturedPropertySection() {
+  const t = await getTranslations("home.featured");
+  const tc = await getTranslations("common");
   const properties = await getFeaturedProperties();
   if (properties.length === 0) return null;
 
@@ -37,17 +40,17 @@ export default async function FeaturedPropertySection() {
             h="100%"
           >
             <Text color="white" as="h4" fontWeight="semibold" letterSpacing="wider">
-              COLLECTION EXCLUSIVE
+              {t("eyebrow")}
             </Text>
             <Text color="white" mt={4} fontSize="sm" lineHeight="tall">
-              Architecture soignée, volumes harmonieux, finitions raffinées
+              {t("body")}
             </Text>
             <Flex gap={4} w="100%" pb={{ base: 0, md: 6 }}>
               <Text asChild textDecor="underline" color="whiteAlpha.900" fontSize="sm" py={1}>
-                <NextLink href={buildPropertyHref({ transactionType: "sale" })}>Vente</NextLink>
+                <NextLink href={buildPropertyHref({ transactionType: "sale" })}>{t("sale")}</NextLink>
               </Text>
               <Text asChild textDecor="underline" color="whiteAlpha.900" fontSize="sm" py={1}>
-                <NextLink href={buildPropertyHref({ transactionType: "rent" })}>Location</NextLink>
+                <NextLink href={buildPropertyHref({ transactionType: "rent" })}>{t("rent")}</NextLink>
               </Text>
             </Flex>
           </Flex>
@@ -76,7 +79,7 @@ export default async function FeaturedPropertySection() {
           _hover={{ bg: "secondary.500", color: "brand.900" }}
         >
           <NextLink href="/properties">
-            Voir plus
+            {tc("seeMore")}
             <Iconify icon="mdi:arrow-right" w="16px" h="16px" />
           </NextLink>
         </Button>

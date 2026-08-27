@@ -1,7 +1,9 @@
 import { Box, SimpleGrid, Skeleton, Text, VStack } from "@chakra-ui/react";
 import { getProperties } from "@/services/properties.service";
-import type { PropertyQuery } from "../property.query";
+import { getTranslations } from "next-intl/server";
+import type { PropertyQuery, PropertyView } from "../property.query";
 import PropertyGrid from "./PropertyGrid";
+import PropertyList from "./PropertyList";
 import PropertyPagination from "./propertyPagination";
 
 /**
@@ -9,17 +11,24 @@ import PropertyPagination from "./propertyPagination";
  * the heading, the search widget, the toolbar — stays in the static shell, so
  * the page paints immediately and only the result set waits on data.
  */
-export default async function PropertyResults({ query }: { query: PropertyQuery }) {
+export default async function PropertyResults({
+    query,
+    view,
+}: {
+    query: PropertyQuery;
+    view: PropertyView;
+}) {
+    const t = await getTranslations("properties.list");
     const { items, total, page, totalPages } = await getProperties(query);
 
     if (total === 0) {
         return (
             <VStack gap={3} py={20} px={6} bg="brand.700" textAlign="center">
                 <Text as="h2" color="secondary.400" fontSize="lg">
-                    Aucun bien ne correspond à votre recherche
+                    {t("emptyTitle")}
                 </Text>
                 <Text color="secondary.500" fontSize="sm">
-                    Essayez d&apos;élargir vos critères — un budget plus large ou une autre ville.
+                    {t("emptyBody")}
                 </Text>
             </VStack>
         );
@@ -29,11 +38,15 @@ export default async function PropertyResults({ query }: { query: PropertyQuery 
         <>
             <Box bg="brand.700" px={6} pt={4}>
                 <Text color="secondary.500" fontSize="sm">
-                    {total} bien{total > 1 ? "s" : ""} — page {page} sur {totalPages}
+                    {t("resultCount", { count: total, page, totalPages })}
                 </Text>
             </Box>
-            <PropertyGrid properties={items} />
-            <PropertyPagination query={query} page={page} totalPages={totalPages} />
+            {view === "list" ? (
+                <PropertyList properties={items} />
+            ) : (
+                <PropertyGrid properties={items} />
+            )}
+            <PropertyPagination query={query} view={view} page={page} totalPages={totalPages} />
         </>
     );
 }

@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Box, Flex, Grid, GridItem, Text, VStack } from "@chakra-ui/react";
 
 import Iconify from "@/components/ui/iconify";
 import { PROPERTYICONS } from "@/config/propertyIcons";
 import { siteConfig } from "@/config/site";
-import { locales } from "@/i18n/locales";
+import { defaultLocale, locales, type Locale } from "@/i18n/locales";
 import PropertyDetails from "@/features/properties/components/propertyDetails/propertyDetails";
 import PropertyFeatures from "@/features/properties/components/propertyDetails/propertyFeatures";
 import PropertyMortgage from "@/features/properties/components/propertyDetails/propertyMortgage";
@@ -28,18 +28,25 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: { params: Params }): Promise<Metadata> {
-    const { slug } = await params;
+    const { locale, slug } = await params;
+    const t = await getTranslations({ locale, namespace: "errors" });
     const property = await getPropertyBySlug(slug);
 
-    if (!property) return { title: "Bien introuvable", robots: { index: false, follow: false } };
+    if (!property) return { title: t("propertyNotFound"), robots: { index: false, follow: false } };
 
-    const canonical = `/properties/${property.slug}`;
+    // The default locale is served unprefixed; other locales must carry it.
+    const path = `/properties/${property.slug}`;
+    const prefixed = (l: string) => (l === defaultLocale ? path : `/${l}${path}`);
+    const canonical = prefixed(locale);
     const description = property.description.slice(0, 300);
 
     return {
         title: property.title,
         description,
-        alternates: { canonical },
+        alternates: {
+            canonical,
+            languages: Object.fromEntries(locales.map((l: Locale) => [l, prefixed(l)])),
+        },
         openGraph: {
             type: "website",
             url: canonical,
@@ -114,6 +121,7 @@ const Attribute = ({ icon, label, value }: { icon: string; label: string; value?
 export default async function PropertyPage({ params }: { params: Params }) {
     const { locale, slug } = await params;
     setRequestLocale(locale);
+    const t = await getTranslations("properties.detail");
 
     const property = await getPropertyBySlug(slug);
     if (!property) notFound();
@@ -149,10 +157,10 @@ export default async function PropertyPage({ params }: { params: Params }) {
                     pb={1}
                     css={{ "&::-webkit-scrollbar": { display: "none" } }}
                 >
-                    <Attribute icon={PROPERTYICONS["bedrooms"]} label="Bedrooms" value={property.bedrooms?.toString()} />
-                    <Attribute icon={PROPERTYICONS["bathrooms"]} label="Bathrooms" value={property.bathrooms?.toString()} />
-                    <Attribute icon={PROPERTYICONS["totalArea"]} label="m²" value={property.totalArea?.toString()} />
-                    <Attribute icon={PROPERTYICONS["parkingSpaces"]} label="Parking Spaces" value={property.parkingSpaces?.toString()} />
+                    <Attribute icon={PROPERTYICONS["bedrooms"]} label={t("bedrooms")} value={property.bedrooms?.toString()} />
+                    <Attribute icon={PROPERTYICONS["bathrooms"]} label={t("bathrooms")} value={property.bathrooms?.toString()} />
+                    <Attribute icon={PROPERTYICONS["totalArea"]} label={t("squareMeters")} value={property.totalArea?.toString()} />
+                    <Attribute icon={PROPERTYICONS["parkingSpaces"]} label={t("parking")} value={property.parkingSpaces?.toString()} />
                 </Flex>
             </Box>
 

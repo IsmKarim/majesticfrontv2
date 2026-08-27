@@ -2,21 +2,25 @@
 import { Flex, Icon, Menu, Portal, Tabs, Text } from "@chakra-ui/react";
 import { LuArrowUpDown, LuLayoutGrid, LuList } from "react-icons/lu";
 import { useSearch } from "@/features/search/useSearch";
-import type { PropertySort } from "@/features/properties/property.query";
+import { useTranslations } from "next-intl";
+import type { PropertySort, PropertyView } from "@/features/properties/property.query";
 
 // Values match the `sort` enum in property.query.ts — they go straight into the URL.
-const SORT_OPTIONS: { value: PropertySort; label: string }[] = [
-    { value: "price-asc", label: "Price: Low to High" },
-    { value: "price-desc", label: "Price: High to Low" },
-    { value: "newest", label: "Newest First" },
-    { value: "oldest", label: "Oldest First" },
-    { value: "size-desc", label: "Largest First" },
-    { value: "size-asc", label: "Smallest First" },
+// `labelKey` resolves against the `properties.toolbar` namespace.
+const SORT_OPTIONS: { value: PropertySort; labelKey: string }[] = [
+    { value: "price-asc", labelKey: "sortPriceAsc" },
+    { value: "price-desc", labelKey: "sortPriceDesc" },
+    { value: "newest", labelKey: "sortNewest" },
+    { value: "oldest", labelKey: "sortOldest" },
+    { value: "size-desc", labelKey: "sortSizeDesc" },
+    { value: "size-asc", labelKey: "sortSizeAsc" },
 ];
 
 export default function ViewToolBar() {
-    const { committed, applySort } = useSearch();
-    const activeLabel = SORT_OPTIONS.find((o) => o.value === committed.sort)?.label ?? "Sort Order";
+    const t = useTranslations("properties.toolbar");
+    const { committed, view, applySort, applyView } = useSearch();
+    const activeKey = SORT_OPTIONS.find((o) => o.value === committed.sort)?.labelKey;
+    const activeLabel = activeKey ? t(activeKey) : t("sortOrder");
 
     return (
         <Flex
@@ -27,7 +31,10 @@ export default function ViewToolBar() {
             py={3}
             borderRadius="md"
         >
-            <Tabs.Root defaultValue="grid">
+            <Tabs.Root
+                value={view}
+                onValueChange={(e) => applyView(e.value as PropertyView)}
+            >
                 <Tabs.List
                     borderBottom="none"
                     bg="brand.600"
@@ -44,7 +51,7 @@ export default function ViewToolBar() {
                         _selected={{ bg: "brand.500", color: "secondary.500" }}
                     >
                         <Icon as={LuLayoutGrid} mr={1} />
-                        <Text fontSize="sm">Grille</Text>
+                        <Text fontSize="sm">{t("grid")}</Text>
                     </Tabs.Trigger>
                     <Tabs.Trigger
                         value="list"
@@ -55,7 +62,7 @@ export default function ViewToolBar() {
                         _selected={{ bg: "brand.500", color: "secondary.500" }}
                     >
                         <Icon as={LuList} mr={1} />
-                        <Text fontSize="sm">Liste</Text>
+                        <Text fontSize="sm">{t("list")}</Text>
                     </Tabs.Trigger>
                 </Tabs.List>
             </Tabs.Root>
@@ -89,7 +96,7 @@ export default function ViewToolBar() {
                                     fontSize="sm"
                                     _hover={{ bg: "brand.600", color: "secondary.500" }}
                                 >
-                                    {opt.label}
+                                    {t(opt.labelKey)}
                                 </Menu.Item>
                             ))}
                         </Menu.Content>
