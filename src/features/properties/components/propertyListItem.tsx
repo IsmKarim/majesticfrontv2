@@ -95,13 +95,17 @@ export default function PropertyListItem({ property }: { property: Property }) {
         >
             <NextLink href={`/properties/${property.slug}`}>
                 <Flex direction={{ base: "column", md: "row" }} align="stretch">
-                    {/* ── Image ── */}
+                    {/* ── Image ──
+                        Proportional rather than a fixed pixel width: the image is
+                        the anchor of the row and should scale with it, not sit as
+                        a thumbnail beside a wide block of text. */}
                     <Box
                         position="relative"
                         flexShrink={0}
-                        w={{ base: "100%", md: "300px", lg: "340px" }}
-                        aspectRatio={{ base: "16 / 10", md: "auto" }}
-                        minH={{ md: "240px" }}
+                        w={{ base: "100%", md: "40%" }}
+                        maxW={{ md: "560px" }}
+                        aspectRatio={{ base: "3 / 2", md: "auto" }}
+                        minH={{ md: "300px", lg: "340px" }}
                         overflow="hidden"
                     >
                         <Image
@@ -109,13 +113,16 @@ export default function PropertyListItem({ property }: { property: Property }) {
                             alt={property.coverImage.alt ?? property.title}
                             fill
                             style={{ objectFit: "cover", objectPosition: "center" }}
-                            sizes="(max-width: 768px) 100vw, 340px"
+                            sizes="(max-width: 768px) 100vw, (max-width: 1400px) 40vw, 560px"
                         />
                         <Badge
                             position="absolute"
-                            top={3}
-                            left={3}
+                            top={4}
+                            left={4}
                             variant="solid"
+                            fontSize="xs"
+                            px={3}
+                            py={1}
                             colorScheme={isSale ? "yellow" : "blue"}
                         >
                             {tTx(transaction)}
@@ -123,7 +130,7 @@ export default function PropertyListItem({ property }: { property: Property }) {
                     </Box>
 
                     {/* ── Body ── */}
-                    <Flex direction="column" flex="1" minW={0} p={{ base: 4, md: 6 }} gap={3}>
+                    <Flex direction="column" flex="1" minW={0} p={{ base: 5, md: 7 }} gap={4}>
                         <Flex justify="space-between" align="flex-start" gap={4} wrap="wrap">
                             <Box minW={0}>
                                 <Flex align="center" gap={2} mb={1} wrap="wrap">
