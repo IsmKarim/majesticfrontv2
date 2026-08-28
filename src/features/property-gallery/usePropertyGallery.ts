@@ -25,43 +25,15 @@ export const useGalleryStore = create<GalleryStore>((set) => ({
 
 // ─── Main Logic Hook ──────────────────────────────────────────────────────────
 
-export function usePropertyGallery(propertyId: string) {
+/**
+ * @param images The listing's photos, already mapped to `GalleryImage`. The
+ * hook owns filtering and lightbox state only — it never sources its own data.
+ */
+export function usePropertyGallery(images: GalleryImage[]) {
     const { activeIndex, isLightboxOpen, openLightbox, closeLightbox, setActiveIndex } =
         useGalleryStore();
 
     const [activeTag, setActiveTag] = useState<GalleryTag | "all">("all");
-
-    const images: GalleryImage[] = [
-        {
-            id: "4",
-            src: "/images/properties/villa.jpg",
-            alt: "lol",
-            width: 1080,
-            height: 720,
-            caption: "LLOL"
-        }, {
-            id: "4",
-            src: "/images/properties/riad.jpg",
-            alt: "lol",
-            width: 1080,
-            height: 720,
-            caption: "LLOL"
-        },{
-            id: "4",
-            src: "/images/properties/villa2.jpg",
-            alt: "lol",
-            width: 1080,
-            height: 720,
-            caption: "LLOL"
-        }  ,{
-            id: "4",
-            src: "/images/properties/villa3.jpg",
-            alt: "lol",
-            width: 1080,
-            height: 720,
-            caption: "LLOL"
-        }
-    ]
 
 
     const availableTags = useMemo<Array<GalleryTag | "all">>(() => {

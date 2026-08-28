@@ -7,14 +7,6 @@ export interface GalleryImage {
   caption?: string;
   tag?: "interior" | "exterior" | "pool" | "garden" | "kitchen" | "bedroom";
 }
-const image ={
-    id : "4",
-    src : "/images/properties/villa.jpg",
-    alt : "lol" , 
-    width :1080 , 
-    height: 720 , 
-    caption :"LLOL"
-}
 export interface PropertyGalleryProps {
   propertyId: string;
   propertyName: string;

@@ -289,8 +289,10 @@
       "statusSold": "Vendu",
       "statusRented": "Loué",
       "statusPending": "Sous compromis",
-      "advisorName": "Julian St. James",
-      "downPayment": "Apport personnel (%)"
+      "advisorName": "Zahri Mohammed",
+      "downPayment": "Apport personnel (%)",
+      "viewingRequestMessage": "Bonjour Majestic Keys,\n\nJe suis intéressé(e) par le bien « {title} » (réf. {ref}) et je souhaite organiser une visite.\n\n{url}",
+      "priceLabel": "Prix"
     },
     "mortgage": {
       "title": "Simulateur de prêt",
@@ -313,7 +315,10 @@
       "tagGarden": "Jardin",
       "tagKitchen": "Cuisine",
       "tagBedroom": "Chambre",
-      "imageAlt": "Photo du bien"
+      "imageAlt": "Photo du bien",
+      "title": "Galerie",
+      "photoCount": "({count, plural, one {# photo} other {# photos}})",
+      "sectionLabel": "Galerie photo de {name}"
     },
     "features": {
       "hasBasement": "Sous-sol",
@@ -327,6 +332,14 @@
       "hasEasyAccess": "Accès facile",
       "hasOceanView": "Vue sur mer",
       "hasGarden": "Jardin"
+    },
+    "brochure": {
+      "tagline": "L'immobilier d'exception",
+      "reference": "Réf. {ref}",
+      "descriptionTitle": "Description",
+      "photosTitle": "Photographies",
+      "groundFloorShort": "RDC",
+      "documentSubject": "Brochure de présentation du bien"
     }
   },
   "search": {

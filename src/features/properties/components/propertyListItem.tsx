@@ -78,10 +78,17 @@ export default function PropertyListItem({ property }: { property: Property }) {
     const shown = amenities.slice(0, MAX_AMENITY_CHIPS);
     const overflow = amenities.length - shown.length;
 
+    // Absent means "not applicable" (a villa has no floor number), which is a
+    // different thing from ground floor — so omit the spec entirely.
+    // `null` means "not applicable" (a villa has no floor number), which is a
+    // different fact from 0 — that means ground floor. Omit the former, label
+    // the latter.
     const floorLabel =
-        property.floorNumber > 0
-            ? t("floorNumber", { floor: property.floorNumber })
-            : t("groundFloor");
+        property.floorNumber == null
+            ? null
+            : property.floorNumber > 0
+              ? t("floorNumber", { floor: property.floorNumber })
+              : t("groundFloor");
 
     return (
         <Box
@@ -156,7 +163,7 @@ export default function PropertyListItem({ property }: { property: Property }) {
                                 <Flex align="center" gap={1} mt={1} color="gray.400" fontSize="sm">
                                     <Iconify icon={PROPERTYICONS.city} w="14px" h="14px" color="currentColor" />
                                     <Text lineClamp={1}>
-                                        {property.neighborhood} — {property.city}
+                                        {[property.neighborhood, property.city].filter(Boolean).join(" — ")}
                                     </Text>
                                 </Flex>
                             </Box>
@@ -164,13 +171,21 @@ export default function PropertyListItem({ property }: { property: Property }) {
                             {/* Price sits top-right on wide rows: the first thing a
                                 reader compares when scanning a stacked list. */}
                             <Box textAlign={{ base: "left", md: "right" }} flexShrink={0}>
-                                <Text color="secondary.500" fontWeight="700" fontSize={{ base: "lg", md: "xl" }}>
-                                    {t("price", { price: property.price.toLocaleString() })}
-                                </Text>
-                                {pricePerSqm && (
-                                    <Text color="gray.500" fontSize="xs">
-                                        {t("perSqm", { price: pricePerSqm.toLocaleString() })}
+                                {property.isPriceOnRequest ? (
+                                    <Text color="secondary.500" fontWeight="700" fontSize={{ base: "lg", md: "xl" }}>
+                                        {td("priceOnInquiry")}
                                     </Text>
+                                ) : (
+                                    <>
+                                        <Text color="secondary.500" fontWeight="700" fontSize={{ base: "lg", md: "xl" }}>
+                                            {t("price", { price: property.price.toLocaleString() })}
+                                        </Text>
+                                        {pricePerSqm && (
+                                            <Text color="gray.500" fontSize="xs">
+                                                {t("perSqm", { price: pricePerSqm.toLocaleString() })}
+                                            </Text>
+                                        )}
+                                    </>
                                 )}
                             </Box>
                         </Flex>
@@ -191,21 +206,27 @@ export default function PropertyListItem({ property }: { property: Property }) {
                                 value={property.bedrooms}
                                 label={td("bedrooms")}
                             />
-                            <Spec
-                                icon={PROPERTYICONS.bathrooms}
-                                value={property.bathrooms}
-                                label={td("bathrooms")}
-                            />
-                            <Spec
-                                icon={PROPERTYICONS.parkingSpaces}
-                                value={property.parkingSpaces}
-                                label={td("parking")}
-                            />
-                            <Spec
-                                icon={PROPERTYICONS.floorNumber}
-                                value={floorLabel}
-                                label={td("floor")}
-                            />
+                            {property.bathrooms != null && (
+                                <Spec
+                                    icon={PROPERTYICONS.bathrooms}
+                                    value={property.bathrooms}
+                                    label={td("bathrooms")}
+                                />
+                            )}
+                            {property.parkingSpaces != null && (
+                                <Spec
+                                    icon={PROPERTYICONS.parkingSpaces}
+                                    value={property.parkingSpaces}
+                                    label={td("parking")}
+                                />
+                            )}
+                            {floorLabel !== null && (
+                                <Spec
+                                    icon={PROPERTYICONS.floorNumber}
+                                    value={floorLabel}
+                                    label={td("floor")}
+                                />
+                            )}
                         </Flex>
 
                         {/* ── Amenities + CTA ── */}

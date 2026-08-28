@@ -7,24 +7,30 @@ import type { ReactNode } from "react";
 import Iconify from "@/components/ui/iconify";
 import { PROPERTYICONS } from "@/config/propertyIcons";
 import { colors } from "@/theme";
+import type { Property } from "@/types/property.type";
 
-interface PropertyOverviewProps {
-  category: string;
-  transactionType: string;
-  price: number;
-  totalArea: number;
-  livingArea: number;
-  city: string;
-  neighborhood: string;
-  bedrooms: number;
-  bathrooms: number;
-  parkingSpaces: number;
-  isFurnished: boolean;
-  buildingAge: string | number;
-  propertyCondition: string;
-  listingStatus: string;
-  floorNumber: number;
-}
+/**
+ * Derived from `Property` rather than restated, so nullability stays in sync
+ * with the API payload instead of drifting each time the backend changes.
+ */
+type PropertyOverviewProps = Pick<
+  Property,
+  | "category"
+  | "transactionType"
+  | "price"
+  | "totalArea"
+  | "livingArea"
+  | "city"
+  | "neighborhood"
+  | "bedrooms"
+  | "bathrooms"
+  | "parkingSpaces"
+  | "isFurnished"
+  | "buildingAge"
+  | "propertyCondition"
+  | "listingStatus"
+  | "floorNumber"
+>;
 
 
 function StatusBadge({ status }: { status: string }) {
@@ -70,8 +76,12 @@ function DetailItem({
 }: {
   icon: ReactNode;
   label: string;
-  value: string | number | ReactNode;
+  value?: string | number | ReactNode;
 }) {
+  // Optional fields mean "not applicable" — drop the row rather than printing
+  // an empty label or the string "undefined".
+  if (value === undefined || value === null || value === "") return null;
+
   return (
     <Flex gap={3} align="flex-start">
       <Flex
@@ -228,12 +238,12 @@ export default function PropertyDetails({
         <DetailItem
           icon={<Iconify icon={PROPERTYICONS.totalArea} {...iconProps} />}
           label={t("totalArea")}
-          value={`${totalArea} m²`}
+          value={totalArea === undefined ? undefined : `${totalArea} m²`}
         />
         <DetailItem
           icon={<Iconify icon={PROPERTYICONS.totalArea} {...iconProps} />}
           label={t("livingArea")}
-          value={`${livingArea} m²`}
+          value={livingArea === undefined ? undefined : `${livingArea} m²`}
         />
         <DetailItem
           icon={<Iconify icon={PROPERTYICONS.bedrooms} {...iconProps} />}
@@ -248,7 +258,7 @@ export default function PropertyDetails({
         <DetailItem
           icon={<Iconify icon={PROPERTYICONS.parkingSpaces} {...iconProps} />}
           label={t("parking")}
-          value={t("parkingCount", { count: parkingSpaces ?? 0 })}
+          value={parkingSpaces === undefined ? undefined : t("parkingCount", { count: parkingSpaces })}
         />
         <DetailItem
           icon={<Iconify icon={PROPERTYICONS.isFurnished} {...iconProps} />}

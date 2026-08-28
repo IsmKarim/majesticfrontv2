@@ -33,9 +33,12 @@ const nextConfig: NextConfig = {
   images: {
     // Modern formats first; Next falls back automatically for older clients.
     formats: ["image/avif", "image/webp"],
-    // Remote hosts allowed through the image optimizer. Add the CDN that will
-    // serve real property photography before go-live.
-    remotePatterns: [],
+    // Hosts allowed through the image optimizer. Listing photography is served
+    // by the Immotech backend; without this entry every `next/image` for a
+    // listing throws "hostname is not configured" at request time.
+    remotePatterns: [
+      { protocol: "https", hostname: "ma.immotech.app", pathname: "/uploads/**" },
+    ],
   },
 
   async headers() {

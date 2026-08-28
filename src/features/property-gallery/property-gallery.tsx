@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { Alert, Box, Text } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import { PropertyGalleryProps } from "./types";
 import { usePropertyGallery } from "./usePropertyGallery";
 import { GalleryTagFilter } from "./components/GalleryTagFilter";
@@ -10,8 +10,8 @@ import { GalleryCarousel } from "./components/GalleryCarousel";
 import { GalleryLightbox } from "./components/GalleryLightbox";
 
 export default function PropertyGallery({
-  propertyId,
   propertyName,
+  images: source,
 }: PropertyGalleryProps) {
   const t = useTranslations("properties.gallery");
   const {
@@ -24,40 +24,25 @@ export default function PropertyGallery({
     handleLightboxClose,
     handleIndexChange,
     handleTagChange,
-  } = usePropertyGallery(propertyId);
-  const isError = false
-  const isLoading = false
+  } = usePropertyGallery(source ?? []);
 
-  if (isError) {
-    return (
-      <Alert.Root status="error" borderRadius="xl">
-        <Alert.Indicator />
-        <Alert.Content>
-          <Alert.Title>{t("unavailable")}</Alert.Title>
-          <Alert.Description>
-            We couldn&apos;t load the photos for {propertyName}. Please try again later.
-          </Alert.Description>
-        </Alert.Content>
-      </Alert.Root>
-    );
-  }
+  // A listing with no photography renders nothing rather than an empty frame.
+  if (!images.length) return null;
 
   return (
-    <Box as="section" aria-label={`Photo gallery for ${propertyName}`} px="4">
+    <Box as="section" aria-label={t("sectionLabel", { name: propertyName })} px="4">
       {/* Section Header */}
       <Box mb={4}>
         <Text 
           fontSize={{ base: "lg", md: "xl" }}
           fontWeight="semibold"
-          color="gray.800"
+          color="secondary.400"
           mb={3}
         >
-          Gallery
-          {!isLoading && images.length > 0 && (
-            <Text as="span" fontWeight="normal" color="gray.500" ml={2} fontSize="md">
-              ({images.length} photos)
-            </Text>
-          )}
+          {t("title")}
+          <Text as="span" fontWeight="normal" color="secondary.500" ml={2} fontSize="md">
+            {t("photoCount", { count: images.length })}
+          </Text>
         </Text>
 
         <GalleryTagFilter
@@ -68,10 +53,7 @@ export default function PropertyGallery({
       </Box>
 
       <Box display={{ base: "none", md: "block" }}>
-        <GalleryGrid
-          images={isLoading ? [] : images}
-          onImageClick={handleImageClick}
-        />
+        <GalleryGrid images={images} onImageClick={handleImageClick} />
       </Box>
 
       <Box display={{ base: "block", md: "none" }}>

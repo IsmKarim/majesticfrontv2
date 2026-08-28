@@ -22,11 +22,12 @@ function matches(property: Property, query: PropertyQuery): boolean {
     if (transactionType && normalizeTransactionType(property.transactionType) !== transactionType) return false;
     if (propertyType && categoryToPropertyType(property.category) !== propertyType) return false;
     if (city && property.city.toLowerCase() !== city.toLowerCase()) return false;
-    if (neighborhood && property.neighborhood.toLowerCase() !== neighborhood.toLowerCase()) return false;
+    if (neighborhood && property.neighborhood?.toLowerCase() !== neighborhood.toLowerCase()) return false;
     if (priceMin !== undefined && property.price < priceMin) return false;
     if (priceMax !== undefined && property.price > priceMax) return false;
     if (bedrooms !== undefined && bedrooms > 0 && property.bedrooms < bedrooms) return false;
-    if (bathrooms !== undefined && bathrooms > 0 && property.bathrooms < bathrooms) return false;
+    // A null bathroom count cannot satisfy a "2+ bathrooms" filter.
+    if (bathrooms !== undefined && bathrooms > 0 && (property.bathrooms ?? 0) < bathrooms) return false;
     if (equipped === "yes" && !property.hasEquippedKitchen) return false;
     if (equipped === "no" && property.hasEquippedKitchen) return false;
 

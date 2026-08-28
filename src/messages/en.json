@@ -289,8 +289,10 @@
       "statusSold": "Sold",
       "statusRented": "Let",
       "statusPending": "Under offer",
-      "advisorName": "Julian St. James",
-      "downPayment": "Down payment (%)"
+      "advisorName": "Zahri Mohammed",
+      "downPayment": "Down payment (%)",
+      "viewingRequestMessage": "Hello Majestic Keys,\n\nI am interested in the property \"{title}\" (ref. {ref}) and would like to arrange a viewing.\n\n{url}",
+      "priceLabel": "Price"
     },
     "mortgage": {
       "title": "Mortgage simulator",
@@ -313,7 +315,10 @@
       "tagGarden": "Garden",
       "tagKitchen": "Kitchen",
       "tagBedroom": "Bedroom",
-      "imageAlt": "Property photo"
+      "imageAlt": "Property photo",
+      "title": "Gallery",
+      "photoCount": "({count, plural, one {# photo} other {# photos}})",
+      "sectionLabel": "Photo gallery for {name}"
     },
     "features": {
       "hasBasement": "Basement",
@@ -327,6 +332,14 @@
       "hasEasyAccess": "Step-free access",
       "hasOceanView": "Sea view",
       "hasGarden": "Garden"
+    },
+    "brochure": {
+      "tagline": "Exceptional real estate",
+      "reference": "Ref. {ref}",
+      "descriptionTitle": "Description",
+      "photosTitle": "Photography",
+      "groundFloorShort": "GF",
+      "documentSubject": "Property presentation brochure"
     }
   },
   "search": {

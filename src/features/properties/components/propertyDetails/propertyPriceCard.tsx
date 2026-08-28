@@ -4,11 +4,40 @@
 
 import { Box, Button, HStack, Icon, Link, Text, VStack } from "@chakra-ui/react";
 import { FiDownload } from "react-icons/fi";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
-export default function PriceCard ({ price = 8_450_000 }: { price?: number }){
+import { siteConfig } from "@/config/site";
+import { buildWhatsAppHref } from "@/features/properties/whatsapp";
+
+export interface PriceCardProps {
+  title: string;
+  slug: string;
+  propertyRef: string;
+  price: number;
+  currency: string;
+  isPriceOnRequest: boolean;
+}
+
+export default function PriceCard({
+  title,
+  slug,
+  propertyRef,
+  price,
+  currency,
+  isPriceOnRequest,
+}: PriceCardProps) {
   const t = useTranslations("properties.detail");
-  const formatted = new Intl.NumberFormat("fr-MA").format(price);
+  const locale = useLocale();
+
+  const formatted = new Intl.NumberFormat(locale === "en" ? "en-MA" : "fr-MA").format(price);
+
+  const listingUrl = `${siteConfig.url}${locale === "fr" ? "" : `/${locale}`}/properties/${slug}`;
+  const whatsAppHref = buildWhatsAppHref(
+    siteConfig.contact.whatsapp,
+    t("viewingRequestMessage", { title, ref: propertyRef, url: listingUrl }),
+  );
+
+  const brochureHref = `/api/properties/${slug}/brochure?locale=${locale}`;
 
   return (
     <Box
@@ -21,6 +50,9 @@ export default function PriceCard ({ price = 8_450_000 }: { price?: number }){
       borderRadius="sm"
       w="full"
     >
+      {/* The eyebrow used to read "Prix sur demande" on every listing, directly
+          above the actual figure. It is now the price itself when the agency has
+          withheld it, and a plain label otherwise. */}
       <Text
         fontSize="2xs"
         letterSpacing="0.2em"
@@ -28,20 +60,21 @@ export default function PriceCard ({ price = 8_450_000 }: { price?: number }){
         color="secondary.400"
         mb={2}
       >
-        {t("priceOnInquiry")}
+        {t("priceLabel")}
       </Text>
       <Text
-        fontSize={{ base: "3xl", xl: "4xl" }}
+        fontSize={{ base: isPriceOnRequest ? "2xl" : "3xl", xl: isPriceOnRequest ? "3xl" : "4xl" }}
         fontWeight="700"
         color="secondary.50"
         mb={6}
         fontFamily="heading"
         lineHeight="1"
       >
-        {formatted}&nbsp;DH
+        {isPriceOnRequest ? t("priceOnInquiry") : `${formatted} ${currency}`}
       </Text>
 
       <Button
+        asChild
         w="full"
         bg="secondary.500"
         color="secondary.900"
@@ -52,7 +85,9 @@ export default function PriceCard ({ price = 8_450_000 }: { price?: number }){
         borderRadius="none"
         mb={4}
       >
-        {t("requestViewing")}
+        <a href={whatsAppHref} target="_blank" rel="noopener noreferrer">
+          {t("requestViewing")}
+        </a>
       </Button>
 
       <Link
@@ -66,7 +101,10 @@ export default function PriceCard ({ price = 8_450_000 }: { price?: number }){
         color="secondary.400"
         _hover={{ color: "secondary.200" }}
         mb={8}
-        href="#"
+        href={brochureHref}
+        // The route already sets Content-Disposition: attachment; this just gives
+        // the browser a sensible default name if it ignores the header.
+        download
       >
         <Icon as={FiDownload} boxSize={3} />
         {t("downloadBrochure")}
@@ -105,8 +143,8 @@ export default function PriceCard ({ price = 8_450_000 }: { price?: number }){
             fontSize="2xs"
             letterSpacing="0.12em"
             textTransform="uppercase"
-            color="accent.400"
-            _hover={{ color: "accent.300" }}
+            color="secondary.600"
+            _hover={{ color: "secondary.200" }}
             href="#"
           >
             {t("contactDirectly")}

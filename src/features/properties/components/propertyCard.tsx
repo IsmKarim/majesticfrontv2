@@ -14,8 +14,8 @@ const PROP_ATTRIBUTES: {
 }[] = [
         { icon: "totalArea", getValue: (p) => p.totalArea ? `${p.totalArea}m²` : null },
         { icon: "bedrooms", getValue: (p) => p.bedrooms },
-        { icon: "bathrooms", getValue: (p) => p.bathrooms },
-        { icon: "parkingSpaces", getValue: (p) => p.parkingSpaces },
+        { icon: "bathrooms", getValue: (p) => p.bathrooms ?? null },
+        { icon: "parkingSpaces", getValue: (p) => p.parkingSpaces ?? null },
     ];
 
 function pricePerSqmValue(price: number, surface?: number): number | null {
@@ -43,6 +43,7 @@ function PropAttributeWithIcon({
 // ── Main Component ────────────────────────────────────────────────────────────
 export default function PropertyCard({ property }: { property: Property }) {
     const t = useTranslations("properties.card");
+    const td = useTranslations("properties.detail");
     const tType = useTranslations("propertyTypes");
     const tTx = useTranslations("transactionTypes");
 
@@ -50,7 +51,9 @@ export default function PropertyCard({ property }: { property: Property }) {
     // The mocks capitalise ("Sale"/"Rent"); normalise before comparing.
     const transaction = normalizeTransactionType(property.transactionType);
     const isSale = transaction === "sale";
-    const location = `${property.neighborhood} - ${property.city}`
+    // Neighborhood is nullable in the payload; drop the segment rather than
+    // interpolating "null" into the location line.
+    const location = [property.neighborhood, property.city].filter(Boolean).join(" - ");
     return (
         <Box
 
@@ -90,15 +93,25 @@ export default function PropertyCard({ property }: { property: Property }) {
                         {property.title}
                     </Text>
 
-                    {/* Price row */}
+                    {/* Price row — the agency can mark a listing price-on-request,
+                        in which case neither the figure nor the per-m² rate (which
+                        would give it away) may be published. */}
                     <Flex align="baseline" gap={2} mb={3}>
-                        <Text color="secondary.500" fontWeight="bold" fontSize="lg">
-                            {t("price", { price: property.price.toLocaleString() })}
-                        </Text>
-                        {pricePerSqm && (
-                            <Text color="gray.400" fontSize="xs">
-                                {t("perSqm", { price: pricePerSqm.toLocaleString() })}
+                        {property.isPriceOnRequest ? (
+                            <Text color="secondary.500" fontWeight="bold" fontSize="lg">
+                                {td("priceOnInquiry")}
                             </Text>
+                        ) : (
+                            <>
+                                <Text color="secondary.500" fontWeight="bold" fontSize="lg">
+                                    {t("price", { price: property.price.toLocaleString() })}
+                                </Text>
+                                {pricePerSqm && (
+                                    <Text color="gray.400" fontSize="xs">
+                                        {t("perSqm", { price: pricePerSqm.toLocaleString() })}
+                                    </Text>
+                                )}
+                            </>
                         )}
                     </Flex>
 

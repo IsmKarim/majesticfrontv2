@@ -6,19 +6,19 @@ import type { TeamMember } from "./types";
 export const teamMembers: TeamMember[] = [
   {
     id: "mem_001",
-    name: "Nadia El Amrani",
-    role: "Founder & CEO",
-    bio: "Founded Majestic Keys after a decade in Casablanca private banking, convinced Kénitra's property market deserved the same rigor as the capital's.",
-    email: "nadia@majestickeys.com",
+    name: "Zahri Mohammed",
+    role: "Real Estate Agent & Founder",
+    bio: "Founded Majestic Keys , convinced Kénitra's property market deserved the same rigor as the capital's.",
+    email: "zahri@majestickeys.ma",
   },
-  {
+/*   {
     id: "mem_002",
-    name: "Rachid Benjelloun",
+    name: "Zahri Mohammed",
     role: "Director of Sales",
     bio: "Leads the sales team with fifteen years spent closing complex, high-value transactions across the Rabat–Kénitra corridor.",
     email: "rachid@majestickeys.com",
-  },
-  {
+  }, */
+  /* {
     id: "mem_003",
     name: "Salma Idrissi",
     role: "Senior Property Advisor",
@@ -45,5 +45,5 @@ export const teamMembers: TeamMember[] = [
     role: "Legal & Tax Advisor",
     bio: "Structures every transaction for tax efficiency and legal certainty, working alongside notaries across the region.",
     email: "karim@majestickeys.com",
-  },
+  }, */
 ];

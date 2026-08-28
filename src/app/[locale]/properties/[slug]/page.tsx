@@ -103,7 +103,12 @@ function PropertyJsonLd({ property }: { property: Property }) {
     );
 }
 
-const Attribute = ({ icon, label, value }: { icon: string; label: string; value?: string }) => (
+const Attribute = ({ icon, label, value }: { icon: string; label: string; value?: string }) => {
+    // A missing value means the attribute does not apply to this listing —
+    // show nothing rather than a bare, numberless label.
+    if (value === undefined) return null;
+
+    return (
     <VStack gap={1} align="center" minW="fit-content">
         <Iconify icon={icon} boxSize={6} color="secondary.300" />
         <Text
@@ -113,10 +118,11 @@ const Attribute = ({ icon, label, value }: { icon: string; label: string; value?
             textTransform="uppercase"
             color="secondary.300"
         >
-            {value ? `${value} ${label}` : label}
+            {`${value} ${label}`}
         </Text>
     </VStack>
-);
+    );
+};
 
 export default async function PropertyPage({ params }: { params: Params }) {
     const { locale, slug } = await params;
@@ -126,13 +132,19 @@ export default async function PropertyPage({ params }: { params: Params }) {
     const property = await getPropertyBySlug(slug);
     if (!property) notFound();
 
-    const galleryImages = property.images.map((img) => ({
-        id: img.id,
-        src: img.url,
-        alt: img.alt ?? property.title,
-        width: 1080,
-        height: 720,
-    }));
+    // Listings may carry only a cover photo; the gallery still needs one slide.
+    // The provider leaves intrinsic dimensions null, so fall back to a 3:2 frame
+    // — the lightbox only uses these to compute an aspect ratio.
+    const galleryImages = (property.images?.length ? property.images : [property.coverImage]).map(
+        (img, index) => ({
+            // Ids repeat across some payloads; the index keeps React keys unique.
+            id: `${img.id}-${index}`,
+            src: img.url,
+            alt: img.alt || property.title,
+            width: img.width ?? 1080,
+            height: img.height ?? 720,
+        }),
+    );
 
     return (
         <Box pt={28} bg="brand.700" minH="100vh">
@@ -191,7 +203,14 @@ export default async function PropertyPage({ params }: { params: Params }) {
                     </GridItem>
 
                     <GridItem>
-                        <PriceCard price={property.price} />
+                        <PriceCard
+                            title={property.title}
+                            slug={property.slug}
+                            propertyRef={property.propertyRef}
+                            price={property.price}
+                            currency={property.currency}
+                            isPriceOnRequest={property.isPriceOnRequest}
+                        />
                     </GridItem>
                 </Grid>
             </Box>
